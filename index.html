@@ -1288,8 +1288,9 @@
                         if (response.ok) {
                             addMessageToChat(data.response, 'ai');
                         } else {
+                            console.error('API Error:', data);
                             // Use fallback response if API fails
-                            addMessageToChat(data.fallback || data.error, 'ai');
+                            addMessageToChat(data.fallback || data.error || 'Sorry, I cannot respond right now. Please try contacting Messiah directly.', 'ai');
                         }
                     } catch (error) {
                         console.error('Chat error:', error);

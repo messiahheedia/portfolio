@@ -1,5 +1,15 @@
 // Vercel Serverless Function for OpenAI Chat
 export default async function handler(req, res) {
+    // Set CORS headers for all requests
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     // Only allow POST requests
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -16,8 +26,14 @@ export default async function handler(req, res) {
         const apiKey = process.env.OPENAI_API_KEY;
         
         if (!apiKey) {
-            return res.status(500).json({ error: 'API key not configured' });
+            console.error('OpenAI API key not configured');
+            return res.status(500).json({ 
+                error: 'API key not configured',
+                fallback: "Thanks for your interest! You can reach Messiah at messiah.heredia@icloud.com for specific questions, or check out his projects on GitHub: https://github.com/messiahheedia"
+            });
         }
+
+        console.log('Making OpenAI API request...');
 
         // Call OpenAI API
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -56,18 +72,22 @@ export default async function handler(req, res) {
         });
 
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`OpenAI API error: ${response.status} - ${errorText}`);
             throw new Error(`OpenAI API error: ${response.status}`);
         }
 
         const data = await response.json();
         const aiResponse = data.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
 
+        console.log('OpenAI API response received successfully');
         return res.status(200).json({ response: aiResponse });
 
     } catch (error) {
         console.error('Chat API error:', error);
         return res.status(500).json({ 
             error: 'Failed to get AI response',
+            details: error.message,
             fallback: "Thanks for your interest! You can reach Messiah at messiah.heredia@icloud.com for specific questions, or check out his projects on GitHub: https://github.com/messiahheedia"
         });
     }
