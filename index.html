@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messiah Heredia - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23000000'/%3E%3Ctext x='50' y='65' font-family='Poppins,sans-serif' font-size='45' font-weight='bold' text-anchor='middle' fill='%23b9975b'%3EIT%3C/text%3E%3C/svg%3E">
+    
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --pfw-gold: #b9975b;
+            --pfw-gold-light: #e5c97b;
+            --pfw-gold-dark: #a3863a;
+            --pfw-gold-darker: #7c6329;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #222;
+            --bg-tertiary: #333;
+            --text-primary: #f3f4f6;
+            --text-secondary: rgba(243, 244, 246, 0.8);
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--pfw-gold);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--pfw-gold-dark);
+        }
+        
+        /* Animation Classes */
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Navigation Active State */
+        nav ul li a.active-link {
+            color: var(--pfw-gold) !important;
+            border-bottom: 2px solid var(--pfw-gold);
+        }
+        
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(243, 244, 246, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: var(--pfw-gold);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Custom Utility Classes */
+        .text-pfw-gold { color: var(--pfw-gold) !important; }
+        .text-pfw-gold-light { color: var(--pfw-gold-light) !important; }
+        .bg-pfw-gold { background-color: var(--pfw-gold) !important; }
+        .bg-pfw-gold-dark { background-color: var(--pfw-gold-dark) !important; }
+        .bg-pfw-gold-darker { background-color: var(--pfw-gold-darker) !important; }
+        .border-pfw-gold { border-color: var(--pfw-gold) !important; }
+        .hover\:text-pfw-gold:hover { color: var(--pfw-gold) !important; }
+        .hover\:text-pfw-gold-light:hover { color: var(--pfw-gold-light) !important; }
+        .hover\:bg-pfw-gold:hover { background-color: var(--pfw-gold) !important; }
+        .hover\:bg-pfw-gold-dark:hover { background-color: var(--pfw-gold-dark) !important; }
+
+        /* Enhanced Focus States for Accessibility */
+        button:focus,
+        input:focus,
+        textarea:focus,
+        a:focus {
+            outline: 2px solid var(--pfw-gold);
+            outline-offset: 2px;
+        }
+
+        /* Improved Card Hover Effects */
+        .project-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(185, 151, 91, 0.25);
+        }
+
+        /* Loading Animation for Images */
+        img {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Horizontal Scroll Container */
+        .scroll-container {
+            position: relative;
+            overflow: hidden;
+            padding: 0 2rem;
+        }
+        
+        .scroll-wrapper {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scroll-item {
+            flex: 0 0 auto;
+            min-width: 300px;
+            scroll-snap-align: start;
+        }
+        
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(185, 151, 91, 0.9);
+            color: black;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+        
+        .scroll-button:hover {
+            background: var(--pfw-gold);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .scroll-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .scroll-button.left {
+            left: 0;
+        }
+        
+        .scroll-button.right {
+            right: 0;
+        }
+        
+        /* Scroll indicators */
+        .scroll-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .scroll-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(185, 151, 91, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-indicator.active {
+            background: var(--pfw-gold);
+            transform: scale(1.2);
+        }
+        
+        .scroll-indicator:hover {
+            background: var(--pfw-gold-light);
+            transform: scale(1.1);
+        }
+
+        /* Image loading styles */
+        .scroll-item img {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-item:hover img {
+            border-color: var(--pfw-gold);
+            transform: scale(1.05);
+        }
+
+        /* Mobile Menu Toggle (for future responsive improvements) */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem !important;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .scroll-item {
+                min-width: 280px;
+            }
+            
+            .scroll-button {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .scroll-button.left {
+                left: -20px;
+            }
+            
+            .scroll-button.right {
+                right: -20px;
+            }
+        }
+
+        /* Custom Utility Classes */
+        .text-pfw-gold { color: var(--pfw-gold) !important; }
+        .text-pfw-gold-light { color: var(--pfw-gold-light) !important; }
+        .bg-pfw-gold { background-color: var(--pfw-gold) !important; }
+        .bg-pfw-gold-dark { background-color: var(--pfw-gold-dark) !important; }
+        .bg-pfw-gold-darker { background-color: var(--pfw-gold-darker) !important; }
+        .border-pfw-gold { border-color: var(--pfw-gold) !important; }
+        .hover\:text-pfw-gold:hover { color: var(--pfw-gold) !important; }
+        .hover\:text-pfw-gold-light:hover { color: var(--pfw-gold-light) !important; }
+        .hover\:bg-pfw-gold:hover { background-color: var(--pfw-gold) !important; }
+        .hover\:bg-pfw-gold-dark:hover { background-color: var(--pfw-gold-dark) !important; }
+
+        /* Enhanced Focus States for Accessibility */
+        button:focus,
+        input:focus,
+        textarea:focus,
+        a:focus {
+            outline: 2px solid var(--pfw-gold);
+            outline-offset: 2px;
+        }
+
+        /* Improved Card Hover Effects */
+        .project-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(185, 151, 91, 0.25);
+        }
+
+        /* Loading Animation for Images */
+        img {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Horizontal Scroll Container */
+        .scroll-container {
+            position: relative;
+            overflow: hidden;
+            padding: 0 2rem;
+        }
+        
+        .scroll-wrapper {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scroll-item {
+            flex: 0 0 auto;
+            min-width: 300px;
+            scroll-snap-align: start;
+        }
+        
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(185, 151, 91, 0.9);
+            color: black;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+        
+        .scroll-button:hover {
+            background: var(--pfw-gold);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .scroll-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .scroll-button.left {
+            left: 0;
+        }
+        
+        .scroll-button.right {
+            right: 0;
+        }
+        
+        /* Scroll indicators */
+        .scroll-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .scroll-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(185, 151, 91, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-indicator.active {
+            background: var(--pfw-gold);
+            transform: scale(1.2);
+        }
+        
+        .scroll-indicator:hover {
+            background: var(--pfw-gold-light);
+            transform: scale(1.1);
+        }
+
+        /* Image loading styles */
+        .scroll-item img {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-item:hover img {
+            border-color: var(--pfw-gold);
+            transform: scale(1.05);
+        }
+
+        /* Mobile Menu Toggle (for future responsive improvements) */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem !important;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .scroll-item {
+                min-width: 280px;
+            }
+            
+            .scroll-button {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .scroll-button.left {
+                left: -20px;
+            }
+            
+            .scroll-button.right {
+                right: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-black/90 backdrop-blur-md shadow-xl sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Name and LinkedIn -->
+            <div class="flex-shrink-0 flex items-center space-x-4">
+                <div>
+                    <h1 class="text-3xl font-bold text-pfw-gold hover:text-pfw-gold-light transition-colors cursor-pointer">
+                        Messiah Heredia
+                    </h1>
+                </div>
+                <a 
+                    href="https://www.linkedin.com/in/messiah-heredia-587a11362/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-2xl"
+                    aria-label="LinkedIn Profile"
+                >
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            <!-- Navigation Menu -->
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8 text-lg">
+                    <li><a href="#home" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Home</a></li>
+                    <li><a href="#portfolio" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Portfolio</a></li>
+                    <li><a href="#certifications" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Certifications</a></li>
+                    <li><a href="#homelab" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Home Lab</a></li>
+                </ul>
+            </nav>
+            <!-- Mobile Menu Button (for future implementation) -->
+            <button class="md:hidden text-pfw-gold hover:text-pfw-gold-light transition-colors" aria-label="Toggle Menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-[#1a1a1a] to-[#222] relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, var(--pfw-gold) 2px, transparent 2px); background-size: 50px 50px;"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <!-- PFW Logo in hero section -->
+            <div class="flex justify-center mb-4">
+                <img src="pfw.png" alt="Purdue University Fort Wayne Logo" class="w-16 h-16 object-contain opacity-80 hover:opacity-100 transition-opacity">
+            </div>
+            <h2 class="hero-title text-6xl font-bold mb-6 text-pfw-gold">Welcome to My Portfolio</h2>
+            <p class="text-xl mb-8 text-[#f3f4f6]/80 max-w-2xl mx-auto leading-relaxed">
+                Hi! I'm an IT Engineer passionate about expanding my expertise in software development to enhance my systems administration capabilities for businesses. I specialize in bridging the gap between infrastructure and application development, creating efficient solutions that streamline operations and drive technological innovation.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#portfolio" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-lg inline-flex items-center">
+                    View My Work <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="mailto:messiah.heredia@icloud.com" class="border-2 border-pfw-gold text-pfw-gold hover:bg-pfw-gold hover:text-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 text-lg inline-flex items-center">
+                    Get In Touch <i class="fas fa-envelope ml-2"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-pfw-gold text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-[#1a1a1a]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">My Projects</h3>
+                <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
+                    Explore my latest work and discover the technologies I've been working with
+                </p>
+            </div>
+            
+            <div class="scroll-container">
+                <button class="scroll-button left" id="portfolioScrollLeft" aria-label="Scroll projects left">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="scroll-button right" id="portfolioScrollRight" aria-label="Scroll projects right">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="scroll-wrapper" id="portfolioScrollWrapper">
+                    <!-- Project Card 1 -->
+                    <article class="scroll-item project-card bg-black rounded-xl shadow-2xl overflow-hidden border border-[#333] flex flex-col group">
+                        <div class="p-6 flex-grow">
+                            <!-- Header Section -->
+                            <div class="text-center mb-6">
+                                <h4 class="text-3xl font-bold text-pfw-gold group-hover:text-pfw-gold-light transition-colors mb-3">
+                                    Our Family Connect
+                                </h4>
+                                <p class="text-[#f3f4f6]/80 leading-relaxed max-w-md mx-auto">
+                                    A family networking platform designed to keep families connected through shared experiences, messaging, and collaborative features for maintaining close relationships.
+                                </p>
+                            </div>
+                            
+                            <!-- Technology Tags -->
+                            <div class="flex flex-wrap gap-2 mb-8 justify-center">
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">React</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">Node.js</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">JavaScript</span>
+                            </div>
+                            
+                            <!-- Image Showcase -->
+                            <div class="relative mb-8">
+                                <div class="absolute inset-0 bg-gradient-to-r from-pfw-gold/10 via-pfw-gold/20 to-pfw-gold/10 rounded-2xl blur-xl"></div>
+                                <div class="relative bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] rounded-2xl p-4 border border-pfw-gold/30">
+                                    <div class="flex justify-center">
+                                        <div class="w-full max-w-lg h-48 bg-pfw-gold/10 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-users text-pfw-gold text-6xl"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Features Highlight -->
+                            <div class="grid grid-cols-2 gap-4 mb-6 text-center">
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-calendar-alt text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Calendar</p>
+                                </div>
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-link text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Quick Links</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer with Actions -->
+                        <div class="p-6 pt-0 border-t border-[#333]">
+                            <div class="flex justify-between items-center">
+                                <a href="https://our-family-connect.vercel.app/" target="_blank" rel="noopener noreferrer" class="flex items-center text-pfw-gold hover:text-pfw-gold-light transition-colors font-semibold">
+                                    <i class="fas fa-play mr-2"></i> Demo
+                                </a>
+                                <div class="flex space-x-3">
+                                    <a href="https://vercel.com/messiahheedias-projects/our-family-connect" target="_blank" rel="noopener noreferrer" class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors" title="View on Vercel">
+                                        <i class="fas fa-cloud"></i>
+                                    </a>
+                                    <button class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors" title="Star Project">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project Card 2 -->
+                    <article class="scroll-item project-card bg-black rounded-xl shadow-2xl overflow-hidden border border-[#333] flex flex-col group">
+                        <div class="p-6 flex-grow">
+                            <!-- Header Section -->
+                            <div class="text-center mb-6">
+                                <h4 class="text-3xl font-bold text-pfw-gold group-hover:text-pfw-gold-light transition-colors mb-3">
+                                    QuickCommand
+                                </h4>
+                                <p class="text-[#f3f4f6]/80 leading-relaxed max-w-md mx-auto">
+                                    A command-line utility tool designed to streamline and automate common development tasks, providing quick access to frequently used commands and workflows.
+                                </p>
+                            </div>
+                            
+                            <!-- Technology Tags -->
+                            <div class="flex flex-wrap gap-2 mb-8 justify-center">
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">Python</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">CLI</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">Automation</span>
+                            </div>
+                            
+                            <!-- Image Showcase -->
+                            <div class="relative mb-8">
+                                <div class="absolute inset-0 bg-gradient-to-r from-pfw-gold/10 via-pfw-gold/20 to-pfw-gold/10 rounded-2xl blur-xl"></div>
+                                <div class="relative bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] rounded-2xl p-4 border border-pfw-gold/30">
+                                    <div class="flex justify-center">
+                                        <img src="QuickCommand.png" alt="QuickCommand Tool" class="w-full max-w-lg h-auto object-contain rounded-lg shadow-2xl">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Features Highlight -->
+                            <div class="grid grid-cols-2 gap-4 mb-6 text-center">
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-bolt text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Fast Execution</p>
+                                </div>
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-cogs text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Automation</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer with Actions -->
+                        <div class="p-6 pt-0 border-t border-[#333]">
+                            <div class="flex justify-between items-center">
+                                <a href="https://github.com/messiahheedia/quickcommand" target="_blank" rel="noopener noreferrer" class="flex items-center text-pfw-gold hover:text-pfw-gold-light transition-colors font-semibold">
+                                    <i class="fab fa-github mr-2"></i> View Code
+                                </a>
+                                <div class="flex space-x-3">
+                                    <a href="https://github.com/messiahheedia/quickcommand" target="_blank" rel="noopener noreferrer" class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors" title="Star Project">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project Card 3 -->
+                    <article class="scroll-item project-card bg-black rounded-xl shadow-2xl overflow-hidden border border-[#333] flex flex-col group">
+                        <div class="p-6 flex-grow">
+                            <!-- Header Section -->
+                            <div class="text-center mb-6">
+                                <h4 class="text-3xl font-bold text-pfw-gold group-hover:text-pfw-gold-light transition-colors mb-3">
+                                    My Portfolio Website
+                                </h4>
+                                <p class="text-[#f3f4f6]/80 leading-relaxed max-w-md mx-auto">
+                                    A professional portfolio website showcasing my IT engineering expertise, projects, certifications, and home lab infrastructure with modern design and responsive functionality.
+                                </p>
+                            </div>
+                            
+                            <!-- Technology Tags -->
+                            <div class="flex flex-wrap gap-2 mb-8 justify-center">
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">HTML5</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">CSS3</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">JavaScript</span>
+                            </div>
+                            
+                            <!-- Image Showcase -->
+                            <div class="relative mb-8">
+                                <div class="absolute inset-0 bg-gradient-to-r from-pfw-gold/10 via-pfw-gold/20 to-pfw-gold/10 rounded-2xl blur-xl"></div>
+                                <div class="relative bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] rounded-2xl p-4 border border-pfw-gold/30">
+                                    <div class="flex justify-center">
+                                        <div class="w-full max-w-lg h-48 bg-pfw-gold/10 rounded-lg flex items-center justify-center">
+                                            <span class="text-pfw-gold text-8xl font-bold tracking-wider">IT</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Features Highlight -->
+                            <div class="grid grid-cols-2 gap-4 mb-6 text-center">
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-mobile-alt text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Responsive Design</p>
+                                </div>
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-palette text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Modern UI/UX</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer with Actions -->
+                        <div class="p-6 pt-0 border-t border-[#333]">
+                            <div class="flex justify-between items-center">
+                                <a href="#home" class="flex items-center text-pfw-gold hover:text-pfw-gold-light transition-colors font-semibold">
+                                    <i class="fas fa-eye mr-2"></i> View Live
+                                </a>
+                                <div class="flex space-x-3">
+                                    <a href="https://github.com/messiahheedia" target="_blank" rel="noopener noreferrer" class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <button class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors" title="Star Project">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="scroll-indicators" id="portfolioIndicators">
+                    <div class="scroll-indicator active" data-index="0"></div>
+                    <div class="scroll-indicator" data-index="1"></div>
+                    <div class="scroll-indicator" data-index="2"></div>
+                </div>
+            </div>
+            
+            <!-- View More Projects Button -->
+            <div class="text-center mt-12">
+                <a href="https://github.com/messiahheedia" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-pfw-gold hover:text-pfw-gold-light transition-colors font-medium text-lg">
+                    View All Projects on GitHub <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-20 bg-[#222]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">Certifications</h3>
+                <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
+                    Current certifications and upcoming goals in cybersecurity and cloud computing
+                </p>
+            </div>
+            
+            <!-- Current Certifications -->
+            <div class="mb-12">
+                <h4 class="text-2xl font-semibold mb-8 text-center text-pfw-gold-light">Current Certifications</h4>
+                <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                    <!-- CompTIA A+ -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="flex justify-center mb-4">
+                            <img src="Acert" alt="CompTIA A+ Certification" class="w-24 h-24 object-contain rounded-lg">
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2 text-pfw-gold">CompTIA A+</h4>
+                        <p class="text-[#f3f4f6]/80 mb-3">Hardware and software fundamentals, troubleshooting</p>
+                        <div class="mt-3 mb-4">
+                            <span class="inline-block bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-sm">Certified</span>
+                        </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
+                            <i class="fas fa-external-link-alt mr-1"></i> Verify Certification
+                        </a>
+                    </div>
+                    
+                    <!-- CompTIA Network+ -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="flex justify-center mb-4">
+                            <img src="Ncert.png" alt="CompTIA Network+ Certification" class="w-24 h-24 object-contain rounded-lg">
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2 text-pfw-gold">CompTIA Network+</h4>
+                        <p class="text-[#f3f4f6]/80 mb-3">Networking fundamentals, infrastructure, and security</p>
+                        <div class="mt-3 mb-4">
+                            <span class="inline-block bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-sm">Certified</span>
+                        </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
+                            <i class="fas fa-external-link-alt mr-1"></i> Verify Certification
+                        </a>
+                    </div>
+                    
+                    <!-- CompTIA Security+ -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="flex justify-center mb-4">
+                            <img src="Scert.png" alt="CompTIA Security+ Certification" class="w-24 h-24 object-contain rounded-lg">
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2 text-pfw-gold">CompTIA Security+</h4>
+                        <p class="text-[#f3f4f6]/80 mb-3">Cybersecurity principles and threat management</p>
+                        <div class="mt-3 mb-4">
+                            <span class="inline-block bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-sm">Certified</span>
+                        </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
+                            <i class="fas fa-external-link-alt mr-1"></i> Verify Certification
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Certifications -->
+            <div>
+                <h4 class="text-2xl font-semibold mb-8 text-center text-pfw-gold-light">Pursuing Next</h4>
+                <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold/50 transition-colors">
+                        <i class="fas fa-user-shield text-3xl text-pfw-gold/70 mb-4 group-hover:text-pfw-gold transition-colors"></i>
+                        <h5 class="text-lg font-semibold mb-2 text-pfw-gold/80">CompTIA CySA+</h5>
+                        <p class="text-[#f3f4f6]/60 text-sm">Cybersecurity Analyst</p>
+                        <div class="mt-3">
+                            <span class="inline-block bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full text-xs">In Progress</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold/50 transition-colors">
+                        <i class="fas fa-cloud text-3xl text-pfw-gold/70 mb-4 group-hover:text-pfw-gold transition-colors"></i>
+                        <h5 class="text-lg font-semibold mb-2 text-pfw-gold/80">AWS Cloud Practitioner</h5>
+                        <p class="text-[#f3f4f6]/60 text-sm">Foundational</p>
+                        <div class="mt-3">
+                            <span class="inline-block bg-yellow-600/20 text-yellow-400 px-3 py-1 rounded-full text-xs">Planned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Home Lab Section -->
+    <section id="homelab" class="py-20 bg-[#1a1a1a]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">My Home Lab - Coming August 2025</h3>
+                <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
+                    A dedicated infrastructure environment for continuous learning, testing, and innovation
+                </p>
+            </div>
+            
+            <!-- Current Lab Setup -->
+            <div class="mb-16">
+                <h4 class="text-2xl font-semibold mb-8 text-center text-pfw-gold-light">Current Infrastructure</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Virtualization -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-server text-pfw-gold text-2xl"></i>
+                        </div>
+                        <h5 class="text-xl font-semibold mb-3 text-pfw-gold">Virtualization Platform</h5>
+                        <p class="text-[#f3f4f6]/80 mb-3">VMware vSphere & Proxmox VE for enterprise-grade virtualization</p>
+                        <div class="flex flex-wrap gap-1 justify-center">
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">VMware</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Proxmox</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Network Infrastructure -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-network-wired text-pfw-gold text-2xl"></i>
+                        </div>
+                        <h5 class="text-xl font-semibold mb-3 text-pfw-gold">Network Lab</h5>
+                        <p class="text-[#f3f4f6]/80 mb-3">Cisco & Ubiquiti equipment for advanced networking scenarios</p>
+                        <div class="flex flex-wrap gap-1 justify-center">
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Cisco</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Ubiquiti</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">VLANs</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Tools -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-pfw-gold text-2xl"></i>
+                        </div>
+                        <h5 class="text-xl font-semibold mb-3 text-pfw-gold">Security Arsenal</h5>
+                        <p class="text-[#f3f4f6]/80 mb-3">Penetration testing and vulnerability assessment tools</p>
+                        <div class="flex flex-wrap gap-1 justify-center">
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Kali Linux</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">pfSense</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Wireshark</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Container Orchestration -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-docker text-pfw-gold text-2xl"></i>
+                        </div>
+                        <h5 class="text-xl font-semibold mb-3 text-pfw-gold">Container Platform</h5>
+                        <p class="text-[#f3f4f6]/80 mb-3">Docker & Kubernetes for modern application deployment</p>
+                        <div class="flex flex-wrap gap-1 justify-center">
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Docker</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Kubernetes</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Portainer</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Monitoring & Analytics -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-pfw-gold text-2xl"></i>
+                        </div>
+                        <h5 class="text-xl font-semibold mb-3 text-pfw-gold">Monitoring Stack</h5>
+                        <p class="text-[#f3f4f6]/80 mb-3">Real-time infrastructure monitoring and alerting</p>
+                        <div class="flex flex-wrap gap-1 justify-center">
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Grafana</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Prometheus</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">ELK Stack</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cloud Integration -->
+                    <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
+                        <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-cloud text-pfw-gold text-2xl"></i>
+                        </div>
+                        <h5 class="text-xl font-semibold mb-3 text-pfw-gold">Hybrid Cloud</h5>
+                        <p class="text-[#f3f4f6]/80 mb-3">AWS, Azure, and GCP integration for hybrid environments</p>
+                        <div class="flex flex-wrap gap-1 justify-center">
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">AWS</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Azure</span>
+                            <span class="px-2 py-1 bg-pfw-gold/20 text-pfw-gold text-xs rounded-full">Terraform</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lab Capabilities -->
+            <div class="mb-16">
+                <h4 class="text-2xl font-semibold mb-8 text-center text-pfw-gold-light">Lab Capabilities</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">Active Directory Domain</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Full Windows Server environment with GPO management</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">CI/CD Pipelines</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Jenkins, GitLab CI, and GitHub Actions automation</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">SIEM Implementation</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Splunk and Elastic Security for threat detection</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">Battery Powered Backups</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">UPS systems and battery backup solutions for server/power outage protection</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">Backup Solutions</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Automated backup strategies with Veeam and Restic</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">Network Segmentation</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Isolated environments for security testing</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">Load Balancing</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">HAProxy and NGINX for application delivery</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">IoT Integration</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Raspberry Pi clusters and sensor networks</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">DNS & DHCP Services</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Centralized DNS with Pi-hole and ISC DHCP</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">VPN Infrastructure</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">WireGuard and OpenVPN secure remote access</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">Certificate Authority</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Internal PKI with automated certificate management</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-pfw-gold/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
+                            <i class="fas fa-check text-pfw-gold text-xs"></i>
+                        </div>
+                        <div>
+                            <h6 class="font-semibold text-pfw-gold mb-1">Storage Virtualization</h6>
+                            <p class="text-[#f3f4f6]/70 text-sm">Software-defined storage with Ceph and GlusterFS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Bot Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div class="relative group">
+            <button id="aiBotToggleBtn" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black rounded-full shadow-lg w-16 h-16 flex items-center justify-center text-3xl focus:outline-none transition-all duration-300" aria-label="Open AI Bot Chat">
+                <i class="fas fa-robot"></i>
+            </button>
+            <!-- Tooltip -->
+            <div class="absolute bottom-20 right-0 bg-black text-pfw-gold px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg border border-pfw-gold/30">
+                Siah's Assistant - Click me for help!
+                <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chat Modal -->
+    <div id="aiChatModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-black border border-[#333] rounded-xl shadow-2xl w-full max-w-md h-96 flex flex-col">
+                <!-- Chat Header -->
+                <div class="flex items-center justify-between p-4 border-b border-[#333]">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-pfw-gold/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot text-pfw-gold text-sm"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-pfw-gold">AI Assistant</h3>
+                    </div>
+                    <button id="closeChatBtn" class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Chat Messages -->
+                <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3">
+                    <div class="flex">
+                        <div class="bg-pfw-gold/20 text-[#f3f4f6] p-3 rounded-lg max-w-xs">
+                            <p class="text-sm">Hello! I'm Messiah's AI assistant. How can I help you learn more about his work and experience?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chat Input -->
+                <div class="p-4 border-t border-[#333]">
+                    <div class="flex space-x-2">
+                        <input 
+                            type="text" 
+                            id="chatInput" 
+                            placeholder="Ask me anything..."
+                            class="flex-1 p-2 bg-[#222] border border-[#333] rounded-lg text-white text-sm focus:border-pfw-gold focus:outline-none"
+                        >
+                        <button 
+                            id="sendChatBtn" 
+                            class="bg-pfw-gold hover:bg-pfw-gold-dark text-black px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+                        >
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-[#333]">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-[#f3f4f6]/80">© 2025 Messiah Heredia. All rights reserved.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="https://github.com/messiahheedia" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/messiah-heredia-587a11362/" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+                <a href="mailto:messiah.heredia@icloud.com" class="text-pfw-gold hover:text-pfw-gold-light transition-colors">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Performance optimized JavaScript
+        
+        // Utility functions
+        const debounce = (func, wait) => {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        };
+
+        const throttle = (func, limit) => {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        };
+
+        // Preloader with improved performance
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.remove(); // Remove from DOM instead of hiding
+                }, 500);
+            }
+        });
+
+        // Optimized smooth scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const target = document.getElementById(targetId);
+                    
+                    if (target) {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = target.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Enhanced active navigation with throttling
+            const updateActiveNav = throttle(function() {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-link');
+                const headerHeight = document.querySelector('header').offsetHeight;
+                
+                let current = '';
+                const scrollPos = window.pageYOffset + headerHeight + 100;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active-link');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active-link');
+                    }
+                });
+            }, 100);
+
+            window.addEventListener('scroll', updateActiveNav);
+
+            // Intersection Observer for section animations
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('section-visible');
+                        // Unobserve after animation to improve performance
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections with animation
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('section-hidden');
+                observer.observe(section);
+            });
+
+            // AI Bot functionality
+            const aiBotButton = document.getElementById('aiBotToggleBtn');
+            const aiChatModal = document.getElementById('aiChatModal');
+            const closeChatBtn = document.getElementById('closeChatBtn');
+            const chatInput = document.getElementById('chatInput');
+            const sendChatBtn = document.getElementById('sendChatBtn');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            // Note: AI bot functionality would require backend API integration
+            // This is just a placeholder for demo purposes
+            
+            if (aiBotButton && aiChatModal) {
+                aiBotButton.addEventListener('click', function() {
+                    aiChatModal.classList.remove('hidden');
+                    chatInput.focus();
+                });
+                
+                closeChatBtn.addEventListener('click', function() {
+                    aiChatModal.classList.add('hidden');
+                });
+                
+                // Close modal when clicking outside
+                aiChatModal.addEventListener('click', function(e) {
+                    if (e.target === aiChatModal) {
+                        aiChatModal.classList.add('hidden');
+                    }
+                });
+                
+                // Send message function (demo only - requires backend API)
+                function sendMessage() {
+                    const message = chatInput.value.trim();
+                    if (!message) return;
+                    
+                    // Add user message to chat
+                    addMessageToChat(message, 'user');
+                    chatInput.value = '';
+                    
+                    // Demo response
+                    setTimeout(() => {
+                        const responses = [
+                            "Thanks for your interest! You can reach Messiah at messiah.heredia@icloud.com for specific questions.",
+                            "Check out Messiah's projects on GitHub: https://github.com/messiahheedia",
+                            "Messiah specializes in IT infrastructure and software development. Feel free to contact him directly!",
+                            "For detailed information about Messiah's experience, please visit his LinkedIn profile."
+                        ];
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        addMessageToChat(randomResponse, 'ai');
+                    }, 1000);
+                }
+                
+                // Add message to chat
+                function addMessageToChat(message, sender) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'flex';
+                    
+                    if (sender === 'user') {
+                        messageDiv.classList.add('justify-end');
+                        messageDiv.innerHTML = `
+                            <div class="bg-pfw-gold text-black p-3 rounded-lg max-w-xs">
+                                <p class="text-sm">${message}</p>
+                            </div>
+                        `;
+                    } else {
+                        messageDiv.innerHTML = `
+                            <div class="bg-pfw-gold/20 text-[#f3f4f6] p-3 rounded-lg max-w-xs">
+                                <p class="text-sm">${message}</p>
+                            </div>
+                        `;
+                    }
+                    
+                    chatMessages.appendChild(messageDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+                
+                // Event listeners
+                sendChatBtn.addEventListener('click', sendMessage);
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+            }
+
+            // Initialize scroll functionality
+            initializeScrollContainers();
+        });
+
+        // Scroll container functionality
+        function initializeScrollContainers() {
+            // Portfolio scroll
+            initializeScroll({
+                wrapperId: 'portfolioScrollWrapper',
+                leftButtonId: 'portfolioScrollLeft',
+                rightButtonId: 'portfolioScrollRight',
+                indicatorsId: 'portfolioIndicators'
+            });
+
+            // Certifications scroll
+            initializeScroll({
+                wrapperId: 'certsScrollWrapper',
+                leftButtonId: 'certsScrollLeft',
+                rightButtonId: 'certsScrollRight',
+                indicatorsId: 'certsIndicators'
+            });
+        }
+
+        function initializeScroll(config) {
+            const wrapper = document.getElementById(config.wrapperId);
+            const leftButton = document.getElementById(config.leftButtonId);
+            const rightButton = document.getElementById(config.rightButtonId);
+            const indicators = document.getElementById(config.indicatorsId);
+            
+            if (!wrapper || !leftButton || !rightButton || !indicators) return;
+
+            const items = wrapper.children;
+            let currentIndex = 0;
+
+            // Calculate item width dynamically
+            function getItemWidth() {
+                if (items.length > 0) {
+                    const item = items[0];
+                    const computedStyle = window.getComputedStyle(item);
+                    const marginRight = parseFloat(computedStyle.marginRight) || 0;
+                    return item.offsetWidth + marginRight + 32; // 32px = 2rem gap
+                }
+                return 320; // fallback
+            }
+
+            // Update scroll position
+            function updateScroll() {
+                const itemWidth = getItemWidth();
+                const scrollPosition = currentIndex * itemWidth;
+                
+                wrapper.scrollTo({
+                    left: scrollPosition,
+                    behavior: 'smooth'
+                });
+
+                // Update button states
+                leftButton.disabled = currentIndex === 0;
+                rightButton.disabled = currentIndex >= items.length - 1;
+
+                // Update button opacity based on state
+                leftButton.style.opacity = currentIndex === 0 ? '0.3' : '1';
+                rightButton.style.opacity = currentIndex >= items.length - 1 ? '0.3' : '1';
+
+                // Update indicators
+                const indicatorElements = indicators.querySelectorAll('.scroll-indicator');
+                indicatorElements.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            // Left button click
+            leftButton.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateScroll();
+                }
+            });
+
+            // Right button click
+            rightButton.addEventListener('click', () => {
+                if (currentIndex < items.length - 1) {
+                    currentIndex++;
+                    updateScroll();
+                }
+            });
+
+            // Indicator clicks
+            const indicatorElements = indicators.querySelectorAll('.scroll-indicator');
+            indicatorElements.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateScroll();
+                });
+            });
+
+            // Keyboard navigation
+            wrapper.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    e.preventDefault();
+                    currentIndex--;
+                    updateScroll();
+                } else if (e.key === 'ArrowRight' && currentIndex < items.length - 1) {
+                    e.preventDefault();
+                    currentIndex++;
+                    updateScroll();
+                }
+            });
+
+            // Touch/swipe support
+            let startX = 0;
+            let endX = 0;
+            let startY = 0;
+            let endY = 0;
+
+            wrapper.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+
+            wrapper.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                endY = e.changedTouches[0].clientY;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diffX = startX - endX;
+                const diffY = Math.abs(startY - endY);
+
+                // Only handle horizontal swipes (ignore vertical scrolling)
+                if (Math.abs(diffX) > swipeThreshold && diffY < swipeThreshold) {
+                    if (diffX > 0 && currentIndex < items.length - 1) {
+                        // Swipe left - go to next
+                        currentIndex++;
+                        updateScroll();
+                    } else if (diffX < 0 && currentIndex > 0) {
+                        // Swipe right - go to previous
+                        currentIndex--;
+                        updateScroll();
+                    }
+                }
+            }
+
+            // Handle window resize
+            window.addEventListener('resize', debounce(() => {
+                updateScroll();
+            }, 250));
+
+            // Initialize
+            setTimeout(() => {
+                updateScroll();
+            }, 100); // Small delay to ensure DOM is ready
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+            
+            const colors = {
+                success: 'bg-green-600 text-white',
+                error: 'bg-red-600 text-white',
+                info: 'bg-pfw-gold text-black'
+            };
+            
+            notification.className += ` ${colors[type] || colors.info}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <span>${message}</span>
+                    <button class="ml-4 text-current hover:opacity-70" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // Add loading states for external links
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[href^="http"]') || e.target.closest('a[href^="http"]')) {
+                const link = e.target.matches('a') ? e.target : e.target.closest('a');
+                if (link && !link.hasAttribute('target')) {
+                    link.setAttribute('target', '_blank');
+                    link.setAttribute('rel', 'noopener noreferrer');
+                }
+            }
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close any open modals/notifications
+                const notifications = document.querySelectorAll('.notification');
+                notifications.forEach(notification => notification.remove());
+            }
+        });
+
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    const perfData = performance.timing;
+                    const loadTime = perfData.loadEventEnd - perfData.navigationStart;
+                    console.log(`Page load time: ${loadTime}ms`);
+                }, 0);
+            });
+        }
+    </script>
+</body>
+</html>
