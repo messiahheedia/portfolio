@@ -3083,9 +3083,39 @@
         });
 
         // Theme Toggle System
-            
-            // Get DOM elements with error checking
-            const voiceChatToggle = document.getElementById('voiceChatToggle');
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+
+            if (!themeToggle || !themeIcon) {
+                console.log('Theme toggle elements not found');
+                return;
+            }
+
+            // Get saved theme from localStorage or default to light
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.className = savedTheme + '-theme';
+            updateThemeIcon(savedTheme);
+
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.body.className.includes('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.body.className = newTheme + '-theme';
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                }
+            }
+        });
+
+        // Add CSS animation and immediate preloader fallback
             const voiceSelectionModal = document.getElementById('voiceSelectionModal');
             const closeVoiceModal = document.getElementById('closeVoiceModal');
             const startVoiceChat = document.getElementById('startVoiceChat');
@@ -3952,39 +3982,6 @@
             });
             
             console.log('✅ Nova Voice Chat System ready');
-        });
-
-        // Theme Toggle System
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.getElementById('themeIcon');
-
-            if (!themeToggle || !themeIcon) {
-                console.log('Theme toggle elements not found');
-                return;
-            }
-
-            // Get saved theme from localStorage or default to light
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.body.className = savedTheme + '-theme';
-            updateThemeIcon(savedTheme);
-
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.body.className.includes('dark') ? 'dark' : 'light';
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                
-                document.body.className = newTheme + '-theme';
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-            });
-
-            function updateThemeIcon(theme) {
-                if (theme === 'dark') {
-                    themeIcon.className = 'fas fa-sun';
-                } else {
-                    themeIcon.className = 'fas fa-moon';
-                }
-            }
         });
 
         // Add CSS animation and immediate preloader fallback
