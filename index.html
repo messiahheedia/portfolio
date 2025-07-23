@@ -2979,7 +2979,7 @@
                 
                 // Check for stop command
                 if (transcript.toLowerCase().includes('stop') || transcript.toLowerCase().includes('end chat')) {
-                    stopVoiceChat();
+                    stopVoiceChatSession();
                     return;
                 }
                 
@@ -3887,51 +3887,69 @@
             manualSpeakButton.addEventListener('click', function() {
                 console.log('🎤 Manual speak button clicked');
                 
-                // Show user that we're ready for manual input
-                updateVoiceStatus('🎙️ Click and speak now...', 'info');
-                manualSpeakButton.textContent = '🔴 Recording... (speak now)';
-                manualSpeakButton.disabled = true;
-                
-                // Start a one-time recognition session
-                if (speechRecognition) {
-                    speechRecognition.continuous = false; // One-time recognition
-                    speechRecognition.interimResults = true;
+                try {
+                    // Show user that we're ready for manual input
+                    updateVoiceStatus('🎙️ Click and speak now...', 'info');
+                    manualSpeakButton.textContent = '🔴 Recording... (speak now)';
+                    manualSpeakButton.disabled = true;
                     
-                    // Set up one-time event handlers
-                    const handleResult = function(event) {
-                        if (event.results.length > 0) {
-                            const result = event.results[event.results.length - 1];
-                            if (result.isFinal) {
-                                const transcript = result[0].transcript.trim();
-                                console.log('🎤 Manual speech recognized:', transcript);
-                                
-                                // Process the speech
-                                if (transcript) {
-                                    addTranscriptMessage('You', transcript, 'user');
-                                    processUserSpeech(transcript);
-                                }
-                                
-                                // Reset button
-                                manualSpeakButton.textContent = '🎤 Click & Speak Now';
-                                manualSpeakButton.disabled = false;
-                                updateVoiceStatus('🎤 Manual speech mode - click button to speak', 'success');
-                                
-                                // Clean up one-time handlers
-                                speechRecognition.removeEventListener('result', handleResult);
-                                speechRecognition.removeEventListener('error', handleError);
-                            }
-                        }
-                    };
-                    
-                    const handleError = function(event) {
-                        console.error('Manual speech recognition error:', event.error);
-                        manualSpeakButton.textContent = '🎤 Click & Speak Now';
-                        manualSpeakButton.disabled = false;
-                        updateVoiceStatus('❌ Speech recognition failed - try again', 'error');
+                    // Start a one-time recognition session
+                    if (speechRecognition) {
+                        speechRecognition.continuous = false; // One-time recognition
+                        speechRecognition.interimResults = true;
                         
-                        // Clean up one-time handlers
-                        speechRecognition.removeEventListener('result', handleResult);
-                        speechRecognition.removeEventListener('error', handleError);
+                        // Set up one-time event handlers
+                        const handleResult = function(event) {
+                            if (event.results.length > 0) {
+                                const result = event.results[event.results.length - 1];
+                                if (result.isFinal) {
+                                    const transcript = result[0].transcript.trim();
+                                    console.log('🎤 Manual speech recognized:', transcript);
+                                    
+                                    // Process the speech
+                                    if (transcript) {
+                                        addTranscriptMessage('You', transcript, 'user');
+                                        processUserSpeech(transcript);
+                                    }
+                                    
+                                    // Reset button
+                                    manualSpeakButton.textContent = '🎤 Click & Speak Now';
+                                    manualSpeakButton.disabled = false;
+                                    updateVoiceStatus('🎤 Manual speech mode - click button to speak', 'success');
+                                    
+                                    // Clean up one-time handlers
+                                    speechRecognition.removeEventListener('result', handleResult);
+                                    speechRecognition.removeEventListener('error', handleError);
+                                }
+                            }
+                        };
+                        
+                        const handleError = function(event) {
+                            console.error('Manual speech recognition error:', event.error);
+                            manualSpeakButton.textContent = '🎤 Click & Speak Now';
+                            manualSpeakButton.disabled = false;
+                            updateVoiceStatus('❌ Speech recognition failed - try again', 'error');
+                            
+                            // Clean up one-time handlers
+                            speechRecognition.removeEventListener('result', handleResult);
+                            speechRecognition.removeEventListener('error', handleError);
+                        };
+                        
+                        // Add event listeners for manual speech
+                        speechRecognition.addEventListener('result', handleResult);
+                        speechRecognition.addEventListener('error', handleError);
+                        
+                        // Start recognition
+                        speechRecognition.start();
+                    }
+                    
+                } catch (error) {
+                    console.error('Manual speech error:', error);
+                    manualSpeakButton.textContent = '🎤 Click & Speak Now';
+                    manualSpeakButton.disabled = false;
+                    updateVoiceStatus('❌ Speech recognition failed', 'error');
+                }
+            });
             
             console.log('✅ Nova Voice Chat System ready');
         });
