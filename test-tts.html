@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TTS Test</title>
+</head>
+<body>
+    <h1>OpenAI TTS Test</h1>
+    <button onclick="testTTS()">Test OpenAI TTS</button>
+    <div id="status"></div>
+    
+    <script>
+        async function testTTS() {
+            const status = document.getElementById('status');
+            status.innerHTML = 'Testing TTS...';
+            
+            try {
+                console.log('Starting TTS test...');
+                
+                const response = await fetch('/api/tts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: "Hello, this is a test of OpenAI text to speech",
+                        voice: 'alloy',
+                        model: 'tts-1'
+                    })
+                });
+                
+                console.log('TTS Response status:', response.status);
+                console.log('TTS Response headers:', response.headers);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('TTS Error:', errorText);
+                    status.innerHTML = `TTS Error: ${response.status} - ${errorText}`;
+                    return;
+                }
+                
+                const audioBlob = await response.blob();
+                console.log('Audio blob size:', audioBlob.size);
+                
+                const audioURL = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioURL);
+                
+                audio.onplay = () => {
+                    console.log('Audio started playing');
+                    status.innerHTML = 'Playing OpenAI TTS audio...';
+                };
+                
+                audio.onended = () => {
+                    console.log('Audio finished playing');
+                    status.innerHTML = 'TTS test completed successfully!';
+                    URL.revokeObjectURL(audioURL);
+                };
+                
+                audio.onerror = (error) => {
+                    console.error('Audio playback error:', error);
+                    status.innerHTML = 'Audio playback failed';
+                };
+                
+                await audio.play();
+                
+            } catch (error) {
+                console.error('TTS test error:', error);
+                status.innerHTML = `Test failed: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
