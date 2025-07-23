@@ -2833,7 +2833,7 @@
                         body: JSON.stringify({
                             message: userMessage,
                             history: conversationHistory.slice(-6), // Last 6 messages for context
-                            systemPrompt: "You are Nova, Messiah Heredia's AI assistant. You're knowledgeable about his skills as a full-stack developer, his projects, and his professional background. Keep responses conversational, helpful, and under 100 words for voice chat."
+                            systemPrompt: "You are Nova, Messiah Heredia's AI assistant. You're knowledgeable about his skills as a systems administrator, his projects, and his professional background. Keep responses conversational, helpful, and under 100 words for voice chat."
                         })
                     });
                     
@@ -3028,7 +3028,7 @@
                 addMessage('System', '🎤 Voice chat started! Ask Nova about Messiah\'s skills and projects.', 'system');
                 
                 // Nova introduction
-                const intro = "Hi! I'm Nova, Messiah Heredia's AI assistant. I'm here to tell you about his amazing work as a full-stack developer. What would you like to know?";
+                const intro = "Hi! I'm Nova, Messiah Heredia's AI assistant. I'm here to tell you about his amazing work as a systems administrator. What would you like to know?";
                 addMessage('Nova', intro, 'ai');
                 await speakText(intro);
                 
@@ -3746,7 +3746,7 @@
                     }
                 } catch (error) {
                     console.error('❌ Failed to get Nova introduction:', error);
-                    const fallbackIntro = "Hello! I'm Nova, Messiah Heredia's AI assistant! I'm excited to tell you about his amazing work as a full-stack developer and help answer any questions about his skills and projects. What would you like to know?";
+                    const fallbackIntro = "Hello! I'm Nova, Messiah Heredia's AI assistant! I'm excited to tell you about his amazing work as a systems administrator and help answer any questions about his skills and projects. What would you like to know?";
                     addTranscriptMessage('Nova', fallbackIntro, 'ai');
                     await speakWithSelectedVoice(fallbackIntro);
                 }
