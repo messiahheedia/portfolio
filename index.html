@@ -3116,7 +3116,44 @@
         });
 
         // Add CSS animation and immediate preloader fallback
-            const voiceSelectionModal = document.getElementById('voiceSelectionModal');
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fadeIn {
+                animation: fadeIn 0.3s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Emergency preloader removal - executes immediately
+        (function() {
+            let preloaderHidden = false;
+            
+            function forceHidePreloader() {
+                if (!preloaderHidden) {
+                    const preloader = document.getElementById('preloader');
+                    if (preloader) {
+                        preloader.style.display = 'none';
+                        preloaderHidden = true;
+                        console.log('Preloader force hidden');
+                    }
+                }
+            }
+            
+            // Hide preloader after 3 seconds maximum
+            setTimeout(forceHidePreloader, 3000);
+            
+            // Also try to hide when page is interactive
+            if (document.readyState === 'interactive' || document.readyState === 'complete') {
+                setTimeout(forceHidePreloader, 1000);
+            }
+        })();
+    </script>
+</body>
+</html>
             const closeVoiceModal = document.getElementById('closeVoiceModal');
             const startVoiceChat = document.getElementById('startVoiceChat');
             const startVoiceChatContainer = document.getElementById('startVoiceChatContainer');
