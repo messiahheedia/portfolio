@@ -3395,14 +3395,19 @@
                             if (result.isFinal) {
                                 const text = result[0].transcript.trim();
                                 console.log('Final result:', text);
-                                addTranscriptMessage('You', text, 'user');
-                                // Just add to transcript for now, don't process
-                                setTimeout(() => {
-                                    if (isVoiceChatActive) {
-                                        console.log('🔁 Restarting recognition...');
-                                        startListening();
-                                    }
-                                }, 1000);
+                                
+                                // Process the speech with Nova AI
+                                if (text && text.length > 1) {
+                                    processUserSpeech(text);
+                                } else {
+                                    // If no meaningful speech, just restart listening
+                                    setTimeout(() => {
+                                        if (isVoiceChatActive) {
+                                            console.log('🔁 No speech detected, restarting...');
+                                            startListening();
+                                        }
+                                    }, 1000);
+                                }
                             } else {
                                 const text = result[0].transcript;
                                 console.log('Interim result:', text);
