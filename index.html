@@ -3964,32 +3964,27 @@
                 return;
             }
 
-            // Check for saved theme preference or default to light
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            
-            // Apply theme on load
-            if (currentTheme === 'light') {
-                document.body.classList.add('light-theme');
-                themeIcon.className = 'fas fa-sun';
-            } else {
-                document.body.classList.remove('light-theme');
-                themeIcon.className = 'fas fa-moon';
-            }
+            // Get saved theme from localStorage or default to light
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.className = savedTheme + '-theme';
+            updateThemeIcon(savedTheme);
 
-            // Theme toggle functionality
-            themeToggle.addEventListener('click', () => {
-                if (document.body.classList.contains('light-theme')) {
-                    // Switch to dark theme
-                    document.body.classList.remove('light-theme');
-                    themeIcon.className = 'fas fa-moon';
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    // Switch to light theme
-                    document.body.classList.add('light-theme');
-                    themeIcon.className = 'fas fa-sun';
-                    localStorage.setItem('theme', 'light');
-                }
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.body.className.includes('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.body.className = newTheme + '-theme';
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
             });
+
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                }
+            }
         });
 
         // Add CSS animation and immediate preloader fallback
