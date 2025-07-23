@@ -2754,6 +2754,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🎤 Voice Chat System initializing...');
             
+            // Simple debugging first
+            console.log('Testing speech recognition support...');
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                console.log('✅ Speech Recognition supported');
+            } else {
+                console.log('❌ Speech Recognition NOT supported');
+            }
+            
             let selectedAIVoice = 'alloy';
             let isVoiceChatActive = false;
             let speechRecognition = null;
@@ -2762,6 +2770,7 @@
             const maxTtsFailures = 3; // Disable TTS after 3 failures
             let restartAttempts = 0;
             let isRestartPending = false;
+            let isRecognitionRunning = false;
             
             // Get DOM elements with error checking
             const voiceChatToggle = document.getElementById('voiceChatToggle');
@@ -2962,24 +2971,39 @@
                 return true;
             }
 
-            // Track recognition state
-            let isRecognitionRunning = false;
-
             // Simple start listening function
             function startListening() {
-                if (speechRecognition && !isRecognitionRunning && isVoiceChatActive) {
-                    try {
-                        console.log('Starting speech recognition...');
-                        speechRecognition.start();
-                    } catch (error) {
-                        console.log('Error starting recognition:', error);
-                        // Retry after delay
-                        setTimeout(() => {
-                            if (isVoiceChatActive) {
-                                startListening();
-                            }
-                        }, 1000);
-                    }
+                console.log('🎯 startListening called, isRecognitionRunning:', isRecognitionRunning, 'isVoiceChatActive:', isVoiceChatActive);
+                
+                if (!speechRecognition) {
+                    console.error('❌ No speech recognition object');
+                    return;
+                }
+                
+                if (isRecognitionRunning) {
+                    console.log('⚠️ Recognition already running, skipping...');
+                    return;
+                }
+                
+                if (!isVoiceChatActive) {
+                    console.log('⚠️ Voice chat not active, skipping...');
+                    return;
+                }
+                
+                try {
+                    console.log('🎤 Starting speech recognition...');
+                    speechRecognition.start();
+                } catch (error) {
+                    console.error('❌ Error starting recognition:', error);
+                    isRecognitionRunning = false;
+                    
+                    // Retry in a moment
+                    setTimeout(() => {
+                        if (isVoiceChatActive) {
+                            console.log('🔄 Retrying startListening...');
+                            startListening();
+                        }
+                    }, 1000);
                 }
             }
 
@@ -3291,84 +3315,109 @@
             async function startVoiceChatSession() {
                 console.log('🚀 Starting voice chat session...');
                 
-                // Reset restart attempts for new session
-                restartAttempts = 0;
-                isRestartPending = false;
-                
-                // First check microphone access
-                const microphoneOk = await checkMicrophoneAccess();
-                if (!microphoneOk) {
-                    console.error('❌ Cannot start voice chat - microphone access failed');
-                    return;
-                }
-                
-                if (!initializeSpeechRecognition()) {
-                    alert('Voice recognition is not supported in your browser. Please use Chrome, Edge, or Safari.');
-                    return;
-                }
-
-                isVoiceChatActive = true;
-                
-                // Update UI
-                if (voiceChatToggle) {
-                    const micIcon = voiceChatToggle.querySelector('i');
-                    if (micIcon) {
-                        micIcon.className = 'fas fa-microphone-slash';
-                    }
-                    voiceChatToggle.classList.add('bg-red-500');
-                    voiceChatToggle.classList.remove('bg-pfw-gold');
-                }
-                
-                // Show transcript and status areas, hide start button
-                if (voiceTranscriptArea && voiceStatusDisplay) {
-                    voiceTranscriptArea.classList.remove('hidden');
-                    voiceStatusDisplay.classList.remove('hidden');
+                try {
+                    // Simple test - just try to start recognition without all the complex checks
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                     
-                    // Force visibility in case of CSS issues
-                    voiceTranscriptArea.style.display = 'block';
-                    voiceStatusDisplay.style.display = 'block';
-                    
-                    console.log('✅ Transcript and status areas shown');
-                    console.log('📊 voiceTranscriptArea classes:', voiceTranscriptArea.className);
-                    console.log('📊 voiceTranscriptArea style.display:', voiceTranscriptArea.style.display);
-                    console.log('📊 voiceStatusDisplay classes:', voiceStatusDisplay.className);
-                    console.log('📊 voiceStatusDisplay style.display:', voiceStatusDisplay.style.display);
-                } else {
-                    console.error('❌ Could not show transcript/status areas');
-                    console.error('❌ voiceTranscriptArea:', !!voiceTranscriptArea);
-                    console.error('❌ voiceStatusDisplay:', !!voiceStatusDisplay);
-                }
-                
-                // Hide the start voice chat button, show stop button during session
-                if (startVoiceChatContainer && stopVoiceChatContainer) {
-                    startVoiceChatContainer.classList.add('hidden');
-                    stopVoiceChatContainer.classList.remove('hidden');
-                }
-                
-                // Initially hide manual speak button
-                if (manualSpeakContainer) {
-                    manualSpeakContainer.style.display = 'none';
-                }
-                
-                // Clear previous transcript
-                if (voiceTranscript) {
-                    voiceTranscript.innerHTML = '';
-                    conversationTranscript = [];
-                    console.log('🧹 Transcript cleared');
-                }
-                
-                // Get Nova's introduction and start the conversation
-                await getNovaIntroduction();
-                
-                // Start listening
-                updateVoiceStatus('🎤 Starting voice chat...', 'info');
-                
-                // Simple startup - just start listening
-                setTimeout(() => {
-                    if (isVoiceChatActive) {
-                        startListening();
+                    if (!SpeechRecognition) {
+                        console.error('❌ Speech Recognition not supported');
+                        updateVoiceStatus('❌ Speech Recognition not supported in your browser', 'error');
+                        return;
                     }
-                }, 500);
+                    
+                    speechRecognition = new SpeechRecognition();
+                    speechRecognition.continuous = false;
+                    speechRecognition.interimResults = true;
+                    speechRecognition.lang = 'en-US';
+                    
+                    console.log('✅ Speech Recognition created');
+                    
+                    speechRecognition.onstart = function() {
+                        console.log('🎤 Speech started!');
+                        isRecognitionRunning = true;
+                        updateVoiceStatus('🎤 Listening...', 'success');
+                    };
+                    
+                    speechRecognition.onresult = function(event) {
+                        console.log('🎤 Got speech result:', event.results);
+                        for (let i = 0; i < event.results.length; i++) {
+                            const result = event.results[i];
+                            if (result.isFinal) {
+                                const text = result[0].transcript.trim();
+                                console.log('Final result:', text);
+                                addTranscriptMessage('You', text, 'user');
+                                // Just add to transcript for now, don't process
+                                setTimeout(() => {
+                                    if (isVoiceChatActive) {
+                                        console.log('🔁 Restarting recognition...');
+                                        startListening();
+                                    }
+                                }, 1000);
+                            } else {
+                                const text = result[0].transcript;
+                                console.log('Interim result:', text);
+                                updateVoiceStatus(`🎤 Hearing: "${text}"`, 'listening');
+                            }
+                        }
+                    };
+                    
+                    speechRecognition.onerror = function(event) {
+                        console.error('🎤 Speech error:', event.error);
+                        updateVoiceStatus(`❌ Error: ${event.error}`, 'error');
+                        isRecognitionRunning = false;
+                        
+                        setTimeout(() => {
+                            if (isVoiceChatActive) {
+                                console.log('� Retrying after error...');
+                                startListening();
+                            }
+                        }, 2000);
+                    };
+                    
+                    speechRecognition.onend = function() {
+                        console.log('🔄 Speech ended');
+                        isRecognitionRunning = false;
+                        
+                        if (isVoiceChatActive) {
+                            setTimeout(() => {
+                                console.log('🔁 Auto-restarting...');
+                                startListening();
+                            }, 500);
+                        }
+                    };
+                    
+                    // Set flags
+                    isVoiceChatActive = true;
+                    isRecognitionRunning = false;
+                    
+                    // Show UI elements
+                    if (voiceTranscriptArea) {
+                        voiceTranscriptArea.classList.remove('hidden');
+                        console.log('✅ Transcript area shown');
+                    }
+                    
+                    if (voiceStatusDisplay) {
+                        voiceStatusDisplay.classList.remove('hidden');
+                        console.log('✅ Status display shown');
+                    }
+                    
+                    // Clear transcript
+                    if (voiceTranscript) {
+                        voiceTranscript.innerHTML = '';
+                        console.log('🧹 Transcript cleared');
+                    }
+                    
+                    // Add welcome message
+                    addTranscriptMessage('System', '🎤 Voice chat started! Say something to test...', 'system');
+                    
+                    // Start listening
+                    console.log('� About to start listening...');
+                    startListening();
+                    
+                } catch (error) {
+                    console.error('❌ Failed to start voice chat:', error);
+                    updateVoiceStatus(`❌ Failed to start: ${error.message}`, 'error');
+                }
             }
 
             // Stop voice chat session
@@ -3430,6 +3479,7 @@
             });
 
             startVoiceChat.addEventListener('click', function() {
+                console.log('🚀 Start voice chat clicked! Testing basic speech recognition...');
                 // Don't hide the modal - keep it open to show transcript
                 // voiceSelectionModal.classList.add('hidden');
                 // voiceSelectionModal.classList.remove('flex');
@@ -3437,6 +3487,7 @@
             });
 
             stopVoiceChat.addEventListener('click', function() {
+                console.log('🛑 Stop voice chat clicked!');
                 stopVoiceChatSession();
             });
 
