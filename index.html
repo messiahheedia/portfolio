@@ -3009,11 +3009,15 @@
 
             // Process user speech input - simplified
             async function processUserSpeech(transcript) {
-                console.log(`Processing speech: "${transcript}"`);
+                console.log(`🎯 processUserSpeech CALLED with: "${transcript}"`);
+                console.log('🔍 Function context:', { isVoiceChatActive, transcript: transcript.length });
                 
                 if (!transcript || transcript.length < 2) {
+                    console.log('❌ Transcript too short, ignoring');
                     return;
                 }
+                
+                console.log('✅ Processing valid transcript...');
                 
                 // Add user message to transcript
                 addTranscriptMessage('You', transcript, 'user');
@@ -3031,6 +3035,8 @@
                 }
 
                 try {
+                    console.log('🚀 Starting AI API call...');
+                    
                     // Build conversation history
                     const conversationHistory = conversationTranscript
                         .filter(msg => msg.type === 'user' || msg.type === 'ai')
@@ -3040,32 +3046,49 @@
                         }))
                         .slice(-10);
                     
+                    console.log('📝 Conversation history:', conversationHistory);
+                    
+                    const requestBody = { 
+                        message: transcript,
+                        conversationHistory: conversationHistory
+                    };
+                    console.log('📤 Request body:', requestBody);
+                    
                     const response = await fetch('/api/ai-chat', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            message: transcript,
-                            conversationHistory: conversationHistory
-                        })
+                        body: JSON.stringify(requestBody)
                     });
+                    
+                    console.log('📥 API Response status:', response.status, response.statusText);
 
                     if (response.ok) {
+                        console.log('✅ API call successful, parsing response...');
                         const data = await response.json();
+                        console.log('📋 API response data:', data);
+                        
                         const aiResponse = data.reply || 'Sorry, I had trouble understanding that.';
+                        console.log('🤖 Nova response:', aiResponse);
                         
                         // Add Nova response to transcript
                         addTranscriptMessage('Nova', aiResponse, 'ai');
                         
                         // Speak the response, then restart listening
+                        console.log('🗨️ About to speak response...');
                         await speakWithSelectedVoice(aiResponse);
                         
                         // Restart listening after Nova finishes speaking
                         setTimeout(() => {
                             if (isVoiceChatActive) {
+                                console.log('🔄 Restarting listening after Nova response...');
                                 startListening();
                             }
                         }, 500);
                     } else {
+                        console.error('❌ API call failed:', response.status, response.statusText);
+                        const errorText = await response.text();
+                        console.error('❌ Error details:', errorText);
+                        
                         const errorMsg = "I'm having trouble processing that. Could you try asking me something else?";
                         addTranscriptMessage('Nova', errorMsg, 'ai');
                         await speakWithSelectedVoice(errorMsg);
@@ -3398,8 +3421,10 @@
                                 
                                 // Process the speech with Nova AI
                                 if (text && text.length > 1) {
+                                    console.log('🎯 CALLING processUserSpeech with:', text);
                                     processUserSpeech(text);
                                 } else {
+                                    console.log('⚠️ Speech too short, ignoring:', text);
                                     // If no meaningful speech, just restart listening
                                     setTimeout(() => {
                                         if (isVoiceChatActive) {
