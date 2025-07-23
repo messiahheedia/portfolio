@@ -2760,6 +2760,8 @@
             let conversationTranscript = [];
             let ttsFailCount = 0; // Track TTS failures
             const maxTtsFailures = 3; // Disable TTS after 3 failures
+            let restartAttempts = 0;
+            let isRestartPending = false;
             
             // Get DOM elements with error checking
             const voiceChatToggle = document.getElementById('voiceChatToggle');
@@ -2892,9 +2894,10 @@
                 speechRecognition = new SpeechRecognition();
                 
                 // Simple continuous recognition setup
-                speechRecognition.continuous = true;
-                speechRecognition.interimResults = false; // Only get final results
+                speechRecognition.continuous = false; // Changed to false for better control
+                speechRecognition.interimResults = true; // Enable interim results to show progress
                 speechRecognition.lang = 'en-US';
+                speechRecognition.maxAlternatives = 1;
                 
                 speechRecognition.onstart = function() {
                     console.log('🎤 Listening...');
@@ -2903,13 +2906,23 @@
                 };
 
                 speechRecognition.onresult = function(event) {
+                    console.log('🎤 Speech recognition result event:', event.results.length);
+                    
                     for (let i = event.resultIndex; i < event.results.length; i++) {
-                        if (event.results[i].isFinal) {
-                            const transcript = event.results[i][0].transcript.trim();
-                            if (transcript) {
-                                console.log('Speech recognized:', transcript);
-                                processUserSpeech(transcript);
+                        const result = event.results[i];
+                        const transcript = result[0].transcript;
+                        
+                        if (result.isFinal) {
+                            console.log('✅ Final speech result:', transcript);
+                            const finalTranscript = transcript.trim();
+                            if (finalTranscript.length > 1) {
+                                // Process the final result
+                                processUserSpeech(finalTranscript);
                             }
+                        } else {
+                            // Show interim results for user feedback
+                            console.log('🔄 Interim speech result:', transcript);
+                            updateVoiceStatus(`🎤 Listening: "${transcript.trim()}"`, 'listening');
                         }
                     }
                 };
@@ -2932,13 +2945,16 @@
                 };
 
                 speechRecognition.onend = function() {
-                    console.log('Speech ended');
+                    console.log('🔄 Speech recognition ended');
                     isRecognitionRunning = false;
                     
-                    // Restart immediately to keep continuous loop
+                    // Auto-restart for continuous listening loop
                     if (isVoiceChatActive) {
+                        console.log('🔁 Auto-restarting speech recognition...');
                         setTimeout(() => {
-                            startListening();
+                            if (isVoiceChatActive && !isRecognitionRunning) {
+                                startListening();
+                            }
                         }, 100);
                     }
                 };
