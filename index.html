@@ -3399,11 +3399,11 @@
                     }
                     
                     speechRecognition = new SpeechRecognition();
-                    speechRecognition.continuous = false;
+                    speechRecognition.continuous = true;  // Keep listening continuously
                     speechRecognition.interimResults = true;
                     speechRecognition.lang = 'en-US';
                     
-                    console.log('✅ Speech Recognition created');
+                    console.log('✅ Speech Recognition created with continuous=true');
                     
                     speechRecognition.onstart = function() {
                         console.log('🎤 Speech started!');
