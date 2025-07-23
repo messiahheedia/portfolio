@@ -3232,7 +3232,46 @@
                         };
                         
                         console.log('🗨️ Starting audio playback...');
-                        await audio.play();
+                        
+                        // Handle audio playback with permission fallback
+                        try {
+                            await audio.play();
+                        } catch (playError) {
+                            console.error('🗨️ Audio playback failed:', playError);
+                            
+                            // Check if it's a permission/interaction error
+                            if (playError.name === 'NotAllowedError' || playError.message.includes('interact')) {
+                                console.log('🗨️ Audio requires user interaction, adding click handler...');
+                                updateVoiceStatus('🔊 Click to enable audio', 'warning');
+                                addTranscriptMessage('System', '🔊 Click anywhere on the page to enable voice responses', 'system');
+                                
+                                // Create a one-time click handler to enable audio
+                                const enableAudio = async () => {
+                                    try {
+                                        await audio.play();
+                                        document.removeEventListener('click', enableAudio);
+                                        updateVoiceStatus('🗨️ Audio enabled, continuing...', 'success');
+                                    } catch (retryError) {
+                                        console.error('🗨️ Audio retry failed:', retryError);
+                                        // Fall through to text-only mode
+                                        audio.onended();
+                                    }
+                                };
+                                document.addEventListener('click', enableAudio, { once: true });
+                                
+                                // Also continue after timeout if no click
+                                setTimeout(() => {
+                                    document.removeEventListener('click', enableAudio);
+                                    console.log('🗨️ Audio timeout, continuing in text-only mode');
+                                    audio.onended();
+                                }, 5000);
+                                
+                            } else {
+                                // Other audio errors, continue without audio
+                                console.error('🗨️ Non-permission audio error:', playError);
+                                audio.onended();
+                            }
+                        }
                     } else {
                         // Get error details from response
                         let errorText = '';
@@ -3314,6 +3353,17 @@
             // Start voice chat session
             async function startVoiceChatSession() {
                 console.log('🚀 Starting voice chat session...');
+                
+                // Test audio permissions early with a silent audio
+                try {
+                    const testAudio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSs=');
+                    testAudio.volume = 0; // Silent
+                    await testAudio.play();
+                    console.log('✅ Audio permissions OK');
+                } catch (audioError) {
+                    console.log('⚠️ Audio autoplay blocked, will request permission on first TTS:', audioError);
+                    updateVoiceStatus('🔊 Audio will need permission on first response', 'info');
+                }
                 
                 try {
                     // Simple test - just try to start recognition without all the complex checks
