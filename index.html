@@ -2750,27 +2750,339 @@
             // Regular chatbot voice functionality removed - using separate voice chat button
         });
 
-        // Voice Chat System - Enhanced with Live Transcript
+        // Nova AI Voice Chat System - Complete Rebuild with OpenAI
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎤 Voice Chat System initializing...');
+            console.log('🎤 Nova Voice Chat System initializing...');
             
-            // Simple debugging first
-            console.log('Testing speech recognition support...');
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                console.log('✅ Speech Recognition supported');
-            } else {
+            // Check browser support
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
                 console.log('❌ Speech Recognition NOT supported');
+                return;
+            }
+            console.log('✅ Speech Recognition supported');
+            
+            // Voice chat variables
+            let isVoiceActive = false;
+            let speechRecognition = null;
+            let selectedVoice = 'alloy';
+            let conversationHistory = [];
+            
+            // DOM elements
+            const voiceChatToggle = document.getElementById('voiceChatToggle');
+            const voiceTranscriptArea = document.getElementById('voiceTranscriptArea');
+            const voiceTranscript = document.getElementById('voiceTranscript');
+            const voiceStatusText = document.getElementById('voiceStatusText');
+            const startVoiceChat = document.getElementById('startVoiceChat');
+            const stopVoiceChat = document.getElementById('stopVoiceChat');
+            const voiceSelectionModal = document.getElementById('voiceSelectionModal');
+            const closeVoiceModal = document.getElementById('closeVoiceModal');
+            
+            // Update voice status
+            function updateStatus(message, type = 'info') {
+                console.log(`🔄 ${message}`);
+                if (voiceStatusText) {
+                    const icons = { success: '🎤', processing: '🤔', error: '❌', info: 'ℹ️' };
+                    voiceStatusText.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+                }
             }
             
-            let selectedAIVoice = 'alloy';
-            let isVoiceChatActive = false;
-            let speechRecognition = null;
-            let conversationTranscript = [];
-            let ttsFailCount = 0; // Track TTS failures
-            const maxTtsFailures = 3; // Disable TTS after 3 failures
-            let restartAttempts = 0;
-            let isRestartPending = false;
-            let isRecognitionRunning = false;
+            // Add message to transcript
+            function addMessage(sender, message, type = 'user') {
+                if (!voiceTranscript) return;
+                
+                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'mb-2 p-2 rounded';
+                
+                const color = type === 'user' ? 'text-blue-400' : 
+                             type === 'ai' ? 'text-yellow-400' : 'text-gray-400';
+                
+                messageDiv.innerHTML = `
+                    <div class="flex items-start space-x-2">
+                        <span class="${color} font-bold text-xs">${sender}:</span>
+                        <span class="text-white text-xs flex-1">${message}</span>
+                        <span class="text-gray-500 text-xs">${time}</span>
+                    </div>
+                `;
+                
+                voiceTranscript.appendChild(messageDiv);
+                voiceTranscript.scrollTop = voiceTranscript.scrollHeight;
+                
+                // Store in conversation history
+                if (type === 'user' || type === 'ai') {
+                    conversationHistory.push({
+                        role: type === 'user' ? 'user' : 'assistant',
+                        content: message
+                    });
+                    // Keep only last 10 messages
+                    if (conversationHistory.length > 10) {
+                        conversationHistory = conversationHistory.slice(-10);
+                    }
+                }
+            }
+            
+            // Chat with OpenAI
+            async function chatWithNova(userMessage) {
+                console.log('🤖 Sending to OpenAI:', userMessage);
+                updateStatus('Nova is thinking...', 'processing');
+                
+                try {
+                    const response = await fetch('/api/openai-chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            message: userMessage,
+                            history: conversationHistory.slice(-6), // Last 6 messages for context
+                            systemPrompt: "You are Nova, Messiah Heredia's AI assistant. You're knowledgeable about his skills as a full-stack developer, his projects, and his professional background. Keep responses conversational, helpful, and under 100 words for voice chat."
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`OpenAI API failed: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    const novaResponse = data.response || data.message || "I'm having trouble responding right now.";
+                    
+                    console.log('🤖 Nova responded:', novaResponse);
+                    addMessage('Nova', novaResponse, 'ai');
+                    
+                    // Speak Nova's response
+                    await speakText(novaResponse);
+                    
+                    return novaResponse;
+                    
+                } catch (error) {
+                    console.error('❌ OpenAI chat error:', error);
+                    const errorMsg = "I'm having technical difficulties. Please try again.";
+                    addMessage('Nova', errorMsg, 'ai');
+                    await speakText(errorMsg);
+                    return errorMsg;
+                }
+            }
+            
+            // Text-to-Speech with OpenAI
+            async function speakText(text) {
+                console.log('🗨️ Speaking:', text.substring(0, 50) + '...');
+                updateStatus('Speaking...', 'processing');
+                
+                try {
+                    const response = await fetch('/api/openai-tts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            text: text,
+                            voice: selectedVoice,
+                            model: 'tts-1'
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`TTS failed: ${response.status}`);
+                    }
+                    
+                    const audioBlob = await response.blob();
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    const audio = new Audio(audioUrl);
+                    
+                    return new Promise((resolve) => {
+                        audio.onended = () => {
+                            URL.revokeObjectURL(audioUrl);
+                            console.log('🗨️ Speech completed');
+                            updateStatus('Listening...', 'success');
+                            resolve();
+                        };
+                        
+                        audio.onerror = () => {
+                            console.error('❌ Audio playback failed');
+                            resolve(); // Continue even if audio fails
+                        };
+                        
+                        audio.play().catch(error => {
+                            console.error('❌ Audio play failed:', error);
+                            resolve(); // Continue even if audio fails
+                        });
+                    });
+                    
+                } catch (error) {
+                    console.error('🗨️ TTS error:', error);
+                    updateStatus('Speech synthesis failed', 'error');
+                }
+            }
+            
+            // Initialize speech recognition
+            function initSpeechRecognition() {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                speechRecognition = new SpeechRecognition();
+                
+                speechRecognition.continuous = true;
+                speechRecognition.interimResults = true;
+                speechRecognition.lang = 'en-US';
+                
+                speechRecognition.onstart = () => {
+                    console.log('🎤 Listening started');
+                    updateStatus('Listening...', 'success');
+                };
+                
+                speechRecognition.onresult = (event) => {
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const result = event.results[i];
+                        if (result.isFinal) {
+                            const transcript = result[0].transcript.trim();
+                            console.log('🎤 Speech:', transcript);
+                            
+                            if (transcript.length > 2) {
+                                processUserSpeech(transcript);
+                            }
+                        } else {
+                            // Show interim results
+                            const interim = result[0].transcript.trim();
+                            if (interim) {
+                                updateStatus(`Hearing: "${interim}"`, 'info');
+                            }
+                        }
+                    }
+                };
+                
+                speechRecognition.onerror = (event) => {
+                    console.error('🎤 Speech error:', event.error);
+                    
+                    if (event.error === 'not-allowed') {
+                        updateStatus('Microphone access denied', 'error');
+                        addMessage('System', 'Please allow microphone access and refresh the page.', 'system');
+                        return;
+                    }
+                    
+                    // Auto-restart on other errors
+                    if (isVoiceActive) {
+                        setTimeout(() => startListening(), 1000);
+                    }
+                };
+                
+                speechRecognition.onend = () => {
+                    console.log('🎤 Speech recognition ended');
+                    if (isVoiceActive) {
+                        setTimeout(() => startListening(), 100);
+                    }
+                };
+            }
+            
+            // Process user speech
+            async function processUserSpeech(transcript) {
+                console.log('🎯 Processing speech:', transcript);
+                addMessage('You', transcript, 'user');
+                
+                // Stop listening while processing
+                if (speechRecognition) {
+                    speechRecognition.stop();
+                }
+                
+                // Check for stop command
+                if (transcript.toLowerCase().includes('stop') || transcript.toLowerCase().includes('end chat')) {
+                    stopVoiceChat();
+                    return;
+                }
+                
+                // Send to Nova
+                await chatWithNova(transcript);
+                
+                // Resume listening
+                if (isVoiceActive) {
+                    setTimeout(() => startListening(), 1000);
+                }
+            }
+            
+            // Start listening
+            function startListening() {
+                if (!speechRecognition || !isVoiceActive) return;
+                
+                try {
+                    speechRecognition.start();
+                } catch (error) {
+                    console.error('❌ Failed to start listening:', error);
+                    if (isVoiceActive) {
+                        setTimeout(() => startListening(), 1000);
+                    }
+                }
+            }
+            
+            // Start voice chat
+            async function startVoiceChatSession() {
+                console.log('🚀 Starting Nova voice chat...');
+                isVoiceActive = true;
+                
+                // Show UI
+                if (voiceTranscriptArea) voiceTranscriptArea.classList.remove('hidden');
+                if (voiceTranscript) voiceTranscript.innerHTML = '';
+                
+                // Hide modal
+                if (voiceSelectionModal) {
+                    voiceSelectionModal.classList.add('hidden');
+                    voiceSelectionModal.classList.remove('flex');
+                }
+                
+                // Initialize speech recognition
+                initSpeechRecognition();
+                
+                // Add welcome message
+                addMessage('System', '🎤 Voice chat started! Ask Nova about Messiah\'s skills and projects.', 'system');
+                
+                // Nova introduction
+                const intro = "Hi! I'm Nova, Messiah Heredia's AI assistant. I'm here to tell you about his amazing work as a full-stack developer. What would you like to know?";
+                addMessage('Nova', intro, 'ai');
+                await speakText(intro);
+                
+                // Start listening
+                startListening();
+            }
+            
+            // Stop voice chat
+            function stopVoiceChatSession() {
+                console.log('🛑 Stopping voice chat...');
+                isVoiceActive = false;
+                
+                if (speechRecognition) {
+                    speechRecognition.stop();
+                    speechRecognition = null;
+                }
+                
+                conversationHistory = [];
+                updateStatus('Voice chat stopped', 'info');
+                
+                if (voiceTranscriptArea) voiceTranscriptArea.classList.add('hidden');
+            }
+            
+            // Event listeners
+            if (voiceChatToggle) {
+                voiceChatToggle.addEventListener('click', () => {
+                    if (voiceSelectionModal) {
+                        voiceSelectionModal.classList.remove('hidden');
+                        voiceSelectionModal.classList.add('flex');
+                    }
+                });
+            }
+            
+            if (closeVoiceModal) {
+                closeVoiceModal.addEventListener('click', () => {
+                    if (voiceSelectionModal) {
+                        voiceSelectionModal.classList.add('hidden');
+                        voiceSelectionModal.classList.remove('flex');
+                    }
+                });
+            }
+            
+            if (startVoiceChat) {
+                startVoiceChat.addEventListener('click', startVoiceChatSession);
+            }
+            
+            if (stopVoiceChat) {
+                stopVoiceChat.addEventListener('click', stopVoiceChatSession);
+            }
+            
+            console.log('✅ Nova Voice Chat System ready');
+        });
+
+        // Theme Toggle System
             
             // Get DOM elements with error checking
             const voiceChatToggle = document.getElementById('voiceChatToggle');
@@ -3620,24 +3932,8 @@
                         // Clean up one-time handlers
                         speechRecognition.removeEventListener('result', handleResult);
                         speechRecognition.removeEventListener('error', handleError);
-                    };
-                    
-                    // Add one-time event listeners
-                    speechRecognition.addEventListener('result', handleResult);
-                    speechRecognition.addEventListener('error', handleError);
-                    
-                    try {
-                        speechRecognition.start();
-                    } catch (error) {
-                        console.error('Failed to start manual speech recognition:', error);
-                        handleError({ error: 'start-failed' });
-                    }
-                } else {
-                    updateVoiceStatus('❌ Speech recognition not available', 'error');
-                    manualSpeakButton.textContent = '🎤 Click & Speak Now';
-                    manualSpeakButton.disabled = false;
-                }
-            });
+            
+            console.log('✅ Nova Voice Chat System ready');
         });
 
         // Theme Toggle System
