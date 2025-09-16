@@ -1,4 +1,8 @@
 {
-  "version": 2,
-  "alias": ["messiahheredia.link", "www.messiahheredia.link"]
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
 }

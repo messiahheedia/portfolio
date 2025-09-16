@@ -6,133 +6,292 @@
     <title>Messiah Heredia - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23000000'/%3E%3Ctext x='50' y='65' font-family='Poppins,sans-serif' font-size='45' font-weight='bold' text-anchor='middle' fill='%23b9975b'%3EIT%3C/text%3E%3C/svg%3E">
     
     <style>
-        /* CSS Variables for consistent theming */
+        /* CSS Variables for Theme System */
         :root {
-            --pfw-gold: #b9975b;
-            --pfw-gold-light: #e5c97b;
-            --pfw-gold-dark: #a3863a;
-            --pfw-gold-darker: #7c6329;
+            /* Default Dark Theme (Original PFW Gold) */
+            --primary-color: #b9975b;
+            --primary-light: #e5c97b;
+            --primary-dark: #a3863a;
+            --primary-darker: #7c6329;
             --bg-primary: #1a1a1a;
             --bg-secondary: #222;
             --bg-tertiary: #333;
             --text-primary: #f3f4f6;
             --text-secondary: rgba(243, 244, 246, 0.8);
+            --border-color: rgba(185, 151, 91, 0.2);
         }
 
-        /* Light Theme Styles */
-        .light-theme {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1a202c;
+        /* Theme 1: Ocean Blue */
+        .theme-ocean {
+            --primary-color: #0ea5e9;
+            --primary-light: #38bdf8;
+            --primary-dark: #0284c7;
+            --primary-darker: #0369a1;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: rgba(241, 245, 249, 0.8);
+            --border-color: rgba(14, 165, 233, 0.2);
         }
 
-        .light-theme header {
-            background: rgba(255, 255, 255, 0.95);
+        /* Theme 2: Forest Green */
+        .theme-forest {
+            --primary-color: #059669;
+            --primary-light: #10b981;
+            --primary-dark: #047857;
+            --primary-darker: #065f46;
+            --bg-primary: #064e3b;
+            --bg-secondary: #065f46;
+            --bg-tertiary: #047857;
+            --text-primary: #ecfdf5;
+            --text-secondary: rgba(236, 253, 245, 0.8);
+            --border-color: rgba(5, 150, 105, 0.2);
         }
 
-        .light-theme section {
-            background: #f8fafc;
+        /* Theme 3: Purple Cosmic */
+        .theme-cosmic {
+            --primary-color: #8b5cf6;
+            --primary-light: #a78bfa;
+            --primary-dark: #7c3aed;
+            --primary-darker: #6d28d9;
+            --bg-primary: #1e1b4b;
+            --bg-secondary: #312e81;
+            --bg-tertiary: #3730a3;
+            --text-primary: #f5f3ff;
+            --text-secondary: rgba(245, 243, 255, 0.8);
+            --border-color: rgba(139, 92, 246, 0.2);
         }
 
-        .light-theme #portfolio {
-            background: #e2e8f0;
+        /* Theme 4: Sunset Orange */
+        .theme-sunset {
+            --primary-color: #ea580c;
+            --primary-light: #fb923c;
+            --primary-dark: #c2410c;
+            --primary-darker: #9a3412;
+            --bg-primary: #7c2d12;
+            --bg-secondary: #9a3412;
+            --bg-tertiary: #c2410c;
+            --text-primary: #fff7ed;
+            --text-secondary: rgba(255, 247, 237, 0.8);
+            --border-color: rgba(234, 88, 12, 0.2);
         }
 
-        .light-theme #certifications {
-            background: #cbd5e0;
+        /* Universal Theme System */
+        /* Apply theme colors to all elements */
+        
+        /* Basic Layout Theming */
+        .theme-ocean, .theme-forest, .theme-cosmic, .theme-sunset {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
         }
 
-        .light-theme #homelab {
-            background: #e2e8f0;
+        .theme-ocean header, .theme-forest header, .theme-cosmic header, .theme-sunset header {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
         }
 
-        .light-theme .project-card,
-        .light-theme .bg-black {
-            background: white !important;
-            border-color: #e2e8f0 !important;
-            color: #2d3748;
+        .theme-ocean section, .theme-forest section, .theme-cosmic section, .theme-sunset section {
+            background: var(--bg-primary);
         }
 
-        .light-theme footer {
-            background: #2d3748;
-            color: #f7fafc;
+        .theme-ocean #portfolio, .theme-forest #portfolio, .theme-cosmic #portfolio, .theme-sunset #portfolio {
+            background: var(--bg-secondary);
         }
 
-        .light-theme .text-\[#f3f4f6\]\/80,
-        .light-theme .text-\[#f3f4f6\]\/70,
-        .light-theme .text-\[#f3f4f6\]\/60 {
-            color: #4a5568 !important;
+        .theme-ocean #certifications, .theme-forest #certifications, .theme-cosmic #certifications, .theme-sunset #certifications {
+            background: var(--bg-tertiary);
         }
 
-        /* Additional light theme fixes */
-        .light-theme header {
-            background: rgba(255, 255, 255, 0.95);
-            color: #1a202c;
+        .theme-ocean #homelab, .theme-forest #homelab, .theme-cosmic #homelab, .theme-sunset #homelab {
+            background: var(--bg-secondary);
         }
 
-        .light-theme h1,
-        .light-theme h2,
-        .light-theme h3,
-        .light-theme h4,
-        .light-theme h5,
-        .light-theme h6 {
-            color: #2d3748 !important;
+        /* Project Cards */
+        .theme-ocean .project-card, .theme-ocean .bg-black,
+        .theme-forest .project-card, .theme-forest .bg-black,
+        .theme-cosmic .project-card, .theme-cosmic .bg-black,
+        .theme-sunset .project-card, .theme-sunset .bg-black,
+        .project-card {
+            background: var(--bg-tertiary) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
         }
 
-        .light-theme .hero-title {
-            color: var(--pfw-gold) !important;
+        /* Typography */
+        .theme-ocean h1, .theme-ocean h2, .theme-ocean h3, .theme-ocean h4, .theme-ocean h5, .theme-ocean h6,
+        .theme-forest h1, .theme-forest h2, .theme-forest h3, .theme-forest h4, .theme-forest h5, .theme-forest h6,
+        .theme-cosmic h1, .theme-cosmic h2, .theme-cosmic h3, .theme-cosmic h4, .theme-cosmic h5, .theme-cosmic h6,
+        .theme-sunset h1, .theme-sunset h2, .theme-sunset h3, .theme-sunset h4, .theme-sunset h5, .theme-sunset h6,
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-primary) !important;
         }
 
-        .light-theme p {
-            color: #4a5568 !important;
+        .theme-ocean .hero-title, .theme-forest .hero-title, .theme-cosmic .hero-title, .theme-sunset .hero-title {
+            color: var(--primary-color) !important;
         }
 
-        .light-theme .nav-link {
-            color: #2d3748 !important;
+        .theme-ocean p, .theme-forest p, .theme-cosmic p, .theme-sunset p {
+            color: var(--text-secondary) !important;
         }
 
-        /* AI Chatbox Theme Styles */
-        .light-theme #aiChatBox {
-            background-color: white !important;
-            border-color: rgba(185, 151, 91, 0.3) !important;
+        /* Navigation */
+        .theme-ocean .nav-link, .theme-forest .nav-link, .theme-cosmic .nav-link, .theme-sunset .nav-link {
+            color: var(--text-secondary) !important;
         }
 
-        .light-theme #aiMessages {
-            background-color: #f7fafc !important;
+        .theme-ocean .nav-link:hover, .theme-forest .nav-link:hover, .theme-cosmic .nav-link:hover, .theme-sunset .nav-link:hover {
+            color: var(--primary-color) !important;
         }
 
-        .light-theme #aiInput {
-            background-color: white !important;
-            color: #2d3748 !important;
+        /* Creative Navigation Menu Hover Effects */
+        .creative-nav {
+            display: flex;
         }
 
-        .light-theme .ai-input-area {
-            background-color: #f1f5f9 !important;
+        .creative-nav li {
+            list-style: none;
         }
 
-        .light-theme .ai-message-bot {
-            background-color: #e2e8f0 !important;
-            color: #2d3748 !important;
+        .creative-nav a {
+            position: relative;
+            display: block;
+            text-transform: uppercase;
+            margin: 20px 0;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-family: sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            transition: .5s;
+            z-index: 1;
         }
 
-        .light-theme .ai-message-initial {
-            background-color: #e2e8f0 !important;
-            color: #2d3748 !important;
+        .creative-nav a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-top: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            transform: scaleY(2);
+            opacity: 0;
+            transition: .3s;
         }
 
-        .light-theme .nav-link:hover {
-            color: var(--pfw-gold) !important;
+        .creative-nav a:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            transform: scale(0);
+            opacity: 0;
+            transition: .3s;
+            z-index: -1;
         }
 
-        .light-theme .project-card h4 {
-            color: var(--pfw-gold) !important;
+        .creative-nav a:hover {
+            color: var(--bg-primary);
         }
 
-        .light-theme .project-card .text-sm {
-            color: #4a5568 !important;
+        .creative-nav a:hover:before {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+
+        .creative-nav a:hover:after {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+
+        /* Project Card Titles */
+        .theme-ocean .project-card h4, .theme-forest .project-card h4, .theme-cosmic .project-card h4, .theme-sunset .project-card h4 {
+            color: var(--primary-color) !important;
+        }
+
+        /* Hero Cards - Universal Styling */
+        .theme-ocean .hero-cards .content, .theme-forest .hero-cards .content, .theme-cosmic .hero-cards .content, .theme-sunset .hero-cards .content {
+            background: rgba(0, 0, 0, 0.75) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid var(--border-color) !important;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.45) !important;
+        }
+
+        .theme-light .hero-cards .content {
+            background: rgba(255, 255, 255, 0.98) !important;
+            color: var(--text-primary) !important;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.35) !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+        }
+
+        .theme-ocean .hero-cards .content h2, .theme-forest .hero-cards .content h2, .theme-cosmic .hero-cards .content h2, .theme-sunset .hero-cards .content h2, .theme-light .hero-cards .content h2 {
+            color: var(--primary-color) !important;
+        }
+
+        .theme-ocean .hero-cards .content p, .theme-forest .hero-cards .content p, .theme-cosmic .hero-cards .content p, .theme-sunset .hero-cards .content p {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .theme-light .hero-cards .content p {
+            color: var(--text-secondary) !important;
+        }
+
+        .theme-ocean .hero-cards .content a, .theme-forest .hero-cards .content a, .theme-cosmic .hero-cards .content a, .theme-sunset .hero-cards .content a, .theme-light .hero-cards .content a {
+            background: var(--primary-color) !important;
+            color: var(--bg-primary) !important;
+        }
+
+        .theme-ocean .hero-cards .content a:hover, .theme-forest .hero-cards .content a:hover, .theme-cosmic .hero-cards .content a:hover, .theme-sunset .hero-cards .content a:hover {
+            background: var(--primary-light) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Light theme specific hover effects */
+        .theme-light .hero-cards .content a:hover {
+            background: var(--primary-dark) !important;
+            color: white !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .theme-light .hero-cards .box:hover .content {
+            background: rgba(255, 255, 255, 0.98) !important;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25) !important;
+            border-color: var(--primary-color) !important;
+        }
+
+        /* Footer */
+        .theme-ocean footer, .theme-forest footer, .theme-cosmic footer, .theme-sunset footer, .theme-light footer {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        /* Light theme specific improvements */
+        .theme-light .nav-link:hover {
+            color: var(--primary-color) !important;
+            text-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        .theme-light button:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .theme-light .scroll-arrow:hover {
+            color: var(--primary-dark) !important;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
         * {
@@ -156,12 +315,12 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: var(--pfw-gold);
+            background: var(--primary-color);
             border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--pfw-gold-dark);
+            background: var(--primary-dark);
         }
         
         /* Animation Classes */
@@ -178,8 +337,8 @@
         
         /* Navigation Active State */
         nav ul li a.active-link {
-            color: var(--pfw-gold) !important;
-            border-bottom: 2px solid var(--pfw-gold);
+            color: var(--primary-color) !important;
+            border-bottom: 2px solid var(--primary-color);
         }
         
         /* Preloader */
@@ -235,47 +394,12 @@
             color: #f7fafc;
         }
         
-        /* Light theme voice chat modal styles */
-        .light-theme #voiceSelectionModal {
-            background: white !important;
-            border-color: rgba(185, 151, 91, 0.3) !important;
-            color: #2d3748 !important;
-        }
-        
-        .light-theme #voiceSelectionModal .bg-\[#333\] {
-            background: #f7fafc !important;
-            border-color: rgba(185, 151, 91, 0.2) !important;
-        }
-
-        .light-theme #voiceSelectionModal .bg-\[#222\] {
-            background: #edf2f7 !important;
-            border-color: rgba(185, 151, 91, 0.2) !important;
-        }
-
-        .light-theme #voiceSelectionModal .bg-\[#1a1a1a\] {
-            background: #f1f5f9 !important;
-            border-color: rgba(185, 151, 91, 0.2) !important;
-        }
-        
-        .light-theme #voiceSelectionModal .text-white,
-        .light-theme #voiceSelectionModal h4.text-white {
-            color: #2d3748 !important;
-        }
-        
-        .light-theme #voiceSelectionModal .text-gray-400 {
-            color: #718096 !important;
-        }
-        
-        .light-theme #voiceSelectionModal .border-pfw-gold\/20 {
-            border-color: rgba(185, 151, 91, 0.2) !important;
-        }
-        
         .spinner {
             border: 4px solid rgba(243, 244, 246, 0.1);
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border-left-color: var(--pfw-gold);
+            border-left-color: var(--primary-color);
             animation: spin 1s linear infinite;
         }
         
@@ -284,17 +408,232 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Custom Utility Classes */
-        .text-pfw-gold { color: var(--pfw-gold) !important; }
-        .text-pfw-gold-light { color: var(--pfw-gold-light) !important; }
-        .bg-pfw-gold { background-color: var(--pfw-gold) !important; }
-        .bg-pfw-gold-dark { background-color: var(--pfw-gold-dark) !important; }
-        .bg-pfw-gold-darker { background-color: var(--pfw-gold-darker) !important; }
-        .border-pfw-gold { border-color: var(--pfw-gold) !important; }
-        .hover\:text-pfw-gold:hover { color: var(--pfw-gold) !important; }
-        .hover\:text-pfw-gold-light:hover { color: var(--pfw-gold-light) !important; }
-        .hover\:bg-pfw-gold:hover { background-color: var(--pfw-gold) !important; }
-        .hover\:bg-pfw-gold-dark:hover { background-color: var(--pfw-gold-dark) !important; }
+        /* Shadow-dance CSS (themed to site PFW gold and responsive) */
+        .shadow-dance-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem; /* slightly increased for balance with larger logo */
+            /* prevent wrapping on larger screens so logo stays to the right */
+            flex-wrap: nowrap;
+        }
+
+        .shadow-dance-text {
+            /* headline scales from 1.8rem up to 3.2rem based on viewport (slightly smaller) */
+            font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+            color: var(--text-primary);
+            /* use site theme variables for the layered shadow */
+            text-shadow: 5px 5px 0 var(--primary-color), 10px 10px 0 var(--primary-dark);
+            animation: shadow-dance 3s infinite;
+            font-family: 'Poppins', 'Arial', sans-serif;
+            margin: 0;
+            line-height: 1;
+            font-weight: 600;
+        }
+
+        @keyframes shadow-dance {
+            0%, 100% {
+                text-shadow: 5px 5px 0 var(--primary-color), 10px 10px 0 var(--primary-dark);
+            }
+            50% {
+                text-shadow: -5px -5px 0 var(--primary-dark), -10px -10px 0 var(--primary-color);
+            }
+        }
+
+    /* Logos beside the title removed - reserved rule kept for layout stability */
+    .shadow-dance-container img { display: inline-block; }
+
+    /* .pfw-logo removed per user request */
+
+    /* Scroll arrow (large, animated) */
+    .scroll-arrow { color: var(--primary-color); display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 9999px; transition: transform 0.28s ease, box-shadow 0.28s ease; }
+    .scroll-arrow svg { display: block; width: 56px; height: 56px; transition: transform 0.28s ease, filter 0.28s ease; color: inherit; }
+    .scroll-arrow:hover { transform: translateY(6px) scale(1.03); box-shadow: 0 18px 40px var(--primary-color); }
+    .scroll-arrow:active { transform: translateY(10px) scale(0.98); }
+    @keyframes arrow-bounce { 0%{transform: translateY(0)}50%{transform: translateY(8px)}100%{transform: translateY(0)} }
+    .scroll-arrow svg { animation: arrow-bounce 2s ease-in-out infinite; filter: drop-shadow(0 10px 18px rgba(185,151,91,0.12)); }
+
+    /* Theme-26 CTA style (adapted) */
+    .cta-theme26 { position: relative; display: flex; align-items: center; justify-content: center; width: 20rem; height: 4.5rem; border-radius: 0.6rem; overflow: hidden; background: linear-gradient(90deg, rgba(185,151,91,1), rgba(229,201,123,1)); color: black; font-weight: 700; box-shadow: 0 18px 40px rgba(0,0,0,0.28); transition: transform .32s cubic-bezier(.2,.9,.2,1), box-shadow .32s; }
+    .cta-theme26 .cta-overlay { position: absolute; inset: 0; display:block; pointer-events:none; }
+    .cta-theme26 .cta-overlay .melting { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family: 'Bungee', sans-serif; font-size:1.05rem; color: rgba(0,0,0,0.85); transform-origin:center; transition: transform .45s ease, filter .45s ease; }
+    .cta-theme26 .label { position: relative; z-index: 3; display:inline-flex; gap:.6rem; align-items:center; }
+    .cta-theme26:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.32); }
+    .cta-theme26:hover .cta-overlay .melting { transform: skewX(-8deg) translateY(-6px); filter: blur(0.6px) saturate(1.05); }
+    .cta-theme26:active { transform: translateY(-2px); }
+    @media (max-width: 768px) { .cta-theme26 { width: 16rem; height: 4rem; } }
+
+    /* NEXT Button Styles (theme-aware) */
+    .wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .cta {
+        display: flex;
+        padding: 10px 45px;
+        text-decoration: none;
+        font-family: 'Poppins', sans-serif;
+        font-size: 40px;
+        color: white;
+        background: var(--primary-color);
+        transition: 1s;
+        box-shadow: 6px 6px 0 var(--bg-primary);
+        transform: skewX(-15deg);
+        border: none;
+        cursor: pointer;
+    }
+
+    .cta:focus {
+        outline: none; 
+    }
+
+    .cta:hover {
+        transition: 0.5s;
+        box-shadow: 10px 10px 0 var(--primary-light);
+    }
+
+    .cta span:nth-child(2) {
+        transition: 0.5s;
+        margin-right: 0px;
+    }
+
+    .cta:hover span:nth-child(2) {
+        transition: 0.5s;
+        margin-right: 45px;
+    }
+
+    .cta span {
+        transform: skewX(15deg);
+    }
+
+    .cta span:nth-child(2) {
+        width: 20px;
+        margin-left: 30px;
+        position: relative;
+        top: 12%;
+    }
+    
+    /* SVG Path Animations */
+    path.one {
+        transition: 0.4s;
+        transform: translateX(-60%);
+    }
+
+    path.two {
+        transition: 0.5s;
+        transform: translateX(-30%);
+    }
+
+    .cta:hover path.three {
+        animation: color_anim 1s infinite 0.2s;
+    }
+
+    .cta:hover path.one {
+        transform: translateX(0%);
+        animation: color_anim 1s infinite 0.6s;
+    }
+
+    .cta:hover path.two {
+        transform: translateX(0%);
+        animation: color_anim 1s infinite 0.4s;
+    }
+
+    /* SVG Color Animation */
+    @keyframes color_anim {
+        0% {
+            fill: white;
+        }
+        50% {
+            fill: var(--primary-light);
+        }
+        100% {
+            fill: white;
+        }
+    }
+
+    /* Right-side hero cards (scoped, site-themed) */
+    .hero-cards { position: absolute; right: 3rem; top: 6rem; display:flex; flex-direction:column; gap:3.5rem; z-index: 20; }
+    .hero-cards .box { position: relative; width: 320px; height: 140px; display:flex; align-items:center; margin: 0; transition: 0.45s; border-radius: 10px; }
+    .hero-cards .box::before,
+    .hero-cards .box::after { content:''; position: absolute; top: 0; left: 40px; width: 48%; height: 100%; border-radius: 10px; transform: skewX(12deg); transition: 0.45s; }
+    .hero-cards .box::after { filter: blur(20px); }
+    .hero-cards .box:hover::before, .hero-cards .box:hover::after { transform: skewX(0deg); left: 12px; width: calc(100% - 64px); }
+
+    /* Theme variations using site color variables */
+    .hero-cards .box:nth-child(1)::before, .hero-cards .box:nth-child(1)::after { background: linear-gradient(315deg, var(--primary-color), var(--primary-light)); }
+    .hero-cards .box:nth-child(2)::before, .hero-cards .box:nth-child(2)::after { background: linear-gradient(315deg, var(--primary-dark), var(--primary-color)); }
+    .hero-cards .box:nth-child(3)::before, .hero-cards .box:nth-child(3)::after { background: linear-gradient(315deg, var(--primary-light), var(--primary-darker)); }
+
+    .hero-cards .box span { display:block; position:absolute; inset:0; z-index:5; pointer-events:none; }
+    .hero-cards .box span::before { content:''; position:absolute; top:0; left:0; width:0; height:0; border-radius:10px; background: rgba(255,255,255,0.05); backdrop-filter: blur(6px); opacity:0; transition:0.2s; animation: hero-animate 2s ease-in-out infinite; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+    .hero-cards .box:hover span::before { top: -30px; left: 40px; width: 80px; height: 80px; opacity: 1; }
+    .hero-cards .box span::after { content:''; position:absolute; bottom:0; right:0; width:100%; height:100%; border-radius:10px; background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); opacity:0; transition:0.45s; animation: hero-animate 2s ease-in-out infinite; animation-delay: -1s; }
+    .hero-cards .box:hover span::after { bottom: -30px; right: 40px; width:80px; height:80px; opacity:1; }
+    @keyframes hero-animate { 0%,100%{ transform: translateY(8px) } 50%{ transform: translateY(-6px) } }
+
+    .hero-cards .content { position: relative; left: 0; padding: 18px 24px; background: rgba(0,0,0,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.45); border-radius: 8px; z-index: 10; color: var(--text-primary); width:100%; border: 1px solid var(--border-color); }
+    .hero-cards .box:hover .content { left: -18px; padding: 26px 28px; }
+    .hero-cards .content h2 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 8px; font-weight: 600; }
+    .hero-cards .content p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; line-height: 1.4; }
+    .hero-cards .content a { display: inline-flex; align-items:center; justify-content:center; font-size: 0.95rem; color: black; background: var(--primary-color); padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; }
+    .hero-cards .content a i { margin-right: 6px; }
+    .hero-cards .content a:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+    @media (max-width: 1024px) { .hero-cards { position: static; right: auto; top: auto; margin-top: 1.25rem; flex-direction: row; justify-content:center; gap:2.5rem; } .hero-cards .box { width: 220px; height: 130px; } }
+
+    /* STRONG animated block scoped to CTA tiles (overlay behind the visible label) */
+    .cta-strong * { box-sizing: border-box; }
+    .cta-strong { position: relative; overflow: hidden; }
+    .cta-strong .strong-article { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; pointer-events: none; z-index: 1; }
+    .cta-strong .strong-article p { margin: 0; padding: 0 0.5rem; color: transparent; font-family: 'Bungee', sans-serif; font-size: 1.125rem; line-height:1; position: relative; }
+    .cta-strong .strong-article p:before { content: ""; width: 50%; position: absolute; border-bottom: solid 4px rgba(255,255,255,0.9); left: -50%; top: calc(50% + 10px); transition: transform .45s cubic-bezier(.2,.9,.2,1), filter .45s, opacity .45s; }
+    .cta-strong .strong-article p span { display:block; position: absolute; height:50%; width:100%; overflow:hidden; }
+    .cta-strong .strong-article p span:before { content: attr(data-text); color: rgba(255,255,255,0.95); display:block; transition: transform .45s cubic-bezier(.2,.9,.2,1), filter .45s, opacity .45s; will-change: transform, filter, opacity; }
+    .cta-strong .strong-article p span:first-child { top: 0; }
+    .cta-strong .strong-article p span:last-child { bottom: 0; }
+    .cta-strong .strong-article p span:first-child:before { transform: translateY(18px); }
+    .cta-strong .strong-article p span:last-child:before { transform: translateY(-46px); opacity:0.95; }
+    /* Hover: skew + translate + blur to mimic melting text */
+    .cta-strong:hover .strong-article p:before { transform: translateX(10rem); }
+    .cta-strong:hover .strong-article p span:first-child:before { transform: translateY(0) skewX(-8deg); filter: blur(0); opacity:1; }
+    .cta-strong:hover .strong-article p span:last-child:before { transform: translateY(-28px) skewX(8deg); filter: blur(4px) saturate(.9); opacity:0.7; }
+    /* Visible label stays above the animation */
+    .cta-label { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: .5rem; }
+    /* Visible label stays above the animation */
+    .cta-label { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: .5rem; }
+
+        @media (max-width: 640px) {
+            .shadow-dance-container {
+                flex-direction: column;
+                align-items: flex-start;
+                flex-wrap: wrap; /* allow wrap on small screens */
+            }
+            .shadow-dance-text { white-space: normal; }
+            .shadow-dance-container img {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+
+        /* Keep title and logo together on desktop; avoid title wrapping into multiple lines next to the logo */
+        @media (min-width: 641px) {
+            .shadow-dance-text { white-space: nowrap; }
+        }
+
+        /* Custom Utility Classes - Updated for new theme system */
+        .text-primary-color { color: var(--primary-color) !important; }
+        .text-primary-light { color: var(--primary-light) !important; }
+        .bg-primary-color { background-color: var(--primary-color) !important; }
+        .bg-primary-dark { background-color: var(--primary-dark) !important; }
+        .bg-primary-darker { background-color: var(--primary-darker) !important; }
+        .border-primary-color { border-color: var(--primary-color) !important; }
+        .hover\:text-primary-color:hover { color: var(--primary-color) !important; }
+        .hover\:text-primary-light:hover { color: var(--primary-light) !important; }
+        .hover\:bg-primary-color:hover { background-color: var(--primary-color) !important; }
+        .hover\:bg-primary-dark:hover { background-color: var(--primary-dark) !important; }
 
         /* Enhanced Focus States for Accessibility */
         button:focus,
@@ -312,7 +651,14 @@
 
         .project-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(185, 151, 91, 0.25);
+            box-shadow: 0 25px 50px -12px var(--primary-color);
+        }
+
+        /* Light theme specific project card hover */
+        .theme-light .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color) !important;
         }
 
         /* Loading Animation for Images */
@@ -584,21 +930,60 @@
             box-shadow: 0 20px 40px rgba(185, 151, 91, 0.3);
         }
 
-        /* Hero title bounce animation */
-        @keyframes titleBounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-20px);
-            }
-            60% {
-                transform: translateY(-10px);
-            }
+        /* Hero title animations: reveal + gradient sweep for a clever entrance */
+        @keyframes titleReveal {
+            0% { opacity: 0; transform: translateY(-22px) scale(0.98) rotateX(6deg); filter: blur(6px); }
+            60% { opacity: 1; transform: translateY(6px) scale(1.02) rotateX(-2deg); filter: blur(0.5px); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0); filter: blur(0); }
+        }
+
+        @keyframes titleSweep {
+            0% { background-position: 0% 50%; }
+            60% { background-position: 110% 50%; }
+            100% { background-position: 50% 50%; }
         }
 
         .hero-title {
-            animation: titleBounce 2s ease-in-out infinite;
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(185,151,91,0.95), #ffffff 50%, rgba(185,151,91,0.95));
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleReveal 900ms cubic-bezier(.2,.9,.25,1) both, titleSweep 1400ms ease-out 200ms both;
+            will-change: transform, opacity, filter;
+        }
+
+        /* Character reveal for title (staggered) */
+        .hero-title .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(-8px) scale(0.98);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @keyframes charIn {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Longer CTA boxes */
+        .cta-long {
+            min-height: 5.5rem; /* ensure boxes are visually longer */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Page-load hero entrance animation for container */
+        @keyframes heroEntrance {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-entrance {
+            animation: heroEntrance 700ms ease-out both;
         }
 
         /* Diagram Navigation Pills */
@@ -639,47 +1024,6 @@
             background-color: var(--pfw-gold) !important;
         }
         
-        /* Voice Mode Styles */
-        .voice-mode-active {
-            box-shadow: 0 0 20px rgba(185, 151, 91, 0.3);
-            animation: voicePulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes voicePulse {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(185, 151, 91, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(185, 151, 91, 0.5);
-            }
-        }
-        
-        .voice-listening {
-            animation: voiceListening 1s ease-in-out infinite;
-        }
-        
-        @keyframes voiceListening {
-            0%, 100% {
-                background-color: rgba(185, 151, 91, 0.2);
-            }
-            50% {
-                background-color: rgba(185, 151, 91, 0.4);
-            }
-        }
-        
-        .voice-speaking {
-            animation: voiceSpeaking 0.5s ease-in-out infinite;
-        }
-        
-        @keyframes voiceSpeaking {
-            0%, 100% {
-                color: #b9975b;
-            }
-            50% {
-                color: #e5c97b;
-            }
-        }
-
         /* Skills Horizontal Scroll Animation */
         .skills-scroll-container {
             position: relative;
@@ -715,54 +1059,97 @@
             box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2);
         }
 
+        /* Social Media Icons Styles */
+        .social-media-icons {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
+
+        .social-media-icons ul {
+            display: flex;
+            position: relative;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .social-media-icons ul li {
+            list-style: none;
+        }
+
+        .social-media-icons ul li a {
+            width: 35px;
+            height: 35px;
+            background-color: #fff;
+            text-align: center;
+            line-height: 35px;
+            font-size: 16px;
+            margin: 0 6px;
+            display: block;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #fff;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .social-media-icons ul li a .icon {
+            position: relative;
+            color: #262626;
+            transition: .5s;
+            z-index: 3;
+        }
+
+        .social-media-icons ul li a:hover .icon {
+            color: #fff;
+            transform: rotateY(360deg);
+        }
+
+        .social-media-icons ul li a:before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f00;
+            transition: .5s;
+            z-index: 2;
+        }
+
+        .social-media-icons ul li a:hover:before {
+            top: 0;
+        }
+
+        .social-media-icons ul li:nth-child(1) a:before {
+            background: #0077b5;
+        }
+
+        .social-media-icons ul li:nth-child(2) a:before {
+            background: #ff6b35;
+        }
+
     </style>
 </head>
-<body class="light-theme">
-    <!-- Preloader - Simplified for better reliability -->
+<body>
+    <!-- Preloader -->
     <div id="preloader">
         <div class="spinner"></div>
     </div>
 
     <!-- Header & Navigation -->
     <header class="bg-black/90 backdrop-blur-md shadow-xl sticky top-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Name, GitHub, and LinkedIn -->
-            <div class="flex-shrink-0 flex items-center space-x-4">
-                <div>
-                    <h1 class="text-3xl font-bold text-pfw-gold hover:text-pfw-gold-light transition-colors cursor-pointer">
-                        Messiah Heredia
-                    </h1>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <a 
-                        href="https://github.com/messiahheedia" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-2xl"
-                        aria-label="GitHub Profile"
-                    >
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a 
-                        href="https://www.linkedin.com/in/messiah-heredia-587a11362/" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-2xl"
-                        aria-label="LinkedIn Profile"
-                    >
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </div>
-            </div>
+        <div class="container mx-auto px-6 py-4 flex justify-center items-center">
             <!-- Navigation Menu -->
             <nav class="hidden md:block">
-                <ul class="flex space-x-8 text-lg">
-                    <li><a href="#home" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Home</a></li>
-                    <li><a href="#portfolio" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Portfolio</a></li>
-                    <li><a href="#diagrams" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Diagrams</a></li>
-                    <li><a href="#certifications" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Certifications</a></li>
-                    <li><a href="#homelab" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">Home Lab</a></li>
-                    <li><a href="#about" class="nav-link text-[#b9975b]/70 hover:text-pfw-gold transition-colors duration-300 pb-1 relative">About</a></li>
+                <ul class="creative-nav">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#homelab">Home Lab</a></li>
+                    <li><a href="#about">About</a></li>
                 </ul>
             </nav>
             <!-- Mobile Menu Button -->
@@ -773,47 +1160,100 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-[#1a1a1a] to-[#222] relative overflow-hidden">
+    <section id="home" class="min-h-screen flex items-start justify-center bg-gradient-to-br from-black via-[#1a1a1a] to-[#222] relative overflow-hidden">
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-5">
             <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, var(--pfw-gold) 2px, transparent 2px); background-size: 50px 50px;"></div>
         </div>
         
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <!-- PFW Logo in hero section -->
-            <div class="flex justify-center mb-4">
-                <img src="pfw.png" alt="Purdue University Fort Wayne Logo" class="w-16 h-16 object-contain opacity-80 hover:opacity-100 transition-opacity">
+    <div class="container mx-auto px-6 relative z-10 hero-entrance">
+                <!-- Centered hero content -->
+            <div class="max-w-3xl mx-auto mt-20 text-left lg:text-left" style="margin-left:2rem;">
+                <div class="shadow-dance-container mb-4 flex items-center space-x-6">
+                    <!-- Profile Picture -->
+                    <img src="me.jpg" alt="Messiah Heredia headshot" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                    <!-- Greeting Text -->
+                    <h1 class="shadow-dance-text">Hi! Welcome to my IT Portfolio!</h1>
+                </div>
+                <p class="text-xl mb-6 text-[#f3f4f6]/80 max-w-3xl leading-relaxed text-left" style="margin-left:1rem; max-width:56rem;">
+                    I'm Siah, a Systems Administrator and Infrastructure Engineer specializing in enterprise infrastructure management, network security, and virtualization platforms. I build and maintain scalable, secure IT environments that enable business growth. My software development skills complement my infrastructure expertise, allowing me to automate operations and create custom solutions when needed. I enjoy mentoring junior engineers and writing technical guides to make complex concepts more approachable. Outside of work I experiment with homelab automations and small open-source contributions to sharpen my tooling. I also enjoy collaborating on cross-functional projects that bridge networking and software teams. Continuously learning keeps my tooling modern — I regularly prototype small utilities and share notes to help others get productive faster.
+                </p>
+
+                <!-- NEXT button for theme switching -->
+                <div class="mt-8 flex justify-center">
+                    <!-- designed by me... enjoy! -->
+                    <div class="wrapper">
+                        <a class="cta" href="#" id="nextThemeButton">
+                            <span>NEXT</span>
+                            <span>
+                                <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <path class="one" d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z" fill="#FFFFFF"></path>
+                                        <path class="two" d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z" fill="#FFFFFF"></path>
+                                        <path class="three" d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z" fill="#FFFFFF"></path>
+                                    </g>
+                                </svg>
+                            </span> 
+                        </a>
+                    </div>
+                </div>
             </div>
-            <h2 class="hero-title text-6xl font-bold mb-6 text-pfw-gold">Hi! Welcome to My Portfolio</h2>
-            <p class="text-xl mb-8 text-[#f3f4f6]/80 max-w-2xl mx-auto leading-relaxed">
-                I'm Siah, a Systems Administrator and Infrastructure Engineer specializing in enterprise infrastructure management, network security, and virtualization platforms. I build and maintain scalable, secure IT environments that enable business growth. My software development skills complement my infrastructure expertise, allowing me to automate operations and create custom solutions when needed.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#portfolio" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-lg inline-flex items-center">
-                    View My Work <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-                <a href="mailto:messiah.heredia@icloud.com" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-lg inline-flex items-center">
-                    Get In Touch <i class="fas fa-envelope ml-2"></i>
-                </a>
-                <a href="/resume.pdf" download="Messiah_Heredia_Resume.pdf" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-lg inline-flex items-center">
-                    Download Resume <i class="fas fa-download ml-2"></i>
-                </a>
+
+            <!-- Right-side vertical action buttons (larger rectangular boxes) -->
+            <div class="hero-cards">
+                <div class="box">
+                    <span></span>
+                    <div class="content">
+                        <h2>Download My Resume</h2>
+                        <p>Get a PDF copy of my resume with skills and experience highlights.</p>
+                        <a href="/resume.pdf" download="Messiah_Heredia_Resume.pdf">Download</a>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <span></span>
+                    <div class="content">
+                        <h2>Email me about a Job</h2>
+                        <p>Interested in working together? Send me a message and I'll reply quickly.</p>
+                        <a href="mailto:messiah.heredia@icloud.com"><i class="fas fa-envelope"></i> Email</a>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <span></span>
+                    <div class="content">
+                        <h2>View my LinkedIn and Credly</h2>
+                        <p>Connect with me professionally and view my verified certifications.</p>
+                        <!-- Social Media Icons -->
+                        <div class="social-media-icons">
+                            <ul>
+                                <li>
+                                    <a href="https://www.linkedin.com/in/messiah-heredia-587a11362/" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-linkedin-in icon"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.credly.com/users/messiah-heredia/badges#credly" target="_blank" rel="noopener noreferrer" style="background: transparent; border: none; padding: 2px;">
+                                        <img src="credly.png" alt="Credly badge" style="width: 31px; height: 31px; object-fit: contain; border-radius: 50%;">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i class="fas fa-chevron-down text-pfw-gold text-2xl"></i>
-        </div>
+    <!-- Scroll Indicator removed (chevron placed under paragraph for direct access) -->
     </section>
 
     <!-- Portfolio Section -->
     <section id="portfolio" class="py-20 bg-[#1a1a1a]">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">My Projects</h3>
-                <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
-                    Infrastructure automation tools and administration utilities I've developed
+                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">LinkedIn & Credly Profiles</h3>
+                <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto mb-8">
+                    Connect with me professionally and explore my verified certifications
                 </p>
             </div>
             
@@ -922,7 +1362,7 @@
                                     Professional Writing
                                 </h4>
                                 <p class="text-[#f3f4f6]/80 leading-relaxed max-w-md mx-auto text-sm">
-                                    Academic and technical writing samples including research papers, analysis reports, ethics studies, and professional documentation. Showcasing research, analytical thinking, and communication skills in technology domains.
+                                    Academic and technical writing samples showcasing research, analysis, and communication skills in cybersecurity and technology domains. Professional documentation and reports for enterprise environments.
                                 </p>
                             </div>
                             
@@ -933,8 +1373,8 @@
                                     <p class="text-xs text-[#f3f4f6]/80">Research Papers</p>
                                 </div>
                                 <div class="bg-pfw-gold/10 rounded-lg p-2">
-                                    <i class="fas fa-brain text-pfw-gold text-sm mb-1"></i>
-                                    <p class="text-xs text-[#f3f4f6]/80">AI Ethics</p>
+                                    <i class="fas fa-clipboard-check text-pfw-gold text-sm mb-1"></i>
+                                    <p class="text-xs text-[#f3f4f6]/80">Technical Reports</p>
                                 </div>
                             </div>
                             
@@ -947,22 +1387,6 @@
                                 <a href="/projects/recommendationreport.pdf" download="recommendationreport.pdf" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
                                     <i class="fas fa-download mr-1"></i>
                                     Recommendation Report
-                                </a>
-                                <a href="ai.pdf" download="Messiah-Heredia-AI-Ethics-Paper.pdf" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
-                                    <i class="fas fa-download mr-1"></i>
-                                    The Ethical Use of AI
-                                </a>
-                                <a href="onboarding - Copy.pdf" download="IT-Employee-Onboarding-Guide.pdf" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
-                                    <i class="fas fa-download mr-1"></i>
-                                    IT Employee Onboarding Guide
-                                </a>
-                                <a href="homelab.pdf" download="Messiah-Heredia-2025-Home-Lab-Plan.pdf" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
-                                    <i class="fas fa-download mr-1"></i>
-                                    2025 Home Lab Plan
-                                </a>
-                                <a href="POS.pdf" download="Messiah-Heredia-Restaurant-POS-Software-Dev.pdf" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
-                                    <i class="fas fa-download mr-1"></i>
-                                    Restaurant POS Software Dev
                                 </a>
                             </div>
                         </div>
@@ -985,41 +1409,37 @@
                         </div>
                     </article>
 
-                    <!-- Project Card 5 - IT Diagrams -->
+                    <!-- Project Card 5 - Technical Documentation -->
                     <article class="scroll-item project-card bg-black rounded-xl shadow-xl overflow-hidden border border-[#333] flex flex-col group">
                         <div class="p-3 flex-grow">
                             <!-- Header Section -->
                             <div class="text-center mb-3">
                                 <h4 class="text-xl font-bold text-pfw-gold group-hover:text-pfw-gold-light transition-colors mb-2">
-                                    IT Diagrams
+                                    Technical Documentation
                                 </h4>
                                 <p class="text-[#f3f4f6]/80 leading-relaxed max-w-md mx-auto text-sm">
-                                    Comprehensive collection of IT infrastructure diagrams, network topologies, and visual documentation for enterprise IT environments. Interactive diagrams for system architecture and network design.
+                                    Comprehensive technical documentation, network topologies, and onboarding guides for new IT employees. Essential reference materials for enterprise IT environments.
                                 </p>
                             </div>
                             
                             <!-- Features Highlight -->
                             <div class="grid grid-cols-2 gap-2 mb-3 text-center">
                                 <div class="bg-pfw-gold/10 rounded-lg p-2">
-                                    <i class="fas fa-network-wired text-pfw-gold text-sm mb-1"></i>
-                                    <p class="text-xs text-[#f3f4f6]/80">Network Topology</p>
+                                    <i class="fas fa-file-alt text-pfw-gold text-sm mb-1"></i>
+                                    <p class="text-xs text-[#f3f4f6]/80">Documentation</p>
                                 </div>
                                 <div class="bg-pfw-gold/10 rounded-lg p-2">
-                                    <i class="fas fa-diagram-project text-pfw-gold text-sm mb-1"></i>
-                                    <p class="text-xs text-[#f3f4f6]/80">System Diagrams</p>
+                                    <i class="fas fa-users-cog text-pfw-gold text-sm mb-1"></i>
+                                    <p class="text-xs text-[#f3f4f6]/80">Onboarding Guides</p>
                                 </div>
                             </div>
                             
                             <!-- Download Links -->
                             <div class="mb-2 space-y-1">
-                                <button onclick="openDiagramViewer('network')" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
-                                    <i class="fas fa-eye mr-1"></i>
-                                    View Interactive Network Diagrams
-                                </button>
-                                <button onclick="openDiagramEditor()" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
-                                    <i class="fas fa-edit mr-1"></i>
-                                    Open Diagram Editor
-                                </button>
+                                <a href="/projects/onboarding.pdf" download="onboarding.pdf" class="block w-full bg-pfw-gold text-black hover:bg-pfw-gold-dark font-semibold py-1 px-3 rounded-lg transition-all duration-300 text-center text-xs">
+                                    <i class="fas fa-download mr-1"></i>
+                                    IT Employee Onboarding Guide
+                                </a>
                             </div>
                         </div>
                         
@@ -1027,7 +1447,7 @@
                         <div class="p-3 pt-0 border-t border-[#333]">
                             <div class="flex justify-between items-center">
                                 <a href="https://drive.google.com/drive/folders/1-WKC9P1V_gFQ9jglr4ByE9d0eH_1_QPa?usp=sharing" target="_blank" rel="noopener noreferrer" class="flex items-center text-pfw-gold hover:text-pfw-gold-light transition-colors font-semibold text-xs">
-                                    <i class="fab fa-google-drive mr-1"></i> View All Diagrams
+                                    <i class="fab fa-google-drive mr-1"></i> View All Documentation
                                 </a>
                                 <div class="flex space-x-2">
                                     <a href="https://drive.google.com/drive/folders/1-WKC9P1V_gFQ9jglr4ByE9d0eH_1_QPa?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors">
@@ -1035,6 +1455,75 @@
                                     </a>
                                     <button class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors" title="Bookmark">
                                         <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project Card 6 - Cloud Infrastructure -->
+                    <article class="project-card bg-black rounded-xl shadow-2xl overflow-hidden border border-[#333] flex flex-col group">
+                        <div class="p-6 flex-grow">
+                            <!-- Header Section -->
+                            <div class="text-center mb-6">
+                                <h4 class="text-3xl font-bold text-pfw-gold group-hover:text-pfw-gold-light transition-colors mb-3">
+                                    Cloud Infrastructure
+                                </h4>
+                                <p class="text-[#f3f4f6]/80 leading-relaxed max-w-md mx-auto">
+                                    Multi-cloud infrastructure implementations with AWS, Azure, and GCP. Featuring automated deployment pipelines, infrastructure as code, and comprehensive monitoring solutions for enterprise environments.
+                                </p>
+                            </div>
+                            
+                            <!-- Technology Tags -->
+                            <div class="flex flex-wrap gap-2 mb-8 justify-center">
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">AWS</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">Terraform</span>
+                                <span class="px-4 py-2 bg-pfw-gold/20 text-pfw-gold text-sm rounded-full font-medium">Docker</span>
+                            </div>
+                            
+                            <!-- Image Showcase -->
+                            <div class="relative mb-8">
+                                <div class="absolute inset-0 bg-gradient-to-r from-pfw-gold/10 via-pfw-gold/20 to-pfw-gold/10 rounded-2xl blur-xl"></div>
+                                <div class="relative bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] rounded-2xl p-4 border border-pfw-gold/30">
+                                    <div class="flex justify-center">
+                                        <img src="MessiahSysPanel.png" alt="Cloud Infrastructure Dashboard" class="w-full max-w-lg h-auto object-contain rounded-lg shadow-2xl">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Features Highlight -->
+                            <div class="grid grid-cols-2 gap-4 mb-6 text-center">
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-cloud text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Multi-Cloud</p>
+                                </div>
+                                <div class="bg-pfw-gold/10 rounded-lg p-3">
+                                    <i class="fas fa-cogs text-pfw-gold text-xl mb-2"></i>
+                                    <p class="text-sm text-[#f3f4f6]/80">Automation</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Cloud Features -->
+                            <div class="bg-gradient-to-r from-orange-900/20 to-red-900/20 rounded-lg p-3 mb-4 border border-orange-500/30">
+                                <div class="flex items-center justify-center text-orange-400">
+                                    <i class="fas fa-server mr-2"></i>
+                                    <span class="text-sm font-medium">Infrastructure as Code • CI/CD Pipelines • Auto-scaling</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer with Actions -->
+                        <div class="p-6 pt-0 border-t border-[#333]">
+                            <div class="flex justify-between items-center">
+                                <a href="https://github.com/messiahheedia" target="_blank" rel="noopener noreferrer" class="flex items-center text-pfw-gold hover:text-pfw-gold-light transition-colors font-semibold">
+                                    <i class="fab fa-github mr-2"></i> View Projects
+                                </a>
+                                <div class="flex space-x-3">
+                                    <a href="https://github.com/messiahheedia" target="_blank" rel="noopener noreferrer" class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="text-[#f3f4f6]/60 hover:text-pfw-gold transition-colors" title="Star Project">
+                                        <i class="fas fa-star"></i>
                                     </button>
                                 </div>
                             </div>
@@ -1276,17 +1765,17 @@
             <div class="mb-12">
                 <h4 class="text-2xl font-semibold mb-8 text-center text-pfw-gold-light">Current Certifications</h4>
                 <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                    <!-- CompTIA A+ -->
+                    <!-- Linux Administration (replacing CompTIA A+) -->
                     <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
                         <div class="flex justify-center mb-4">
-                            <img src="Acert" alt="CompTIA A+ Certification" class="w-24 h-24 object-contain rounded-lg">
+                            <img src="linux.png" alt="Linux Certification" class="w-24 h-24 object-contain rounded-lg">
                         </div>
-                        <h4 class="text-xl font-semibold mb-2 text-pfw-gold">CompTIA A+</h4>
-                        <p class="text-[#f3f4f6]/80 mb-3">Hardware and software fundamentals, troubleshooting</p>
+                        <h4 class="text-xl font-semibold mb-2 text-pfw-gold">CompTIA Linux+</h4>
+                        <p class="text-[#f3f4f6]/80 mb-3">Linux systems administration and server management</p>
                         <div class="mt-3 mb-4">
                             <span class="inline-block bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-sm">Certified</span>
                         </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
+                        <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=G4MTLQ0T7R308TD2" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
                             <i class="fas fa-external-link-alt mr-1"></i> Verify Certification
                         </a>
                     </div>
@@ -1301,22 +1790,22 @@
                         <div class="mt-3 mb-4">
                             <span class="inline-block bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-sm">Certified</span>
                         </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
+                        <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=Y96CPZ0RWVLLHF32" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
                             <i class="fas fa-external-link-alt mr-1"></i> Verify Certification
                         </a>
                     </div>
                     
-                    <!-- CompTIA Security+ -->
+                    <!-- CompTIA Cloud+ (replacing Security+) -->
                     <div class="bg-black p-6 rounded-xl border border-[#333] text-center group hover:border-pfw-gold transition-colors">
                         <div class="flex justify-center mb-4">
-                            <img src="Scert.png" alt="CompTIA Security+ Certification" class="w-24 h-24 object-contain rounded-lg">
+                            <img src="cloud.png" alt="CompTIA Cloud+ Certification" class="w-24 h-24 object-contain rounded-lg">
                         </div>
-                        <h4 class="text-xl font-semibold mb-2 text-pfw-gold">CompTIA Security+</h4>
-                        <p class="text-[#f3f4f6]/80 mb-3">Cybersecurity principles and threat management</p>
+                        <h4 class="text-xl font-semibold mb-2 text-pfw-gold">CompTIA Cloud+</h4>
+                        <p class="text-[#f3f4f6]/80 mb-3">Cloud infrastructure and operations across cloud environments</p>
                         <div class="mt-3 mb-4">
                             <span class="inline-block bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-sm">Certified</span>
                         </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
+                        <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=D7ES3EL67Q5LHECJ" target="_blank" rel="noopener noreferrer" class="text-pfw-gold hover:text-pfw-gold-light transition-colors text-sm font-medium">
                             <i class="fas fa-external-link-alt mr-1"></i> Verify Certification
                         </a>
                     </div>
@@ -1353,193 +1842,11 @@
         </div>
     </section>
 
-    <!-- Interactive Diagrams Section -->
-    <section id="diagrams" class="py-20 bg-[#1a1a1a]">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">Interactive Technical Diagrams</h3>
-                <p class="text-xl text-[#f3f4f6]/70 max-w-3xl mx-auto">
-                    Explore my network architectures, security designs, and infrastructure layouts through interactive diagrams powered by draw.io
-                </p>
-            </div>
-            
-            <!-- Flowing Diagram Carousel -->
-            <div class="overflow-hidden bg-gradient-to-r from-[#1a1a1a] via-black to-[#1a1a1a] rounded-xl border border-[#333] mb-12">
-                <div class="diagram-flow-container">
-                    <div class="diagrams-flow">
-                        <!-- Diagram 1 -->
-                        <div class="diagram-card bg-black border border-[#333] rounded-xl p-6">
-                            <div class="text-center mb-4">
-                                <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-pfw-gold text-xl font-bold">1</span>
-                                </div>
-                                <h4 class="text-lg font-semibold text-pfw-gold mb-2">Network Architecture</h4>
-                            </div>
-                            <div class="diagram-preview bg-[#1a1a1a] rounded-lg p-4 mb-4 h-48 flex items-center justify-center border border-[#333]">
-                                <div class="text-center">
-                                    <i class="fas fa-network-wired text-pfw-gold text-4xl mb-3"></i>
-                                    <p class="text-[#f3f4f6]/70 text-sm">Enterprise Network Topology</p>
-                                    <p class="text-[#f3f4f6]/50 text-xs mt-1">VLAN Segmentation & Routing</p>
-                                </div>
-                            </div>
-                            <button onclick="openDiagramViewer('network')" class="w-full bg-pfw-gold/20 hover:bg-pfw-gold hover:text-black text-pfw-gold font-semibold py-2 px-4 rounded transition-all duration-300">
-                                <i class="fas fa-expand mr-2"></i>View Full Diagram
-                            </button>
-                        </div>
-
-                        <!-- Diagram 2 -->
-                        <div class="diagram-card bg-black border border-[#333] rounded-xl p-6">
-                            <div class="text-center mb-4">
-                                <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-pfw-gold text-xl font-bold">2</span>
-                                </div>
-                                <h4 class="text-lg font-semibold text-pfw-gold mb-2">Security Architecture</h4>
-                            </div>
-                            <div class="diagram-preview bg-[#1a1a1a] rounded-lg p-4 mb-4 h-48 flex items-center justify-center border border-[#333]">
-                                <div class="text-center">
-                                    <i class="fas fa-shield-alt text-pfw-gold text-4xl mb-3"></i>
-                                    <p class="text-[#f3f4f6]/70 text-sm">Security Implementation</p>
-                                    <p class="text-[#f3f4f6]/50 text-xs mt-1">DMZ & Firewall Configuration</p>
-                                </div>
-                            </div>
-                            <button onclick="openDiagramViewer('security')" class="w-full bg-pfw-gold/20 hover:bg-pfw-gold hover:text-black text-pfw-gold font-semibold py-2 px-4 rounded transition-all duration-300">
-                                <i class="fas fa-expand mr-2"></i>View Full Diagram
-                            </button>
-                        </div>
-
-                        <!-- Diagram 3 -->
-                        <div class="diagram-card bg-black border border-[#333] rounded-xl p-6">
-                            <div class="text-center mb-4">
-                                <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-pfw-gold text-xl font-bold">3</span>
-                                </div>
-                                <h4 class="text-lg font-semibold text-pfw-gold mb-2">Infrastructure Design</h4>
-                            </div>
-                            <div class="diagram-preview bg-[#1a1a1a] rounded-lg p-4 mb-4 h-48 flex items-center justify-center border border-[#333]">
-                                <div class="text-center">
-                                    <i class="fas fa-server text-pfw-gold text-4xl mb-3"></i>
-                                    <p class="text-[#f3f4f6]/70 text-sm">Cloud Infrastructure</p>
-                                    <p class="text-[#f3f4f6]/50 text-xs mt-1">Virtualization & Integration</p>
-                                </div>
-                            </div>
-                            <button onclick="openDiagramViewer('infrastructure')" class="w-full bg-pfw-gold/20 hover:bg-pfw-gold hover:text-black text-pfw-gold font-semibold py-2 px-4 rounded transition-all duration-300">
-                                <i class="fas fa-expand mr-2"></i>View Full Diagram
-                            </button>
-                        </div>
-
-                        <!-- Duplicate set for seamless looping -->
-                        <!-- Diagram 1 (Duplicate) -->
-                        <div class="diagram-card bg-black border border-[#333] rounded-xl p-6">
-                            <div class="text-center mb-4">
-                                <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-pfw-gold text-xl font-bold">1</span>
-                                </div>
-                                <h4 class="text-lg font-semibold text-pfw-gold mb-2">Network Architecture</h4>
-                            </div>
-                            <div class="diagram-preview bg-[#1a1a1a] rounded-lg p-4 mb-4 h-48 flex items-center justify-center border border-[#333]">
-                                <div class="text-center">
-                                    <i class="fas fa-network-wired text-pfw-gold text-4xl mb-3"></i>
-                                    <p class="text-[#f3f4f6]/70 text-sm">Enterprise Network Topology</p>
-                                    <p class="text-[#f3f4f6]/50 text-xs mt-1">VLAN Segmentation & Routing</p>
-                                </div>
-                            </div>
-                            <button onclick="openDiagramViewer('network')" class="w-full bg-pfw-gold/20 hover:bg-pfw-gold hover:text-black text-pfw-gold font-semibold py-2 px-4 rounded transition-all duration-300">
-                                <i class="fas fa-expand mr-2"></i>View Full Diagram
-                            </button>
-                        </div>
-
-                        <!-- Diagram 2 (Duplicate) -->
-                        <div class="diagram-card bg-black border border-[#333] rounded-xl p-6">
-                            <div class="text-center mb-4">
-                                <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-pfw-gold text-xl font-bold">2</span>
-                                </div>
-                                <h4 class="text-lg font-semibold text-pfw-gold mb-2">Security Architecture</h4>
-                            </div>
-                            <div class="diagram-preview bg-[#1a1a1a] rounded-lg p-4 mb-4 h-48 flex items-center justify-center border border-[#333]">
-                                <div class="text-center">
-                                    <i class="fas fa-shield-alt text-pfw-gold text-4xl mb-3"></i>
-                                    <p class="text-[#f3f4f6]/70 text-sm">Security Implementation</p>
-                                    <p class="text-[#f3f4f6]/50 text-xs mt-1">DMZ & Firewall Configuration</p>
-                                </div>
-                            </div>
-                            <button onclick="openDiagramViewer('security')" class="w-full bg-pfw-gold/20 hover:bg-pfw-gold hover:text-black text-pfw-gold font-semibold py-2 px-4 rounded transition-all duration-300">
-                                <i class="fas fa-expand mr-2"></i>View Full Diagram
-                            </button>
-                        </div>
-
-                        <!-- Diagram 3 (Duplicate) -->
-                        <div class="diagram-card bg-black border border-[#333] rounded-xl p-6">
-                            <div class="text-center mb-4">
-                                <div class="w-12 h-12 bg-pfw-gold/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                                    <span class="text-pfw-gold text-xl font-bold">3</span>
-                                </div>
-                                <h4 class="text-lg font-semibold text-pfw-gold mb-2">Infrastructure Design</h4>
-                            </div>
-                            <div class="diagram-preview bg-[#1a1a1a] rounded-lg p-4 mb-4 h-48 flex items-center justify-center border border-[#333]">
-                                <div class="text-center">
-                                    <i class="fas fa-server text-pfw-gold text-4xl mb-3"></i>
-                                    <p class="text-[#f3f4f6]/70 text-sm">Cloud Infrastructure</p>
-                                    <p class="text-[#f3f4f6]/50 text-xs mt-1">Virtualization & Integration</p>
-                                </div>
-                            </div>
-                            <button onclick="openDiagramViewer('infrastructure')" class="w-full bg-pfw-gold/20 hover:bg-pfw-gold hover:text-black text-pfw-gold font-semibold py-2 px-4 rounded transition-all duration-300">
-                                <i class="fas fa-expand mr-2"></i>View Full Diagram
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Full-Screen Diagram Modal (Hidden by default) -->
-            <div id="diagramModal" class="fixed inset-0 bg-black/95 z-50 hidden">
-                <div class="h-full flex flex-col">
-                    <!-- Modal Header -->
-                    <div class="bg-gradient-to-r from-pfw-gold/20 to-pfw-gold/10 p-4 border-b border-[#333] flex justify-between items-center">
-                        <h4 id="modalDiagramTitle" class="text-xl font-semibold text-pfw-gold">Network Architecture Diagram</h4>
-                        <button onclick="closeDiagramModal()" class="bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white px-3 py-1 rounded text-sm transition-all duration-300">
-                            <i class="fas fa-times mr-1"></i>Close
-                        </button>
-                    </div>
-                    
-                    <!-- Modal Content -->
-                    <div id="modalDiagramContainer" class="flex-1 relative">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="text-center">
-                                <i class="fas fa-spinner fa-spin text-pfw-gold text-3xl mb-4"></i>
-                                <p class="text-[#f3f4f6]/70">Loading interactive diagram...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Quick Actions -->
-            <div class="grid md:grid-cols-2 gap-6 mt-12">
-                <div class="bg-black rounded-xl p-6 border border-[#333]">
-                    <h5 class="text-lg font-semibold mb-3 text-pfw-gold">Create New Diagram</h5>
-                    <p class="text-[#f3f4f6]/80 mb-4">Launch draw.io editor to create your own network or infrastructure diagrams</p>
-                    <button onclick="createNewDiagram()" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black font-semibold py-2 px-6 rounded transition-all duration-300">
-                        <i class="fas fa-plus mr-2"></i>New Diagram
-                    </button>
-                </div>
-                
-                <div class="bg-black rounded-xl p-6 border border-[#333]">
-                    <h5 class="text-lg font-semibold mb-3 text-pfw-gold">Template Library</h5>
-                    <p class="text-[#f3f4f6]/80 mb-4">Access pre-built templates for common IT infrastructure patterns</p>
-                    <button onclick="openTemplateLibrary()" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black font-semibold py-2 px-6 rounded transition-all duration-300">
-                        <i class="fas fa-layer-group mr-2"></i>Browse Templates
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Home Lab Section -->
     <section id="homelab" class="py-20 bg-[#1a1a1a]">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">My Home Lab - Coming August 2025</h3>
+                <h3 class="text-4xl font-bold mb-4 text-pfw-gold">My Home Lab</h3>
                 <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
                     A dedicated infrastructure environment for continuous learning, testing, and innovation
                 </p>
@@ -1737,8 +2044,8 @@
                         <div class="flex-shrink-0">
                             <div class="relative w-64 h-80 rounded-lg overflow-hidden border-2 border-pfw-gold/30">
                                 <div id="familySlideshow" class="relative w-full h-full">
-                                    <img src="IMG_0738.JPG" alt="Messiah with family" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" id="slide1">
-                                    <img src="IMG_0944.jpg" alt="Messiah, Josephine and Emmanuel" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide2">
+                                    <img src="IMG_0944.JPEG" alt="Messiah with family" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" id="slide1">
+                                    <img src="IMG_0738.JPEG" alt="Messiah, Josephine and Emmanuel" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" id="slide2">
                                 </div>
                                 <!-- Slideshow indicators -->
                                 <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
@@ -1754,7 +2061,7 @@
                             <div class="space-y-4 text-lg">
                                 <p class="text-[#f3f4f6]/90 leading-relaxed">
                                     <i class="fas fa-graduation-cap text-pfw-gold mr-2"></i>
-                                    A Computer Science student pursuing my masters at Purdue Fort Wayne and building knowledge to become a valuable systems administrator. I'm passionate about enterprise infrastructure, network security, and creating robust IT environments that support business operations.
+                                    An Information Systems Specialist & Major with a Specialty in Network Administration student pursuing my bachelors at Purdue Fort Wayne and building knowledge to become a valuable systems administrator. I'm passionate about enterprise infrastructure, network security, and creating robust IT environments that support business operations.
                                 </p>
                                 <p class="text-[#f3f4f6]/90 leading-relaxed">
                                     <i class="fas fa-heart text-pfw-gold mr-2"></i>
@@ -1827,6 +2134,30 @@
                             <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
                                 <span class="text-pfw-gold font-semibold text-lg">Ansible</span>
                             </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Red Hat</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">vSphere</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Terraform</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Nagios</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Splunk</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Puppet</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">AWS</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">GCP</span>
+                            </div>
                             <!-- Duplicate for seamless loop -->
                             <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
                                 <span class="text-pfw-gold font-semibold text-lg">Active Directory</span>
@@ -1846,6 +2177,30 @@
                             <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
                                 <span class="text-pfw-gold font-semibold text-lg">JavaScript</span>
                             </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Red Hat</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">vSphere</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Terraform</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Nagios</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Splunk</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">Puppet</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">AWS</span>
+                            </div>
+                            <div class="flex-shrink-0 bg-pfw-gold/20 px-6 py-3 rounded-lg border border-pfw-gold/30">
+                                <span class="text-pfw-gold font-semibold text-lg">GCP</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1853,177 +2208,70 @@
         </div>
     </section>
 
-    <!-- AI Chat Box and Theme Toggle Buttons -->
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-3">
-        
-        <!-- AI Chat Box (Collapsible) -->
-        <div id="aiChatBox" class="bg-black border border-pfw-gold/30 rounded-xl shadow-2xl w-80 h-96 flex-col hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between p-3 border-b border-pfw-gold/30 bg-pfw-gold/10 rounded-t-xl">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-robot text-pfw-gold text-lg"></i>
-                    <h3 class="text-pfw-gold font-semibold text-sm">AI Assistant</h3>
-                </div>
-                <button id="closeChatBox" class="text-pfw-gold hover:text-pfw-gold-light transition-colors">
-                    <i class="fas fa-times text-sm"></i>
-                </button>
-            </div>
+    <!-- AI Bot and Theme Toggle Buttons -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col space-y-3">
+        <!-- Chat Widget (moved here to be part of the button group) -->
+        <div class="relative">
+            <!-- Chat Toggle Button -->
+            <button id="chatToggle" class="rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 w-14 h-14 flex items-center justify-center" style="background-color: var(--primary-color); color: var(--bg-primary);" aria-label="Chat with Messiah">
+                <i class="fas fa-comments text-xl"></i>
+            </button>
             
-            <!-- Chat Messages -->
-            <div id="aiMessages" class="flex-1 p-3 overflow-y-auto space-y-2 bg-[#1a1a1a] text-sm">
-                <div class="flex items-start space-x-2">
-                    <div class="bg-pfw-gold/20 rounded-full p-1 flex-shrink-0">
-                        <i class="fas fa-robot text-pfw-gold text-xs"></i>
-                    </div>
-                    <div class="ai-message-initial bg-[#333] text-white p-2 rounded-lg rounded-tl-none flex-1">
-                        <p class="text-xs">Hi! I'm Messiah's AI assistant. Ask me about his background, skills, or projects!</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Input Area -->
-            <div class="ai-input-area p-3 border-t border-pfw-gold/30 bg-[#222] rounded-b-xl">
-                <!-- Input Row -->
-                <div class="flex space-x-2">
-                    <input 
-                        id="aiInput" 
-                        type="text" 
-                        placeholder="Ask about Messiah..." 
-                        class="flex-1 bg-[#333] text-white p-2 rounded text-xs border border-pfw-gold/30 focus:border-pfw-gold focus:outline-none"
-                    >
-                    <button 
-                        id="voiceInput" 
-                        class="bg-pfw-gold/20 hover:bg-pfw-gold/30 text-pfw-gold px-3 py-2 rounded transition-colors border border-pfw-gold/30 hidden"
-                        title="Voice Input"
-                    >
-                        <i class="fas fa-microphone text-xs"></i>
-                    </button>
-                    <button 
-                        id="aiSend" 
-                        class="bg-pfw-gold hover:bg-pfw-gold-dark text-black px-3 py-2 rounded transition-colors"
-                    >
-                        <i class="fas fa-paper-plane text-xs"></i>
+            <!-- Chat Box -->
+            <div id="chatBox" class="hidden absolute bottom-16 right-0 w-80 h-96 rounded-lg shadow-2xl flex flex-col" style="background-color: var(--bg-tertiary); border: 1px solid var(--border-color);">
+                <!-- Chat Header -->
+                <div class="p-3 rounded-t-lg flex justify-between items-center" style="background-color: var(--primary-color); color: var(--bg-primary);">
+                    <h4 class="font-semibold">Chat with Messiah</h4>
+                    <button id="chatClose" class="transition-colors" style="color: var(--bg-primary); opacity: 0.8;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
-                <!-- Voice Input Status -->
-                <div id="voiceInputStatus" class="mt-2 text-xs text-center text-pfw-gold/70 hidden">
-                    <div class="flex items-center justify-center space-x-2">
-                        <div class="animate-pulse">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <span>Voice conversation active...</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Fixed Buttons -->
-        <div class="flex space-x-3">
-            <!-- Voice Chat Button -->
-            <div class="relative group">
-                <button id="voiceChatToggle" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-2xl focus:outline-none transition-all duration-300" aria-label="Voice Chat with AI">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <!-- Voice Chat Tooltip -->
-                <div class="absolute bottom-16 right-0 bg-black text-pfw-gold px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg border border-pfw-gold/30">
-                    Voice Chat
-                    <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black"></div>
-                </div>
-            </div>
-
-            <!-- AI Bot Button -->
-            <div class="relative group">
-                <button id="aiToggle" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-2xl focus:outline-none transition-all duration-300" aria-label="Toggle AI Assistant">
-                    <i class="fas fa-robot"></i>
-                </button>
-                <!-- AI Bot Tooltip -->
-                <div class="absolute bottom-16 right-0 bg-black text-pfw-gold px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg border border-pfw-gold/30">
-                    AI Assistant
-                    <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black"></div>
-                </div>
-            </div>
-            
-            <!-- Theme Toggle Button -->
-            <div class="relative group">
-                <button id="themeToggle" class="bg-pfw-gold hover:bg-pfw-gold-dark text-black rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-2xl focus:outline-none transition-all duration-300" aria-label="Toggle Theme">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                </button>
-                <!-- Theme Toggle Tooltip -->
-                <div class="absolute bottom-16 right-0 bg-black text-pfw-gold px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg border border-pfw-gold/30">
-                    Toggle Light/Dark Theme
-                    <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black"></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Voice Chat Modal -->
-        <div id="voiceSelectionModal" class="bg-black border border-pfw-gold/30 rounded-xl shadow-2xl w-80 p-4 flex-col hidden">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-robot text-pfw-gold text-lg"></i>
-                    <h3 class="text-pfw-gold font-semibold text-sm">Chat with Nova AI</h3>
-                </div>
-                <button id="closeVoiceModal" class="text-pfw-gold hover:text-pfw-gold-light transition-colors">
-                    <i class="fas fa-times text-sm"></i>
-                </button>
-            </div>
-            
-            <!-- Voice Chat Info -->
-            <div class="mb-4">
-                <div class="bg-[#333] border border-pfw-gold/20 rounded-lg p-4 text-center">
-                    <h4 class="text-white font-medium text-sm mb-1">🤖 Nova - AI Assistant</h4>
-                    <p class="text-gray-400 text-xs">Advanced AI powered by GPT-4, ready to discuss Messiah's portfolio!</p>
-                </div>
-            </div>
-
-            <!-- Live Transcript Area (hidden initially) -->
-            <div id="voiceTranscriptArea" class="mb-4 hidden">
-                <div class="bg-[#222] border border-pfw-gold/20 rounded-lg p-3 max-h-48 overflow-y-auto">
-                    <div class="text-pfw-gold text-xs font-medium mb-2 flex items-center">
-                        <i class="fas fa-comments mr-1"></i>
-                        Live Conversation
-                    </div>
-                    <div id="voiceTranscript" class="text-white text-xs space-y-2">
-                        <!-- Transcript messages will appear here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Voice Status Display -->
-            <div id="voiceStatusDisplay" class="mb-4 hidden">
-                <div class="bg-[#1a1a1a] border border-pfw-gold/20 rounded-lg p-2 text-center">
-                    <div id="voiceStatusText" class="text-pfw-gold text-xs">
-                        <i class="fas fa-microphone-alt mr-1"></i>
-                        Ready to listen...
-                    </div>
-                    <div id="liveTranscript" class="text-white text-xs mt-1 italic">
-                        <!-- Live speech recognition will appear here -->
+                <!-- Chat Messages -->
+                <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3">
+                    <div class="p-3 rounded-lg" style="background-color: rgba(185, 151, 91, 0.2);">
+                        <p class="text-sm" style="color: var(--primary-color);">👋 Hi! I'm Messiah's AI assistant. Ask me anything about his experience, projects, or skills!</p>
                     </div>
                 </div>
                 
-                <!-- Manual Speak Button -->
-                <div id="manualSpeakContainer" class="mt-2 hidden">
-                    <button id="manualSpeakButton" class="w-full bg-pfw-gold hover:bg-pfw-gold-dark text-black font-medium py-1 px-3 rounded text-xs transition-colors">
-                        🎤 Click & Speak Now
-                    </button>
+                <!-- Chat Input -->
+                <div class="p-3" style="border-top: 1px solid var(--border-color);">
+                    <div class="flex space-x-2">
+                        <input 
+                            id="chatInput" 
+                            type="text" 
+                            placeholder="Type your message..." 
+                            class="flex-1 p-2 rounded-md border focus:outline-none transition-colors"
+                            style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: var(--border-color);"
+                            onfocus="this.style.borderColor='var(--primary-color)'"
+                            onblur="this.style.borderColor='var(--border-color)'"
+                        >
+                        <button 
+                            id="chatSend" 
+                            class="px-4 py-2 rounded-md transition-colors"
+                            style="background-color: var(--primary-color); color: var(--bg-primary);"
+                            onmouseover="this.style.backgroundColor='var(--primary-light)'"
+                            onmouseout="this.style.backgroundColor='var(--primary-color)'"
+                        >
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            
-            <div id="startVoiceChatContainer" class="pt-3 border-t border-pfw-gold/20">
-                <button id="startVoiceChat" class="w-full bg-pfw-gold hover:bg-pfw-gold-dark text-black font-medium py-2 px-4 rounded-lg transition-colors">
-                    <i class="fas fa-robot mr-2"></i>Talk to Nova AI
-                </button>
-            </div>
-            
-            <!-- Stop Voice Chat Button (hidden initially) -->
-            <div id="stopVoiceChatContainer" class="pt-3 border-t border-pfw-gold/20 hidden">
-                <button id="stopVoiceChat" class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                    <i class="fas fa-stop mr-2"></i>End Nova Conversation
-                </button>
             </div>
         </div>
 
+        <!-- Theme Toggle Button -->
+        <div class="relative group">
+            <button id="themeToggle" class="bg-primary-color hover:bg-primary-dark text-black rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-2xl focus:outline-none transition-all duration-300" aria-label="Cycle Themes" style="background-color: var(--primary-color); color: var(--bg-primary);">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+            <!-- Theme Toggle Tooltip -->
+            <div class="absolute bottom-16 right-0 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg border" style="background-color: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-color);">
+                Cycle Themes (5 Available)
+                <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent" style="border-top-color: var(--bg-tertiary);"></div>
+            </div>
+        </div>
+        
     </div>
 
     <!-- Footer -->
@@ -2170,6 +2418,25 @@
             }
         }
 
+        // Title character-by-character reveal
+        document.addEventListener('DOMContentLoaded', () => {
+            const title = document.querySelector('.hero-title');
+            if (title) {
+                const text = title.textContent.trim();
+                title.textContent = '';
+                const frag = document.createDocumentFragment();
+                [...text].forEach((ch, i) => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = ch;
+                    // staggered animation
+                    span.style.animation = `charIn 420ms cubic-bezier(.2,.9,.25,1) ${i * 35}ms both`;
+                    frag.appendChild(span);
+                });
+                title.appendChild(frag);
+            }
+        });
+
         function openDiagramEditor() {
             // Open draw.io editor with empty diagram
             const editorUrl = 'https://app.diagrams.net/?embed=1&ui=kennedy&spin=1&proto=json';
@@ -2197,27 +2464,16 @@
             window.open(templatesUrl, '_blank');
         }
 
-        // Preloader with improved performance - multiple fallbacks
-        function hidePreloader() {
+        // Preloader with improved performance
+        window.addEventListener('load', function() {
             const preloader = document.getElementById('preloader');
             if (preloader) {
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.remove(); // Remove from DOM instead of hiding
-                }, 300);
-                console.log('Preloader hidden');
+                }, 500);
             }
-        }
-
-        // Multiple event listeners to ensure preloader is hidden
-        window.addEventListener('load', hidePreloader);
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide preloader after 2 seconds as backup
-            setTimeout(hidePreloader, 2000);
         });
-        
-        // Immediate fallback in case of slow loading
-        setTimeout(hidePreloader, 5000);
 
         // Optimized smooth scrolling
         document.addEventListener('DOMContentLoaded', function() {
@@ -2290,7 +2546,80 @@
                 observer.observe(section);
             });
 
+            // Advanced Theme System with 5 themes
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+            
+            // Define all available themes
+            const themes = [
+                { name: 'dark', class: '', icon: 'fa-moon', label: 'Dark (Gold)' },
+                { name: 'ocean', class: 'theme-ocean', icon: 'fa-water', label: 'Ocean Blue' },
+                { name: 'forest', class: 'theme-forest', icon: 'fa-leaf', label: 'Forest Green' },
+                { name: 'cosmic', class: 'theme-cosmic', icon: 'fa-star', label: 'Cosmic Purple' },
+                { name: 'sunset', class: 'theme-sunset', icon: 'fa-sun', label: 'Sunset Orange' }
+            ];
+            
+            let currentThemeIndex = 0;
+            
+            // Get saved theme or default to dark
+            const savedTheme = localStorage.getItem('portfolioTheme') || 'dark';
+            currentThemeIndex = themes.findIndex(theme => theme.name === savedTheme);
+            if (currentThemeIndex === -1) currentThemeIndex = 0;
+            
+            // Apply theme function
+            function applyTheme(themeIndex) {
+                const theme = themes[themeIndex];
+                
+                // Remove all theme classes
+                themes.forEach(t => {
+                    if (t.class) body.classList.remove(t.class);
+                });
+                
+                // Apply new theme class
+                if (theme.class) {
+                    body.classList.add(theme.class);
+                }
+                
+                // Update icon
+                themeIcon.className = `fas ${theme.icon}`;
+                
+                // Save preference
+                localStorage.setItem('portfolioTheme', theme.name);
+                
+                // Update tooltip (if exists)
+                const tooltip = themeToggle.parentNode.querySelector('.group-hover\\:opacity-100');
+                if (tooltip) {
+                    tooltip.textContent = `Switch Theme (Current: ${theme.label})`;
+                }
+                
+                console.log(`Theme switched to: ${theme.label}`);
+            }
+            
+            // Apply initial theme
+            applyTheme(currentThemeIndex);
+            
+            // Theme toggle click handler
+            themeToggle.addEventListener('click', function() {
+                currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                applyTheme(currentThemeIndex);
+            });
 
+            // NEXT button scroll to next section handler
+            const nextThemeButton = document.getElementById('nextThemeButton');
+            if (nextThemeButton) {
+                nextThemeButton.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default link behavior
+                    // Scroll to the portfolio section (next section after hero)
+                    const portfolioSection = document.getElementById('portfolio');
+                    if (portfolioSection) {
+                        portfolioSection.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
 
             // Initialize scroll functionality
             initializeScrollContainers();
@@ -2547,8 +2876,8 @@
                 try {
                     // Send to API with absolute URL for production
                     const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                        ? '/api/chatbot' 
-                        : `${window.location.origin}/api/chatbot`;
+                        ? '/api/chatapi' 
+                        : `${window.location.origin}/api/chatapi`;
                     
                     console.log('Sending message to:', apiUrl);
                     
@@ -2588,7 +2917,7 @@
             // Add message to chat
             function addMessage(text, sender, isTyping = false) {
                 const messageDiv = document.createElement('div');
-                messageDiv.className = `p-3 rounded-lg ${sender === 'user' ? 'bg-pfw-gold text-black ml-8' : 'light-theme:bg-gray-100 dark-theme:bg-[#333] light-theme:text-gray-800 dark-theme:text-white mr-8'} ${isTyping ? 'opacity-70' : ''}`;
+                messageDiv.className = `p-3 rounded-lg ${sender === 'user' ? 'bg-pfw-gold text-black ml-8' : 'bg-[#333] text-white mr-8'} ${isTyping ? 'opacity-70' : ''}`;
                 messageDiv.innerHTML = `<p class="text-sm">${text}</p>`;
                 
                 chatMessages.appendChild(messageDiv);
@@ -2614,1449 +2943,6 @@
                 }
             });
         });
-
-        // AI Chat Box System
-        document.addEventListener('DOMContentLoaded', function() {
-            const aiToggle = document.getElementById('aiToggle');
-            const aiChatBox = document.getElementById('aiChatBox');
-            const closeChatBox = document.getElementById('closeChatBox');
-            const aiInput = document.getElementById('aiInput');
-            const aiSend = document.getElementById('aiSend');
-            const aiMessages = document.getElementById('aiMessages');
-
-            if (!aiToggle || !aiChatBox || !closeChatBox || !aiInput || !aiSend || !aiMessages) {
-                console.log('AI chat elements not found');
-                return;
-            }
-
-            // Toggle chat box visibility
-            aiToggle.addEventListener('click', () => {
-                if (aiChatBox.classList.contains('hidden')) {
-                    aiChatBox.classList.remove('hidden');
-                    aiChatBox.classList.add('flex');
-                    aiInput.focus();
-                } else {
-                    aiChatBox.classList.add('hidden');
-                    aiChatBox.classList.remove('flex');
-                }
-            });
-
-            // Close chat box
-            closeChatBox.addEventListener('click', () => {
-                aiChatBox.classList.add('hidden');
-                aiChatBox.classList.remove('flex');
-            });
-
-            // Send message function
-            async function sendMessage() {
-                const message = aiInput.value.trim();
-                if (!message) return;
-
-                // Add user message
-                addMessage(message, 'user');
-                aiInput.value = '';
-
-                // Add typing indicator
-                const typingDiv = addTypingIndicator();
-
-                try {
-                    const response = await fetch('/api/chatbot', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ message })
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json().catch(() => ({}));
-                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    
-                    // Remove typing indicator
-                    typingDiv.remove();
-                    
-                    // Add AI response
-                    addMessage(data.reply || data.message || 'Sorry, I encountered an error. Please try again.', 'bot');
-                } catch (error) {
-                    console.error('Chat error details:', error);
-                    typingDiv.remove();
-                    addMessage(`Sorry, there was an error: ${error.message}. Please contact Messiah directly at messiah.heredia@icloud.com`, 'bot');
-                }
-            }
-
-            // Add message to chat
-            function addMessage(text, sender) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `flex items-start space-x-2 mb-2`;
-                
-                if (sender === 'user') {
-                    messageDiv.innerHTML = `
-                        <div class="bg-pfw-gold text-black p-2 rounded-lg rounded-tr-none flex-1 ml-6">
-                            <p class="text-xs">${text}</p>
-                        </div>
-                        <div class="bg-pfw-gold/20 rounded-full p-1 flex-shrink-0">
-                            <i class="fas fa-user text-pfw-gold text-xs"></i>
-                        </div>
-                    `;
-                } else {
-                    messageDiv.innerHTML = `
-                        <div class="bg-pfw-gold/20 rounded-full p-1 flex-shrink-0">
-                            <i class="fas fa-robot text-pfw-gold text-xs"></i>
-                        </div>
-                        <div class="ai-message-bot bg-[#333] text-white p-2 rounded-lg rounded-tl-none flex-1">
-                            <p class="text-xs">${text}</p>
-                        </div>
-                    `;
-                }
-                
-                aiMessages.appendChild(messageDiv);
-                aiMessages.scrollTop = aiMessages.scrollHeight;
-            }
-
-            // Add typing indicator
-            function addTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.className = 'flex items-start space-x-2 mb-2';
-                typingDiv.innerHTML = `
-                    <div class="bg-pfw-gold/20 rounded-full p-1 flex-shrink-0">
-                        <i class="fas fa-robot text-pfw-gold text-xs"></i>
-                    </div>
-                    <div class="ai-message-bot bg-[#333] text-white p-2 rounded-lg rounded-tl-none flex-1">
-                        <div class="flex space-x-1">
-                            <div class="w-1 h-1 bg-pfw-gold rounded-full animate-bounce"></div>
-                            <div class="w-1 h-1 bg-pfw-gold rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                            <div class="w-1 h-1 bg-pfw-gold rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                        </div>
-                    </div>
-                `;
-                aiMessages.appendChild(typingDiv);
-                aiMessages.scrollTop = aiMessages.scrollHeight;
-                return typingDiv;
-            }
-
-            // Send message on button click
-            aiSend.addEventListener('click', sendMessage);
-
-            // Send message on Enter key
-            aiInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-
-            // Regular chatbot voice functionality removed - using separate voice chat button
-        });
-
-        // Nova AI Voice Chat System - Complete Rebuild with OpenAI
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎤 Nova Voice Chat System initializing...');
-            
-            // Check browser support
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                console.log('❌ Speech Recognition NOT supported');
-                return;
-            }
-            console.log('✅ Speech Recognition supported');
-            
-            // Voice chat variables
-            let isVoiceActive = false;
-            let speechRecognition = null;
-            let selectedVoice = 'alloy';
-            let conversationHistory = [];
-            
-            // DOM elements
-            const voiceChatToggle = document.getElementById('voiceChatToggle');
-            const voiceTranscriptArea = document.getElementById('voiceTranscriptArea');
-            const voiceTranscript = document.getElementById('voiceTranscript');
-            const voiceStatusText = document.getElementById('voiceStatusText');
-            const startVoiceChat = document.getElementById('startVoiceChat');
-            const stopVoiceChat = document.getElementById('stopVoiceChat');
-            const voiceSelectionModal = document.getElementById('voiceSelectionModal');
-            const closeVoiceModal = document.getElementById('closeVoiceModal');
-            
-            // Update voice status
-            function updateStatus(message, type = 'info') {
-                console.log(`🔄 ${message}`);
-                if (voiceStatusText) {
-                    const icons = { success: '🎤', processing: '🤔', error: '❌', info: 'ℹ️' };
-                    voiceStatusText.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
-                }
-            }
-            
-            // Add message to transcript
-            function addMessage(sender, message, type = 'user') {
-                if (!voiceTranscript) return;
-                
-                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'mb-2 p-2 rounded';
-                
-                const color = type === 'user' ? 'text-blue-400' : 
-                             type === 'ai' ? 'text-yellow-400' : 'text-gray-400';
-                
-                messageDiv.innerHTML = `
-                    <div class="flex items-start space-x-2">
-                        <span class="${color} font-bold text-xs">${sender}:</span>
-                        <span class="text-white text-xs flex-1">${message}</span>
-                        <span class="text-gray-500 text-xs">${time}</span>
-                    </div>
-                `;
-                
-                voiceTranscript.appendChild(messageDiv);
-                voiceTranscript.scrollTop = voiceTranscript.scrollHeight;
-                
-                // Store in conversation history
-                if (type === 'user' || type === 'ai') {
-                    conversationHistory.push({
-                        role: type === 'user' ? 'user' : 'assistant',
-                        content: message
-                    });
-                    // Keep only last 10 messages
-                    if (conversationHistory.length > 10) {
-                        conversationHistory = conversationHistory.slice(-10);
-                    }
-                }
-            }
-            
-            // Chat with OpenAI
-            async function chatWithNova(userMessage) {
-                console.log('🤖 Sending to OpenAI:', userMessage);
-                updateStatus('Nova is thinking...', 'processing');
-                
-                try {
-                    const response = await fetch('/api/openai-chat', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            message: userMessage,
-                            history: conversationHistory.slice(-6), // Last 6 messages for context
-                            systemPrompt: "You are Nova, Messiah Heredia's AI assistant. You're knowledgeable about his skills as a systems administrator, his projects, and his professional background. Keep responses conversational, helpful, and under 100 words for voice chat."
-                        })
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`OpenAI API failed: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    const novaResponse = data.response || data.message || "I'm having trouble responding right now.";
-                    
-                    console.log('🤖 Nova responded:', novaResponse);
-                    addMessage('Nova', novaResponse, 'ai');
-                    
-                    // Speak Nova's response
-                    await speakText(novaResponse);
-                    
-                    return novaResponse;
-                    
-                } catch (error) {
-                    console.error('❌ OpenAI chat error:', error);
-                    const errorMsg = "I'm having technical difficulties. Please try again.";
-                    addMessage('Nova', errorMsg, 'ai');
-                    await speakText(errorMsg);
-                    return errorMsg;
-                }
-            }
-            
-            // Text-to-Speech with OpenAI
-            async function speakText(text) {
-                console.log('🗨️ Speaking:', text.substring(0, 50) + '...');
-                updateStatus('Speaking...', 'processing');
-                
-                try {
-                    const response = await fetch('/api/openai-tts', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            text: text,
-                            voice: selectedVoice,
-                            model: 'tts-1'
-                        })
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`TTS failed: ${response.status}`);
-                    }
-                    
-                    const audioBlob = await response.blob();
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    const audio = new Audio(audioUrl);
-                    
-                    return new Promise((resolve) => {
-                        audio.onended = () => {
-                            URL.revokeObjectURL(audioUrl);
-                            console.log('🗨️ Speech completed');
-                            updateStatus('Listening...', 'success');
-                            resolve();
-                        };
-                        
-                        audio.onerror = () => {
-                            console.error('❌ Audio playback failed');
-                            resolve(); // Continue even if audio fails
-                        };
-                        
-                        audio.play().catch(error => {
-                            console.error('❌ Audio play failed:', error);
-                            resolve(); // Continue even if audio fails
-                        });
-                    });
-                    
-                } catch (error) {
-                    console.error('🗨️ TTS error:', error);
-                    updateStatus('Speech synthesis failed', 'error');
-                }
-            }
-            
-            // Initialize speech recognition
-            function initSpeechRecognition() {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                speechRecognition = new SpeechRecognition();
-                
-                speechRecognition.continuous = true;
-                speechRecognition.interimResults = true;
-                speechRecognition.lang = 'en-US';
-                
-                speechRecognition.onstart = () => {
-                    console.log('🎤 Listening started');
-                    updateStatus('Listening...', 'success');
-                };
-                
-                speechRecognition.onresult = (event) => {
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        const result = event.results[i];
-                        if (result.isFinal) {
-                            const transcript = result[0].transcript.trim();
-                            console.log('🎤 Speech:', transcript);
-                            
-                            if (transcript.length > 2) {
-                                processUserSpeech(transcript);
-                            }
-                        } else {
-                            // Show interim results
-                            const interim = result[0].transcript.trim();
-                            if (interim) {
-                                updateStatus(`Hearing: "${interim}"`, 'info');
-                            }
-                        }
-                    }
-                };
-                
-                speechRecognition.onerror = (event) => {
-                    console.error('🎤 Speech error:', event.error);
-                    
-                    if (event.error === 'not-allowed') {
-                        updateStatus('Microphone access denied', 'error');
-                        addMessage('System', 'Please allow microphone access and refresh the page.', 'system');
-                        return;
-                    }
-                    
-                    // Auto-restart on other errors
-                    if (isVoiceActive) {
-                        setTimeout(() => startListening(), 1000);
-                    }
-                };
-                
-                speechRecognition.onend = () => {
-                    console.log('🎤 Speech recognition ended');
-                    if (isVoiceActive) {
-                        setTimeout(() => startListening(), 100);
-                    }
-                };
-            }
-            
-            // Process user speech
-            async function processUserSpeech(transcript) {
-                console.log('🎯 Processing speech:', transcript);
-                addMessage('You', transcript, 'user');
-                
-                // Stop listening while processing
-                if (speechRecognition) {
-                    speechRecognition.stop();
-                }
-                
-                // Check for stop command
-                if (transcript.toLowerCase().includes('stop') || transcript.toLowerCase().includes('end chat')) {
-                    stopVoiceChatSession();
-                    return;
-                }
-                
-                // Send to Nova
-                await chatWithNova(transcript);
-                
-                // Resume listening
-                if (isVoiceActive) {
-                    setTimeout(() => startListening(), 1000);
-                }
-            }
-            
-            // Start listening
-            function startListening() {
-                if (!speechRecognition || !isVoiceActive) return;
-                
-                try {
-                    speechRecognition.start();
-                } catch (error) {
-                    console.error('❌ Failed to start listening:', error);
-                    if (isVoiceActive) {
-                        setTimeout(() => startListening(), 1000);
-                    }
-                }
-            }
-            
-            // Start voice chat
-            async function startVoiceChatSession() {
-                console.log('🚀 Starting Nova voice chat...');
-                isVoiceActive = true;
-                
-                // Show UI
-                if (voiceTranscriptArea) voiceTranscriptArea.classList.remove('hidden');
-                if (voiceTranscript) voiceTranscript.innerHTML = '';
-                
-                // Hide modal
-                if (voiceSelectionModal) {
-                    voiceSelectionModal.classList.add('hidden');
-                    voiceSelectionModal.classList.remove('flex');
-                }
-                
-                // Initialize speech recognition
-                initSpeechRecognition();
-                
-                // Add welcome message
-                addMessage('System', '🎤 Voice chat started! Ask Nova about Messiah\'s skills and projects.', 'system');
-                
-                // Nova introduction
-                const intro = "Hi! I'm Nova, Messiah Heredia's AI assistant. I'm here to tell you about his amazing work as a systems administrator. What would you like to know?";
-                addMessage('Nova', intro, 'ai');
-                await speakText(intro);
-                
-                // Start listening
-                startListening();
-            }
-            
-            // Stop voice chat
-            function stopVoiceChatSession() {
-                console.log('🛑 Stopping voice chat...');
-                isVoiceActive = false;
-                
-                if (speechRecognition) {
-                    speechRecognition.stop();
-                    speechRecognition = null;
-                }
-                
-                conversationHistory = [];
-                updateStatus('Voice chat stopped', 'info');
-                
-                if (voiceTranscriptArea) voiceTranscriptArea.classList.add('hidden');
-            }
-            
-            // Event listeners
-            if (voiceChatToggle) {
-                voiceChatToggle.addEventListener('click', () => {
-                    if (voiceSelectionModal) {
-                        voiceSelectionModal.classList.remove('hidden');
-                        voiceSelectionModal.classList.add('flex');
-                    }
-                });
-            }
-            
-            if (closeVoiceModal) {
-                closeVoiceModal.addEventListener('click', () => {
-                    if (voiceSelectionModal) {
-                        voiceSelectionModal.classList.add('hidden');
-                        voiceSelectionModal.classList.remove('flex');
-                    }
-                });
-            }
-            
-            if (startVoiceChat) {
-                startVoiceChat.addEventListener('click', startVoiceChatSession);
-            }
-            
-            if (stopVoiceChat) {
-                stopVoiceChat.addEventListener('click', stopVoiceChatSession);
-            }
-            
-            console.log('✅ Nova Voice Chat System ready');
-        });
-
-        // Theme Toggle System
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.getElementById('themeIcon');
-
-            if (!themeToggle || !themeIcon) {
-                console.log('Theme toggle elements not found');
-                return;
-            }
-
-            // Get saved theme from localStorage or default to light
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.body.className = savedTheme + '-theme';
-            updateThemeIcon(savedTheme);
-
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.body.className.includes('dark') ? 'dark' : 'light';
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                
-                document.body.className = newTheme + '-theme';
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-            });
-
-            function updateThemeIcon(theme) {
-                if (theme === 'dark') {
-                    themeIcon.className = 'fas fa-sun';
-                } else {
-                    themeIcon.className = 'fas fa-moon';
-                }
-            }
-        });
-
-        // Add CSS animation and immediate preloader fallback
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fadeIn {
-                animation: fadeIn 0.3s ease-out;
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Emergency preloader removal - executes immediately
-        (function() {
-            let preloaderHidden = false;
-            
-            function forceHidePreloader() {
-                if (!preloaderHidden) {
-                    const preloader = document.getElementById('preloader');
-                    if (preloader) {
-                        preloader.style.display = 'none';
-                        preloaderHidden = true;
-                        console.log('Preloader force hidden');
-                    }
-                }
-            }
-            
-            // Hide preloader after 3 seconds maximum
-            setTimeout(forceHidePreloader, 3000);
-            
-            // Also try to hide when page is interactive
-            if (document.readyState === 'interactive' || document.readyState === 'complete') {
-                setTimeout(forceHidePreloader, 1000);
-            }
-        })();
-    </script>
-</body>
-</html>
-            const closeVoiceModal = document.getElementById('closeVoiceModal');
-            const startVoiceChat = document.getElementById('startVoiceChat');
-            const startVoiceChatContainer = document.getElementById('startVoiceChatContainer');
-            const stopVoiceChat = document.getElementById('stopVoiceChat');
-            const stopVoiceChatContainer = document.getElementById('stopVoiceChatContainer');
-            const voiceTranscriptArea = document.getElementById('voiceTranscriptArea');
-            const voiceTranscript = document.getElementById('voiceTranscript');
-            const voiceStatusDisplay = document.getElementById('voiceStatusDisplay');
-            const voiceStatusText = document.getElementById('voiceStatusText');
-            const liveTranscript = document.getElementById('liveTranscript');
-            const manualSpeakContainer = document.getElementById('manualSpeakContainer');
-            const manualSpeakButton = document.getElementById('manualSpeakButton');
-
-            // Debug log to check if all elements exist
-            console.log('DOM Elements found:', {
-                voiceChatToggle: !!voiceChatToggle,
-                voiceSelectionModal: !!voiceSelectionModal,
-                closeVoiceModal: !!closeVoiceModal,
-                startVoiceChat: !!startVoiceChat,
-                voiceTranscriptArea: !!voiceTranscriptArea,
-                voiceTranscript: !!voiceTranscript,
-                voiceStatusDisplay: !!voiceStatusDisplay,
-                voiceStatusText: !!voiceStatusText,
-                liveTranscript: !!liveTranscript
-            });
-
-            // Check microphone permissions and access
-            async function checkMicrophoneAccess() {
-                console.log('🎙️ Checking microphone access...');
-                
-                try {
-                    // Check if we're in a secure context (required for microphone access)
-                    if (!window.isSecureContext) {
-                        console.error('❌ Microphone requires secure context (HTTPS)');
-                        updateVoiceStatus('❌ Microphone requires HTTPS', 'error');
-                        addTranscriptMessage('System', '🔒 Microphone access requires a secure connection (HTTPS). Please use the live site.', 'system');
-                        return false;
-                    }
-
-                    // Check if getUserMedia is available
-                    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                        console.error('❌ getUserMedia not supported');
-                        updateVoiceStatus('❌ Microphone not supported', 'error');
-                        addTranscriptMessage('System', '❌ Microphone access not supported in this browser.', 'system');
-                        return false;
-                    }
-
-                    // Check permissions API if available
-                    if ('permissions' in navigator) {
-                        try {
-                            const permission = await navigator.permissions.query({ name: 'microphone' });
-                            console.log('🎙️ Microphone permission state:', permission.state);
-                            
-                            if (permission.state === 'denied') {
-                                updateVoiceStatus('❌ Microphone access denied in browser settings', 'error');
-                                addTranscriptMessage('System', '🎙️ Microphone access denied. Please enable microphone permissions in your browser settings and refresh the page.', 'system');
-                                return false;
-                            }
-                        } catch (err) {
-                            console.log('⚠️ Could not check permissions API:', err.message);
-                        }
-                    }
-                    
-                    // Try to access microphone directly
-                    console.log('🎙️ Requesting microphone access...');
-                    const stream = await navigator.mediaDevices.getUserMedia({ 
-                        audio: {
-                            echoCancellation: true,
-                            noiseSuppression: true,
-                            autoGainControl: true
-                        } 
-                    });
-                    
-                    console.log('✅ Microphone access granted');
-                    
-                    // Check if we have audio tracks
-                    const audioTracks = stream.getAudioTracks();
-                    if (audioTracks.length > 0) {
-                        const track = audioTracks[0];
-                        console.log('🎙️ Audio track found:', track.label || 'Default microphone');
-                        console.log('🎙️ Audio track settings:', track.getSettings());
-                        console.log('🎙️ Audio track capabilities:', track.getCapabilities());
-                        
-                        // Check if track is enabled and ready
-                        if (track.readyState !== 'live') {
-                            console.warn('⚠️ Audio track not in live state:', track.readyState);
-                        }
-                    } else {
-                        console.error('❌ No audio tracks available');
-                        updateVoiceStatus('❌ No microphone detected', 'error');
-                        addTranscriptMessage('System', '❌ No microphone detected. Please check your audio devices.', 'system');
-                        stream.getTracks().forEach(track => track.stop());
-                        return false;
-                    }
-                    
-                    // Stop the stream - we just needed to test access
-                    stream.getTracks().forEach(track => track.stop());
-                    return true;
-                    
-                } catch (error) {
-                    console.error('🎙️ Microphone access error:', error);
-                    let errorMessage = 'Microphone access failed';
-                    
-                    if (error.name === 'NotAllowedError') {
-                        errorMessage = 'Microphone access denied - please allow microphone permissions';
-                    } else if (error.name === 'NotFoundError') {
-                        errorMessage = 'No microphone found - please check your audio devices';
-                    } else if (error.name === 'NotReadableError') {
-                        errorMessage = 'Microphone is being used by another application';
-                    }
-                    
-                    updateVoiceStatus(`❌ ${errorMessage}`, 'error');
-                    addTranscriptMessage('System', errorMessage, 'system');
-                    return false;
-                }
-            }
-
-            // Initialize speech recognition
-            function initializeSpeechRecognition() {
-                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                    console.error('Speech recognition not supported');
-                    return false;
-                }
-
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                speechRecognition = new SpeechRecognition();
-                
-                // Simple continuous recognition setup
-                speechRecognition.continuous = false; // Changed to false for better control
-                speechRecognition.interimResults = true; // Enable interim results to show progress
-                speechRecognition.lang = 'en-US';
-                speechRecognition.maxAlternatives = 1;
-                
-                speechRecognition.onstart = function() {
-                    console.log('🎤 Listening...');
-                    isRecognitionRunning = true;
-                    updateVoiceStatus('🎤 Listening...', 'success');
-                };
-
-                speechRecognition.onresult = function(event) {
-                    console.log('🎤 Speech recognition result event:', event.results.length);
-                    
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        const result = event.results[i];
-                        const transcript = result[0].transcript;
-                        
-                        if (result.isFinal) {
-                            console.log('✅ Final speech result:', transcript);
-                            const finalTranscript = transcript.trim();
-                            if (finalTranscript.length > 1) {
-                                // Process the final result
-                                processUserSpeech(finalTranscript);
-                            }
-                        } else {
-                            // Show interim results for user feedback
-                            console.log('🔄 Interim speech result:', transcript);
-                            updateVoiceStatus(`🎤 Listening: "${transcript.trim()}"`, 'listening');
-                        }
-                    }
-                };
-
-                speechRecognition.onerror = function(event) {
-                    console.log('Speech error:', event.error);
-                    isRecognitionRunning = false;
-                    
-                    if (event.error === 'not-allowed') {
-                        updateVoiceStatus('❌ Microphone access denied', 'error');
-                        return;
-                    }
-                    
-                    // Restart on any error
-                    setTimeout(() => {
-                        if (isVoiceChatActive) {
-                            startListening();
-                        }
-                    }, 1000);
-                };
-
-                speechRecognition.onend = function() {
-                    console.log('🔄 Speech recognition ended');
-                    isRecognitionRunning = false;
-                    
-                    // Auto-restart for continuous listening loop
-                    if (isVoiceChatActive) {
-                        console.log('🔁 Auto-restarting speech recognition...');
-                        setTimeout(() => {
-                            if (isVoiceChatActive && !isRecognitionRunning) {
-                                startListening();
-                            }
-                        }, 100);
-                    }
-                };
-
-                return true;
-            }
-
-            // Simple start listening function
-            function startListening() {
-                console.log('🎯 startListening called, isRecognitionRunning:', isRecognitionRunning, 'isVoiceChatActive:', isVoiceChatActive);
-                
-                if (!speechRecognition) {
-                    console.error('❌ No speech recognition object');
-                    return;
-                }
-                
-                if (isRecognitionRunning) {
-                    console.log('⚠️ Recognition already running, skipping...');
-                    return;
-                }
-                
-                if (!isVoiceChatActive) {
-                    console.log('⚠️ Voice chat not active, skipping...');
-                    return;
-                }
-                
-                try {
-                    console.log('🎤 Starting speech recognition...');
-                    speechRecognition.start();
-                } catch (error) {
-                    console.error('❌ Error starting recognition:', error);
-                    isRecognitionRunning = false;
-                    
-                    // Retry in a moment
-                    setTimeout(() => {
-                        if (isVoiceChatActive) {
-                            console.log('🔄 Retrying startListening...');
-                            startListening();
-                        }
-                    }, 1000);
-                }
-            }
-
-            // Process user speech input - simplified
-            async function processUserSpeech(transcript) {
-                console.log(`🎯 processUserSpeech CALLED with: "${transcript}"`);
-                console.log('🔍 Function context:', { isVoiceChatActive, transcript: transcript.length });
-                
-                if (!transcript || transcript.length < 2) {
-                    console.log('❌ Transcript too short, ignoring');
-                    return;
-                }
-                
-                console.log('✅ Processing valid transcript...');
-                
-                // Add user message to transcript
-                addTranscriptMessage('You', transcript, 'user');
-                updateVoiceStatus('🤔 Nova is thinking...', 'processing');
-                
-                // Stop listening while Nova responds
-                if (speechRecognition && isRecognitionRunning) {
-                    speechRecognition.stop();
-                }
-                
-                // Check for stop commands
-                if (transcript.toLowerCase().includes('stop') || transcript.toLowerCase().includes('end chat')) {
-                    stopVoiceChatSession();
-                    return;
-                }
-
-                try {
-                    console.log('🚀 Starting AI API call...');
-                    
-                    // Build conversation history
-                    const conversationHistory = conversationTranscript
-                        .filter(msg => msg.type === 'user' || msg.type === 'ai')
-                        .map(msg => ({
-                            role: msg.type === 'user' ? 'user' : 'assistant',
-                            content: msg.message
-                        }))
-                        .slice(-10);
-                    
-                    console.log('📝 Conversation history:', conversationHistory);
-                    
-                    const requestBody = { 
-                        message: transcript,
-                        conversationHistory: conversationHistory
-                    };
-                    console.log('📤 Request body:', requestBody);
-                    
-                    const response = await fetch('/api/ai-chat', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(requestBody)
-                    });
-                    
-                    console.log('📥 API Response status:', response.status, response.statusText);
-
-                    if (response.ok) {
-                        console.log('✅ API call successful, parsing response...');
-                        const data = await response.json();
-                        console.log('📋 API response data:', data);
-                        
-                        const aiResponse = data.reply || 'Sorry, I had trouble understanding that.';
-                        console.log('🤖 Nova response:', aiResponse);
-                        
-                        // Add Nova response to transcript
-                        addTranscriptMessage('Nova', aiResponse, 'ai');
-                        
-                        // Speak the response, then restart listening
-                        console.log('🗨️ About to speak response...');
-                        await speakWithSelectedVoice(aiResponse);
-                        
-                        // Restart listening after Nova finishes speaking
-                        setTimeout(() => {
-                            if (isVoiceChatActive) {
-                                console.log('🔄 Restarting listening after Nova response...');
-                                startListening();
-                            }
-                        }, 500);
-                    } else {
-                        console.error('❌ API call failed:', response.status, response.statusText);
-                        const errorText = await response.text();
-                        console.error('❌ Error details:', errorText);
-                        
-                        const errorMsg = "I'm having trouble processing that. Could you try asking me something else?";
-                        addTranscriptMessage('Nova', errorMsg, 'ai');
-                        await speakWithSelectedVoice(errorMsg);
-                        setTimeout(() => {
-                            if (isVoiceChatActive) {
-                                startListening();
-                            }
-                        }, 500);
-                    }
-                } catch (error) {
-                    console.error('Voice chat error:', error);
-                    const errorMsg = "I encountered a technical issue. Please try asking me something else.";
-                    addTranscriptMessage('Nova', errorMsg, 'ai');
-                    await speakWithSelectedVoice(errorMsg);
-                    setTimeout(() => {
-                        if (isVoiceChatActive) {
-                            startListening();
-                        }
-                    }, 500);
-                }
-            }
-
-            // Add message to transcript
-            function addTranscriptMessage(sender, message, type) {
-                console.log(`📝 Adding transcript message: ${sender}: ${message}`);
-                
-                if (!voiceTranscript) {
-                    console.error('❌ voiceTranscript element not found');
-                    console.error('❌ Available elements:', {
-                        voiceTranscriptArea: !!document.getElementById('voiceTranscriptArea'),
-                        voiceTranscript: !!document.getElementById('voiceTranscript'),
-                        voiceStatusDisplay: !!document.getElementById('voiceStatusDisplay')
-                    });
-                    return;
-                }
-                
-                console.log('📊 voiceTranscript element found, current children:', voiceTranscript.children.length);
-                
-                const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                const messageElement = document.createElement('div');
-                messageElement.className = `transcript-message ${type} mb-2`;
-                
-                const senderClass = type === 'user' ? 'text-blue-400' : 
-                                   type === 'ai' ? 'text-pfw-gold' : 
-                                   'text-gray-400';
-                
-                messageElement.innerHTML = `
-                    <div class="flex items-start space-x-2">
-                        <div class="${senderClass} font-medium text-xs min-w-0">${sender}:</div>
-                        <div class="text-white text-xs flex-1 break-words">${message}</div>
-                        <div class="text-gray-500 text-xs shrink-0">${timestamp}</div>
-                    </div>
-                `;
-                
-                voiceTranscript.appendChild(messageElement);
-                console.log('📊 Message element added. New children count:', voiceTranscript.children.length);
-                
-                // Auto-scroll to bottom
-                voiceTranscript.scrollTop = voiceTranscript.scrollHeight;
-                
-                // Store in conversation history
-                conversationTranscript.push({ sender, message, timestamp, type });
-                
-                console.log(`✅ Transcript message added. Total messages: ${conversationTranscript.length}`);
-            }
-
-            // Update voice status display
-            function updateVoiceStatus(message, type = 'info') {
-                console.log(`🔄 Voice Status: ${message} (${type})`);
-                
-                if (voiceStatusText) {
-                    const icons = {
-                        success: '🎤',
-                        listening: '🗣️',
-                        processing: '🤔',
-                        error: '❌',
-                        info: 'ℹ️'
-                    };
-                    
-                    voiceStatusText.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
-                } else {
-                    console.warn('⚠️ voiceStatusText element not found');
-                }
-                
-                // Also update live transcript if applicable
-                if (type === 'listening' && liveTranscript) {
-                    liveTranscript.textContent = '';
-                }
-            }
-
-            // Get user-friendly error messages
-            function getErrorMessage(error) {
-                const messages = {
-                    'no-speech': 'No speech detected - try speaking louder',
-                    'audio-capture': 'Microphone not available',
-                    'not-allowed': 'Microphone access denied',
-                    'network': 'Network error - check connection',
-                    'aborted': 'Recognition was interrupted'
-                };
-                return messages[error] || 'Recognition error occurred';
-            }
-
-            // Speak with AI voice
-            async function speakWithSelectedVoice(text) {
-                // Skip TTS if it has failed too many times
-                if (ttsFailCount >= maxTtsFailures) {
-                    console.log('🗨️ TTS disabled due to previous failures, skipping...');
-                    updateVoiceStatus('📝 Text-only mode (TTS disabled)', 'info');
-                    
-                    // Just resume listening immediately
-                    if (isVoiceChatActive && !isRecognitionRunning) {
-                        setTimeout(() => {
-                            updateVoiceStatus('🎤 Ready to listen...', 'success');
-                            if (speechRecognition) {
-                                try {
-                                    isRecognitionRunning = true;
-                                    speechRecognition.start();
-                                } catch (error) {
-                                    console.warn('Failed to restart after TTS skip:', error);
-                                    isRecognitionRunning = false;
-                                }
-                            }
-                        }, 500);
-                    }
-                    return;
-                }
-                
-                console.log('🗨️ TTS Request starting...', { text: text.substring(0, 100) + '...', voice: selectedAIVoice });
-                updateVoiceStatus('🗨️ Speaking...', 'info');
-                
-                try {
-                    const requestBody = {
-                        text: text,
-                        voice: selectedAIVoice,
-                        model: 'tts-1'
-                    };
-                    
-                    console.log('🗨️ TTS Request body:', requestBody);
-                    
-                    const response = await fetch('/api/tts', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(requestBody)
-                    });
-
-                    console.log('🗨️ TTS Response status:', response.status, response.statusText);
-
-                    if (response.ok) {
-                        const audioBlob = await response.blob();
-                        console.log('🗨️ Audio blob received, size:', audioBlob.size);
-                        const audioURL = URL.createObjectURL(audioBlob);
-                        const audio = new Audio(audioURL);
-                        
-                        audio.onended = () => {
-                            console.log('🗨️ Audio playback completed');
-                            URL.revokeObjectURL(audioURL);
-                            // Resume listening after TTS
-                            updateVoiceStatus('🎤 Listening...', 'success');
-                            setTimeout(() => {
-                                if (isVoiceChatActive) {
-                                    startListening();
-                                }
-                            }, 500);
-                        };
-                        
-                        console.log('🗨️ Starting audio playback...');
-                        
-                        // Handle audio playback with permission fallback
-                        try {
-                            await audio.play();
-                        } catch (playError) {
-                            console.error('🗨️ Audio playback failed:', playError);
-                            
-                            // Check if it's a permission/interaction error
-                            if (playError.name === 'NotAllowedError' || playError.message.includes('interact')) {
-                                console.log('🗨️ Audio requires user interaction, adding click handler...');
-                                updateVoiceStatus('🔊 Click to enable audio', 'warning');
-                                addTranscriptMessage('System', '🔊 Click anywhere on the page to enable voice responses', 'system');
-                                
-                                // Create a one-time click handler to enable audio
-                                const enableAudio = async () => {
-                                    try {
-                                        await audio.play();
-                                        document.removeEventListener('click', enableAudio);
-                                        updateVoiceStatus('🗨️ Audio enabled, continuing...', 'success');
-                                    } catch (retryError) {
-                                        console.error('🗨️ Audio retry failed:', retryError);
-                                        // Fall through to text-only mode
-                                        audio.onended();
-                                    }
-                                };
-                                document.addEventListener('click', enableAudio, { once: true });
-                                
-                                // Also continue after timeout if no click
-                                setTimeout(() => {
-                                    document.removeEventListener('click', enableAudio);
-                                    console.log('🗨️ Audio timeout, continuing in text-only mode');
-                                    audio.onended();
-                                }, 5000);
-                                
-                            } else {
-                                // Other audio errors, continue without audio
-                                console.error('🗨️ Non-permission audio error:', playError);
-                                audio.onended();
-                            }
-                        }
-                    } else {
-                        // Get error details from response
-                        let errorText = '';
-                        try {
-                            const errorData = await response.json();
-                            errorText = errorData.error || errorData.details || 'Unknown TTS error';
-                            console.error('🗨️ TTS API Error:', errorData);
-                        } catch (e) {
-                            errorText = `HTTP ${response.status}: ${response.statusText}`;
-                            console.error('🗨️ TTS Response Error:', errorText);
-                        }
-                        throw new Error(`TTS failed: ${errorText}`);
-                    }
-                } catch (error) {
-                    console.error('🗨️ TTS error details:', error);
-                    ttsFailCount++;
-                    
-                    let errorMessage = error.message || 'Unknown TTS error';
-                    updateVoiceStatus(`❌ Speech synthesis failed: ${errorMessage}`, 'error');
-                    
-                    if (ttsFailCount >= maxTtsFailures) {
-                        addTranscriptMessage('System', `⚠️ TTS disabled after ${maxTtsFailures} failures. Voice chat will continue text-only.`, 'system');
-                        console.warn(`🗨️ TTS disabled after ${maxTtsFailures} failures`);
-                    } else {
-                        addTranscriptMessage('System', `TTS Error (${ttsFailCount}/${maxTtsFailures}): ${errorMessage}`, 'system');
-                    }
-                    
-                    // Resume listening even if TTS failed
-                    if (isVoiceChatActive && !isRecognitionRunning) {
-                        setTimeout(() => {
-                            updateVoiceStatus('🎤 Ready to listen...', 'success');
-                            if (speechRecognition) {
-                                try {
-                                    isRecognitionRunning = true;
-                                    speechRecognition.start();
-                                } catch (error) {
-                                    console.warn('Failed to restart after TTS error:', error);
-                                    isRecognitionRunning = false;
-                                }
-                            }
-                        }, 1000);
-                    }
-                }
-            }
-
-            // Get Nova's introduction and start the conversation
-            async function getNovaIntroduction() {
-                console.log('🤖 Getting Nova introduction...');
-                updateVoiceStatus('🤖 Nova is introducing herself...', 'processing');
-                
-                try {
-                    const response = await fetch('/api/nova-intro');
-                    if (response.ok) {
-                        const data = await response.json();
-                        const introduction = data.introduction;
-                        
-                        console.log('✨ Nova introduction received');
-                        addTranscriptMessage('Nova', introduction, 'ai');
-                        
-                        // Speak Nova's introduction
-                        await speakWithSelectedVoice(introduction);
-                        
-                        // Add helpful message after introduction
-                        setTimeout(() => {
-                            addTranscriptMessage('System', '💡 Tip: Say "stop" or "end chat" to finish the conversation. Speak clearly for best results!', 'system');
-                        }, 2000);
-                        
-                    } else {
-                        throw new Error('Failed to get introduction');
-                    }
-                } catch (error) {
-                    console.error('❌ Failed to get Nova introduction:', error);
-                    const fallbackIntro = "Hello! I'm Nova, Messiah Heredia's AI assistant! I'm excited to tell you about his amazing work as a systems administrator and help answer any questions about his skills and projects. What would you like to know?";
-                    addTranscriptMessage('Nova', fallbackIntro, 'ai');
-                    await speakWithSelectedVoice(fallbackIntro);
-                }
-            }
-
-            // Start voice chat session
-            async function startVoiceChatSession() {
-                console.log('🚀 Starting voice chat session...');
-                
-                // Test audio permissions early with a silent audio
-                try {
-                    const testAudio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSsFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfBz2b3/LGdSs=');
-                    testAudio.volume = 0; // Silent
-                    await testAudio.play();
-                    console.log('✅ Audio permissions OK');
-                } catch (audioError) {
-                    console.log('⚠️ Audio autoplay blocked, will request permission on first TTS:', audioError);
-                    updateVoiceStatus('🔊 Audio will need permission on first response', 'info');
-                }
-                
-                try {
-                    // Simple test - just try to start recognition without all the complex checks
-                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                    
-                    if (!SpeechRecognition) {
-                        console.error('❌ Speech Recognition not supported');
-                        updateVoiceStatus('❌ Speech Recognition not supported in your browser', 'error');
-                        return;
-                    }
-                    
-                    speechRecognition = new SpeechRecognition();
-                    speechRecognition.continuous = true;  // Keep listening continuously
-                    speechRecognition.interimResults = true;
-                    speechRecognition.lang = 'en-US';
-                    
-                    console.log('✅ Speech Recognition created with continuous=true');
-                    
-                    speechRecognition.onstart = function() {
-                        console.log('🎤 Speech started!');
-                        isRecognitionRunning = true;
-                        updateVoiceStatus('🎤 Listening...', 'success');
-                    };
-                    
-                    speechRecognition.onresult = function(event) {
-                        console.log('🎤 Got speech result:', event.results);
-                        for (let i = 0; i < event.results.length; i++) {
-                            const result = event.results[i];
-                            if (result.isFinal) {
-                                const text = result[0].transcript.trim();
-                                console.log('Final result:', text);
-                                
-                                // Process the speech with Nova AI
-                                if (text && text.length > 1) {
-                                    console.log('🎯 CALLING processUserSpeech with:', text);
-                                    processUserSpeech(text);
-                                } else {
-                                    console.log('⚠️ Speech too short, ignoring:', text);
-                                    // If no meaningful speech, just restart listening
-                                    setTimeout(() => {
-                                        if (isVoiceChatActive) {
-                                            console.log('🔁 No speech detected, restarting...');
-                                            startListening();
-                                        }
-                                    }, 1000);
-                                }
-                            } else {
-                                const text = result[0].transcript;
-                                console.log('Interim result:', text);
-                                updateVoiceStatus(`🎤 Hearing: "${text}"`, 'listening');
-                            }
-                        }
-                    };
-                    
-                    speechRecognition.onerror = function(event) {
-                        console.error('🎤 Speech error:', event.error);
-                        updateVoiceStatus(`❌ Error: ${event.error}`, 'error');
-                        isRecognitionRunning = false;
-                        
-                        setTimeout(() => {
-                            if (isVoiceChatActive) {
-                                console.log('� Retrying after error...');
-                                startListening();
-                            }
-                        }, 2000);
-                    };
-                    
-                    speechRecognition.onend = function() {
-                        console.log('🔄 Speech ended');
-                        isRecognitionRunning = false;
-                        
-                        if (isVoiceChatActive) {
-                            setTimeout(() => {
-                                console.log('🔁 Auto-restarting...');
-                                startListening();
-                            }, 500);
-                        }
-                    };
-                    
-                    // Set flags
-                    isVoiceChatActive = true;
-                    isRecognitionRunning = false;
-                    
-                    // Show UI elements
-                    if (voiceTranscriptArea) {
-                        voiceTranscriptArea.classList.remove('hidden');
-                        console.log('✅ Transcript area shown');
-                    }
-                    
-                    if (voiceStatusDisplay) {
-                        voiceStatusDisplay.classList.remove('hidden');
-                        console.log('✅ Status display shown');
-                    }
-                    
-                    // Clear transcript
-                    if (voiceTranscript) {
-                        voiceTranscript.innerHTML = '';
-                        console.log('🧹 Transcript cleared');
-                    }
-                    
-                    // Add welcome message
-                    addTranscriptMessage('System', '🎤 Voice chat started! Say something to test...', 'system');
-                    
-                    // Start listening
-                    console.log('� About to start listening...');
-                    startListening();
-                    
-                } catch (error) {
-                    console.error('❌ Failed to start voice chat:', error);
-                    updateVoiceStatus(`❌ Failed to start: ${error.message}`, 'error');
-                }
-            }
-
-            // Stop voice chat session
-            function stopVoiceChatSession() {
-                isVoiceChatActive = false;
-                isRecognitionRunning = false;
-                
-                // Update UI
-                const micIcon = voiceChatToggle.querySelector('i');
-                micIcon.className = 'fas fa-microphone';
-                voiceChatToggle.classList.remove('bg-red-500');
-                voiceChatToggle.classList.add('bg-pfw-gold');
-                
-                // Hide transcript and status areas
-                voiceTranscriptArea.classList.add('hidden');
-                voiceStatusDisplay.classList.add('hidden');
-                
-                // Show the start voice chat button again, hide stop button
-                if (startVoiceChatContainer && stopVoiceChatContainer) {
-                    startVoiceChatContainer.classList.remove('hidden');
-                    stopVoiceChatContainer.classList.add('hidden');
-                }
-                
-                // Hide manual speak button when voice chat ends
-                if (manualSpeakContainer) {
-                    manualSpeakContainer.style.display = 'none';
-                }
-                
-                // Hide the entire modal when voice chat ends
-                voiceSelectionModal.classList.add('hidden');
-                voiceSelectionModal.classList.remove('flex');
-                
-                // Stop recognition
-                if (speechRecognition) {
-                    speechRecognition.stop();
-                }
-                
-                // Add farewell message
-                addTranscriptMessage('System', 'Voice chat ended. Thanks for chatting!', 'system');
-            }
-
-            // Event Listeners
-            voiceChatToggle.addEventListener('click', function() {
-                if (isVoiceChatActive) {
-                    stopVoiceChatSession();
-                } else if (voiceSelectionModal.classList.contains('hidden')) {
-                    voiceSelectionModal.classList.remove('hidden');
-                    voiceSelectionModal.classList.add('flex');
-                }
-            });
-
-            closeVoiceModal.addEventListener('click', function() {
-                if (isVoiceChatActive) {
-                    // If voice chat is active, stop it first
-                    stopVoiceChatSession();
-                }
-                voiceSelectionModal.classList.add('hidden');
-                voiceSelectionModal.classList.remove('flex');
-            });
-
-            startVoiceChat.addEventListener('click', function() {
-                console.log('🚀 Start voice chat clicked! Testing basic speech recognition...');
-                // Don't hide the modal - keep it open to show transcript
-                // voiceSelectionModal.classList.add('hidden');
-                // voiceSelectionModal.classList.remove('flex');
-                startVoiceChatSession();
-            });
-
-            stopVoiceChat.addEventListener('click', function() {
-                console.log('🛑 Stop voice chat clicked!');
-                stopVoiceChatSession();
-            });
-
-            // Manual speak button event handler
-            manualSpeakButton.addEventListener('click', function() {
-                console.log('🎤 Manual speak button clicked');
-                
-                try {
-                    // Show user that we're ready for manual input
-                    updateVoiceStatus('🎙️ Click and speak now...', 'info');
-                    manualSpeakButton.textContent = '🔴 Recording... (speak now)';
-                    manualSpeakButton.disabled = true;
-                    
-                    // Start a one-time recognition session
-                    if (speechRecognition) {
-                        speechRecognition.continuous = false; // One-time recognition
-                        speechRecognition.interimResults = true;
-                        
-                        // Set up one-time event handlers
-                        const handleResult = function(event) {
-                            if (event.results.length > 0) {
-                                const result = event.results[event.results.length - 1];
-                                if (result.isFinal) {
-                                    const transcript = result[0].transcript.trim();
-                                    console.log('🎤 Manual speech recognized:', transcript);
-                                    
-                                    // Process the speech
-                                    if (transcript) {
-                                        addTranscriptMessage('You', transcript, 'user');
-                                        processUserSpeech(transcript);
-                                    }
-                                    
-                                    // Reset button
-                                    manualSpeakButton.textContent = '🎤 Click & Speak Now';
-                                    manualSpeakButton.disabled = false;
-                                    updateVoiceStatus('🎤 Manual speech mode - click button to speak', 'success');
-                                    
-                                    // Clean up one-time handlers
-                                    speechRecognition.removeEventListener('result', handleResult);
-                                    speechRecognition.removeEventListener('error', handleError);
-                                }
-                            }
-                        };
-                        
-                        const handleError = function(event) {
-                            console.error('Manual speech recognition error:', event.error);
-                            manualSpeakButton.textContent = '🎤 Click & Speak Now';
-                            manualSpeakButton.disabled = false;
-                            updateVoiceStatus('❌ Speech recognition failed - try again', 'error');
-                            
-                            // Clean up one-time handlers
-                            speechRecognition.removeEventListener('result', handleResult);
-                            speechRecognition.removeEventListener('error', handleError);
-                        };
-                        
-                        // Add event listeners for manual speech
-                        speechRecognition.addEventListener('result', handleResult);
-                        speechRecognition.addEventListener('error', handleError);
-                        
-                        // Start recognition
-                        speechRecognition.start();
-                    }
-                    
-                } catch (error) {
-                    console.error('Manual speech error:', error);
-                    manualSpeakButton.textContent = '🎤 Click & Speak Now';
-                    manualSpeakButton.disabled = false;
-                    updateVoiceStatus('❌ Speech recognition failed', 'error');
-                }
-            });
-            
-            console.log('✅ Nova Voice Chat System ready');
-        });
-
-        // Add CSS animation and immediate preloader fallback
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fadeIn {
-                animation: fadeIn 0.3s ease-out;
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Emergency preloader removal - executes immediately
-        (function() {
-            let preloaderHidden = false;
-            
-            function forceHidePreloader() {
-                if (!preloaderHidden) {
-                    const preloader = document.getElementById('preloader');
-                    if (preloader) {
-                        preloader.style.display = 'none';
-                        preloaderHidden = true;
-                        console.log('Preloader force hidden');
-                    }
-                }
-            }
-            
-            // Hide preloader after 3 seconds maximum
-            setTimeout(forceHidePreloader, 3000);
-            
-            // Also try to hide when page is interactive
-            if (document.readyState === 'interactive' || document.readyState === 'complete') {
-                setTimeout(forceHidePreloader, 1000);
-            }
-        })();
     </script>
 </body>
 </html>
