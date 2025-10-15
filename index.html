@@ -12,8 +12,221 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23000000'/%3E%3Ctext x='50' y='65' font-family='Poppins,sans-serif' font-size='45' font-weight='bold' text-anchor='middle' fill='%23b9975b'%3EIT%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="future-certs-panel.css">
     
     <style>
+        /* Creative Personal Projects Section & Cards */
+        .personal-projects-wrapper {
+            background: linear-gradient(135deg, rgba(210,180,140,0.05) 0%, rgba(100,108,255,0.05) 50%, rgba(185,151,91,0.05) 100%);
+            border-radius: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.1);
+            padding: 3.5rem 2.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .personal-projects-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(210,180,140,0.03) 50%, transparent 70%);
+            pointer-events: none;
+        }
+        .projects-section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .projects-main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(210,180,140,0.3);
+        }
+        .projects-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        .creative-project-card {
+            background: linear-gradient(145deg, var(--bg-tertiary) 0%, rgba(255,255,255,0.02) 100%);
+            border-radius: 1.8rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.1) inset;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(210,180,140,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .creative-project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(210,180,140,0.1), transparent);
+            transition: left 0.6s;
+        }
+        .creative-project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25), 0 0 40px rgba(210,180,140,0.15);
+            border-color: var(--primary-color);
+        }
+        .creative-project-card:hover::before {
+            left: 100%;
+        }
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px rgba(210,180,140,0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+        }
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .project-counter {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(210,180,140,0.1) 100%);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            align-self: flex-end;
+            border: 1px solid rgba(210,180,140,0.2);
+            backdrop-filter: blur(10px);
+        }
+        /* Certification Section Styles */
+        .cert-grid {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .cert-panel {
+            background: linear-gradient(145deg, var(--bg-tertiary) 0%, rgba(255,255,255,0.02) 100%);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 1px solid rgba(210,180,140,0.1);
+            min-width: 300px;
+        }
+        .cert-panel-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .cert-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .cert-card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(210,180,140,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cert-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+        .cert-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+        .cert-card h5 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .cert-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .cert-status {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .cert-status.achieved {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        .cube-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px;
+        }
+        @media (max-width: 768px) {
+            .cert-grid {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .personal-projects-wrapper {
+                padding: 2rem 1.5rem;
+                margin: 1rem 0;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .creative-project-card {
+                padding: 2rem 1.5rem;
+            }
+            .projects-main-title {
+                font-size: 2rem;
+            }
+        }
         /* CSS Variables for Theme System */
         :root {
             /* Default Dark Theme (Tan/Beige Colors) */
@@ -195,12 +408,12 @@
             position: relative;
             display: block;
             text-transform: uppercase;
-            margin: 20px 0;
-            padding: 10px 20px;
+            margin: 8px 0;
+            padding: 6px 12px;
             text-decoration: none;
             color: var(--text-secondary);
             font-family: sans-serif;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
             transition: .5s;
             z-index: 1;
@@ -677,7 +890,212 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Shadow-dance CSS (themed to site PFW gold and responsive) */
+        /* Aurora Title Effect */
+        .aurora-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: clamp(-1.75px, -0.25vw, -3.5px);
+            position: relative;
+            margin: 0;
+            display: inline-block;
+            white-space: nowrap;
+            background: linear-gradient(
+                45deg,
+                var(--primary-color),
+                var(--primary-light),
+                #DAA520,
+                var(--primary-color),
+                #B8860B,
+                var(--primary-light)
+            );
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        /* Apply aurora effect to all titles */
+        .shadow-dance-text, h3, .panel-title, .cert-section-title {
+            background: linear-gradient(
+                45deg,
+                var(--primary-color),
+                var(--primary-light),
+                #DAA520,
+                var(--primary-color),
+                #B8860B,
+                var(--primary-light)
+            );
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+            font-weight: 700;
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        /* Theme-specific gradient overrides */
+        .theme-ocean .aurora-title,
+        .theme-ocean .shadow-dance-text,
+        .theme-ocean h3,
+        .theme-ocean .panel-title,
+        .theme-ocean .cert-section-title {
+            background: linear-gradient(
+                45deg,
+                #00c2ff,
+                #0099cc,
+                #006699,
+                #00c2ff,
+                #004466,
+                #0099cc
+            );
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        .theme-forest .aurora-title,
+        .theme-forest .shadow-dance-text,
+        .theme-forest h3,
+        .theme-forest .panel-title,
+        .theme-forest .cert-section-title {
+            background: linear-gradient(
+                45deg,
+                #33ff8c,
+                #00cc66,
+                #009944,
+                #33ff8c,
+                #006622,
+                #00cc66
+            );
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        .theme-cosmic .aurora-title,
+        .theme-cosmic .shadow-dance-text,
+        .theme-cosmic h3,
+        .theme-cosmic .panel-title,
+        .theme-cosmic .cert-section-title {
+            background: linear-gradient(
+                45deg,
+                #e54cff,
+                #cc00ff,
+                #9900cc,
+                #e54cff,
+                #660099,
+                #cc00ff
+            );
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        .theme-sunset .aurora-title,
+        .theme-sunset .shadow-dance-text,
+        .theme-sunset h3,
+        .theme-sunset .panel-title,
+        .theme-sunset .cert-section-title {
+            background: linear-gradient(
+                45deg,
+                #ffc640,
+                #ff9900,
+                #ff6600,
+                #ffc640,
+                #cc3300,
+                #ff9900
+            );
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        /* Fallback for browsers that don't support background-clip */
+        @supports not (-webkit-background-clip: text) {
+            .aurora-title,
+            .shadow-dance-text,
+            h3,
+            .panel-title,
+            .cert-section-title {
+                background: none !important;
+                color: var(--primary-color) !important;
+                -webkit-text-fill-color: var(--primary-color) !important;
+            }
+            
+            .theme-ocean .aurora-title,
+            .theme-ocean .shadow-dance-text,
+            .theme-ocean h3,
+            .theme-ocean .panel-title,
+            .theme-ocean .cert-section-title {
+                color: #00c2ff !important;
+                -webkit-text-fill-color: #00c2ff !important;
+            }
+            
+            .theme-forest .aurora-title,
+            .theme-forest .shadow-dance-text,
+            .theme-forest h3,
+            .theme-forest .panel-title,
+            .theme-forest .cert-section-title {
+                color: #33ff8c !important;
+                -webkit-text-fill-color: #33ff8c !important;
+            }
+            
+            .theme-cosmic .aurora-title,
+            .theme-cosmic .shadow-dance-text,
+            .theme-cosmic h3,
+            .theme-cosmic .panel-title,
+            .theme-cosmic .cert-section-title {
+                color: #e54cff !important;
+                -webkit-text-fill-color: #e54cff !important;
+            }
+            
+            .theme-sunset .aurora-title,
+            .theme-sunset .shadow-dance-text,
+            .theme-sunset h3,
+            .theme-sunset .panel-title,
+            .theme-sunset .cert-section-title {
+                color: #ffc640 !important;
+                -webkit-text-fill-color: #ffc640 !important;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .aurora-title {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+                white-space: normal;
+                line-height: 1.2;
+            }
+        }
+
+        /* Title animations now handled by aurora effect above */
         .shadow-dance-container {
             display: flex;
             justify-content: flex-start;
@@ -822,11 +1240,11 @@
     }
 
     /* Right-side hero cards (scoped, site-themed) */
-    .hero-cards { position: absolute; right: 3rem; top: 6rem; display:flex; flex-direction:column; gap:3.5rem; z-index: 20; }
+    .hero-cards { position: absolute; right: 3rem; top: 3rem; display:flex; flex-direction:column; gap:5.5rem; z-index: 20; }
     .hero-cards .box { 
         position: relative; 
-        width: 320px; 
-        height: 140px; 
+        width: 280px; 
+        height: 120px; 
         display:flex; 
         align-items:center; 
         margin: 0; 
@@ -931,16 +1349,16 @@
     .hero-cards .content a i { margin-right: 6px; }
     .hero-cards .content a:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
 
-    @media (max-width: 1024px) { .hero-cards { position: static; right: auto; top: auto; margin-top: 1.25rem; flex-direction: row; justify-content:center; gap:2.5rem; } .hero-cards .box { width: 220px; height: 130px; } }
+    @media (max-width: 1024px) { .hero-cards { position: static; right: auto; top: auto; margin-top: 1.25rem; flex-direction: row; justify-content:center; gap:2rem; } .hero-cards .box { width: 200px; height: 110px; } }
 
     /* STRONG animated block scoped to CTA tiles (overlay behind the visible label) */
     .cta-strong * { box-sizing: border-box; }
     .cta-strong { position: relative; overflow: hidden; }
     .cta-strong .strong-article { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; pointer-events: none; z-index: 1; }
     .cta-strong .strong-article p { margin: 0; padding: 0 0.5rem; color: transparent; font-family: 'Bungee', sans-serif; font-size: 1.125rem; line-height:1; position: relative; }
-    .cta-strong .strong-article p:before { content: ""; width: 50%; position: absolute; border-bottom: solid 4px rgba(255,255,255,0.9); left: -50%; top: calc(50% + 10px); transition: transform .45s cubic-bezier(.2,.9,.2,1), filter .45s, opacity .45s; }
+    .cta-strong .strong-article p:before { content: ""; width: 50%; position: absolute; border-bottom: solid 4px rgba(255,255,255,0.9); left: -50%; top: calc(50% + 10px); transition: transform .45s cubic-bezier(.2,.9,.2,1), filter .45s ease, opacity .45s; }
     .cta-strong .strong-article p span { display:block; position: absolute; height:50%; width:100%; overflow:hidden; }
-    .cta-strong .strong-article p span:before { content: attr(data-text); color: rgba(255,255,255,0.95); display:block; transition: transform .45s cubic-bezier(.2,.9,.2,1), filter .45s, opacity .45s; will-change: transform, filter, opacity; }
+    .cta-strong .strong-article p span:before { content: attr(data-text); color: rgba(255,255,255,0.95); display:block; transition: transform .45s cubic-bezier(.2,.9,.2,1), filter .45s ease, opacity .45s; will-change: transform, filter, opacity; }
     .cta-strong .strong-article p span:first-child { top: 0; }
     .cta-strong .strong-article p span:last-child { bottom: 0; }
     .cta-strong .strong-article p span:first-child:before { transform: translateY(18px); }
@@ -1003,13 +1421,6 @@
         .project-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 25px 50px -12px var(--primary-color);
-        }
-
-        /* Light theme specific project card hover */
-        .theme-light .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary-color) !important;
         }
 
         /* Loading Animation for Images */
@@ -1482,739 +1893,491 @@
             background: #ff6b35;
         }
 
-        /* Mobile Optimizations */
-        @media screen and (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 10px;
-                padding: 10px 20px;
-            }
-            
-            nav a {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-            
-            /* Creative nav mobile optimization */
-            .creative-nav {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .creative-nav li a {
-                padding: 12px 20px;
-                border-radius: 8px;
-                font-size: 14px;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .creative-nav li a:hover {
-                background: var(--primary-color);
-                transform: scale(1.02);
-                border-color: var(--primary-color);
-            }
-            
-            /* Mobile header adjustments */
-            header {
-                position: fixed;
-                padding: 15px 20px;
-            }
-            
-            .theme-toggle {
-                position: fixed;
-                top: 15px;
-                right: 15px;
-                z-index: 999;
-                padding: 8px;
-                font-size: 18px;
-                border-radius: 50%;
-                background: rgba(0, 0, 0, 0.8);
-            }
-            
-            .hero {
-                padding: 30px 20px;
-                text-align: center;
-                min-height: auto;
-                margin-top: 80px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-                margin-bottom: 20px;
-                line-height: 1.2;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-                line-height: 1.7;
-                margin-bottom: 30px;
-                max-width: 90%;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            
-            .social-icons {
-                justify-content: center;
-                gap: 20px;
-                margin-bottom: 25px;
-            }
-            
-            .social-icons a {
-                padding: 10px;
-                font-size: 1.8rem;
-                border-radius: 50%;
-                transition: all 0.3s ease;
-                background: rgba(255, 255, 255, 0.1);
-                border: 2px solid transparent;
-            }
-            
-            .social-icons a:hover {
-                transform: scale(1.1);
-                background: var(--primary-color);
-                border-color: var(--primary-light);
-            }
-            
-            .next-btn {
-                padding: 15px 30px;
-                font-size: 16px;
-                margin-top: 20px;
-                border-radius: 25px;
-                background: var(--primary-color);
-                color: var(--bg-primary);
-                border: 2px solid var(--primary-color);
-                transition: all 0.3s ease;
-            }
-            
-            .next-btn:hover {
-                background: transparent;
-                color: var(--primary-color);
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            }
-            
-            .project-cards {
-                overflow-x: auto;
-                flex-wrap: nowrap;
-                padding: 20px 10px;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .project-card {
-                min-width: 280px;
-                margin: 10px;
-                scroll-snap-align: start;
-            }
-            
-            .chat-widget {
-                width: 90%;
-                max-width: 400px;
-                height: 400px;
-            }
-            
-            /* Mobile menu icon if needed */
-            .mobile-menu-toggle {
-                display: block;
-                background: none;
-                border: none;
-                color: var(--text-primary);
-                font-size: 24px;
-                cursor: pointer;
-                padding: 8px;
-            }
-
-            /* 3D Cards responsive */
-            .cert-section-3d {
-                flex-direction: column !important;
-                gap: 2rem !important;
-                min-height: auto !important;
-            }
-
-            .cert-card-3d {
-                position: relative !important;
-                width: 100% !important;
-                max-width: 300px !important;
-                margin: 0 auto !important;
-                transform: rotatex(15deg) translatey(-20px) translatez(-20px) !important;
-                cursor: pointer !important;
-            }
-
-            .cert-card-3d:hover {
-                transform: rotatex(0deg) translatey(0px) translatez(0px) scale(1.02) !important;
-                z-index: 10 !important;
-                box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.4) !important;
-            }
-        }
-
-        /* 3D Certification Cards CSS */
-        @import url('https://fonts.googleapis.com/css?family=Exo:700');
-        @import url('https://fonts.googleapis.com/css?family=Abel');
-
-        .cert-section-3d {
-            -webkit-transform: perspective(900px);
-            transform: perspective(900px);
-            -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-            position: relative;
-            min-height: 500px;
-            margin: 60px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .cert-card-3d {
-            text-align: center;
-            position: relative;
-            width: 360px;
-            height: 460px;
-            margin: 20px;
-            transition: all .6s ease;
-            transform: rotatex(25deg) translatey(-30px) translatez(-30px);
-            box-shadow: 0px 20px 60px rgba(0,0,0, 0.5);
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            /* Ensure the entire card is hoverable */
-            pointer-events: auto !important;
-            z-index: 1;
-            /* Default theme colors */
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        }
-
-        /* Theme-aware card backgrounds */
-        .theme-ocean .cert-card-3d:nth-child(2) {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-        }
-
-        .theme-ocean .cert-card-3d:nth-child(3) {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-        }
-
-        .theme-ocean .cert-card-3d:nth-child(4) {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-        }
-
-        .theme-forest .cert-card-3d:nth-child(2) {
-            background: linear-gradient(135deg, #059669, #047857);
-        }
-
-        .theme-forest .cert-card-3d:nth-child(3) {
-            background: linear-gradient(135deg, #047857, #065f46);
-        }
-
-        .theme-forest .cert-card-3d:nth-child(4) {
-            background: linear-gradient(135deg, #047857, #065f46);
-        }
-
-        .theme-cosmic .cert-card-3d:nth-child(2) {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-        }
-
-        .theme-cosmic .cert-card-3d:nth-child(3) {
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
-        }
-
-        .theme-cosmic .cert-card-3d:nth-child(4) {
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
-        }
-
-        .theme-sunset .cert-card-3d:nth-child(2) {
-            background: linear-gradient(135deg, #ea580c, #c2410c);
-        }
-
-        .theme-sunset .cert-card-3d:nth-child(3) {
-            background: linear-gradient(135deg, #c2410c, #9a3412);
-        }
-
-        .theme-sunset .cert-card-3d:nth-child(4) {
-            background: linear-gradient(135deg, #c2410c, #9a3412);
-        }
-
-        .cert-card-3d:hover {
-            transform: rotatex(0deg) translatey(0px) translatez(0px) scale(1.05);
-            transition: all .6s ease;
-            box-shadow: 0px 30px 80px rgba(0, 0, 0, 0.4);
-            z-index: 10;
-        }
-
-        /* CLEAN SLATE - SINGLE DEFINITIVE HOVER SOLUTION */
-        .cert-card-3d {
-            text-align: center !important;
-            position: relative !important;
-            width: 360px !important;
-            height: 460px !important;
-            margin: 20px !important;
-            transition: all .6s ease !important;
-            transform: rotatex(25deg) translatey(-30px) translatez(-30px) !important;
-            box-shadow: 0px 20px 60px rgba(0,0,0, 0.5) !important;
-            border-radius: 15px !important;
-            overflow: hidden !important;
-            cursor: pointer !important;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
-            z-index: 5 !important;
-        }
-
-        /* UNIVERSAL BROWSER HOVER FIX - SIMPLIFIED */
-        .cert-card-3d:hover,
-        .cert-card-3d:hover *,
-        .cert-card-3d *:hover {
-            transform: rotatex(0deg) translatey(0px) translatez(0px) scale(1.05) !important;
-            transition: all .6s ease !important;
-            box-shadow: 0px 30px 80px rgba(0, 0, 0, 0.4) !important;
-            z-index: 999 !important;
-        }
-
-        /* Restore normal state for child elements on hover */
-        .cert-card-3d:hover img,
-        .cert-card-3d:hover h3,
-        .cert-card-3d:hover p {
-            transform: none !important;
-            box-shadow: none !important;
-        }
-
-        .cert-card-3d img {
-            transform: translateY(25px);
-            width: 250px;
-            height: 160px;
-            object-fit: contain;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            backdrop-filter: blur(5px);
-            margin: 0 auto;
-            display: block;
-        }
-
-        .cert-card-3d h3 {
-            font-size: 22px;
-            font-family: 'Abel', sans-serif;
-            color: rgb(255,255,255);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            transform: translatey(5px);
-            margin: 15px 0 10px 0;
-            font-weight: bold;
-        }
-
-        .cert-card-3d p {
-            font-family: 'Abel', sans-serif;
-            color: rgba(255,255,255,0.95);
-            text-align: center;
-            width: 100%;
-            margin: 10px auto 15px auto;
-            font-size: 13px;
-            line-height: 1.5;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            padding: 0 20px;
-        }
-
-        .cert-card-3d .cert-status {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 25px;
-            font-size: 11px;
-            font-weight: bold;
-            margin: 10px 0;
-            background: rgba(255,255,255,0.25);
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .cert-card-3d .cert-link {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            display: inline-block;
-            margin-top: 10px;
-            padding: 12px 24px;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .cert-card-3d .cert-link:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        @media screen and (max-width: 480px) {
-            .hero {
-                padding: 25px 15px;
-                margin-top: 70px;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-                margin-bottom: 15px;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-                line-height: 1.6;
-                margin-bottom: 25px;
-            }
-            
-            .social-icons {
-                gap: 15px;
-                margin-bottom: 20px;
-            }
-            
-            .social-icons a {
-                padding: 8px;
-                font-size: 1.5rem;
-            }
-            
-            .next-btn {
-                padding: 12px 24px;
-                font-size: 14px;
-                margin-top: 15px;
-            }
-            
-            .creative-nav li a {
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            
-            .project-card {
-                min-width: 250px;
-            }
-            
-            .chat-widget {
-                height: 350px;
-            }
-            
-            .theme-toggle {
-                top: 10px;
-                right: 10px;
-                padding: 6px;
-                font-size: 16px;
-            }
-        }
-
-        /* Stack Cards Styles */
-        .stack-cards-wrapper {
+        /* Enhanced Certification Section Styles */
+        .cert-main-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin: 2rem 0;
-            justify-items: center;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
             align-items: start;
-            width: 100%;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
         }
         
-        .stack-cards-container {
-            position: relative;
-            height: 500px;
-            width: 100%;
-            max-width: 420px;
-            overflow-y: auto;
-            overflow-x: hidden;
+        /* Large Certification Images Section */
+        .cert-images-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .cert-image-item {
+            text-align: center;
+        }
+        
+        .large-cert-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
             border-radius: 15px;
-            border: 1px solid var(--primary-color);
-            background: rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            scroll-behavior: smooth;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, var(--bg-tertiary), rgba(255,255,255,0.1));
+            padding: 10px;
         }
-
-        .stack-cards-container::-webkit-scrollbar {
-            width: 6px;
+        
+        .large-cert-image:hover {
+            transform: scale(1.1) rotateY(10deg);
+            box-shadow: 0 15px 40px rgba(210,180,140,0.3);
         }
-
-        .stack-cards-container::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 3px;
+        
+        .cert-image-label {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
         }
-
-        .stack-cards-container::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 3px;
+        
+        .cert-section {
+            background: linear-gradient(145deg, var(--bg-tertiary) 0%, rgba(255,255,255,0.02) 100%);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            border: 1px solid rgba(210,180,140,0.1);
         }
-
-        .stack-cards-container::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
+        
+        .cert-section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.2rem;
         }
-
-        .stack-cards {
+        
+        .cert-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .enhanced-cert-card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(210,180,140,0.2);
+            transition: all 0.3s ease;
             position: relative;
-            height: auto;
-            min-height: 2000px;
         }
-
-        .stack-cards__item {
-            position: sticky;
-            top: 15px;
-            width: 100%;
-            height: 280px;
-            margin: 0 auto 40px auto;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        
+        .enhanced-cert-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .cert-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .cert-details {
+            flex-grow: 1;
+        }
+        
+        .cert-title {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .cert-code {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.4;
+            margin-top: 0.3rem;
+        }
+        
+        .cert-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Personal Projects Panels */
+        .project-panels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .project-panel {
+            background: linear-gradient(145deg, var(--bg-tertiary) 0%, rgba(255,255,255,0.03) 100%);
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 1px solid rgba(210,180,140,0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            min-height: 450px;
+        }
+        
+        .project-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-panel:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .project-panel:hover::before {
+            opacity: 1;
+        }
+        
+        .panel-header {
+            padding: 2rem 2rem 1rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(210,180,140,0.1);
+        }
+        
+        .panel-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             border-radius: 20px;
-            padding: 20px;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            color: var(--bg-primary);
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-panel:hover .panel-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Navigation Controls */
+        .panel-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(210,180,140,0.1);
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: var(--bg-primary);
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transform-origin: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .stack-cards__item:hover {
-            transform: scale(1.02) translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        
+        .nav-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(210,180,140,0.4);
         }
-
-        .stack-cards__item .inner {
-            height: 100%;
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .card-indicator {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        /* Flippable Cards */
+        .cards-container {
+            position: relative;
+            padding: 2rem;
+            height: 280px;
+            overflow: hidden;
+        }
+        
+        .project-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.02);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(210,180,140,0.1);
+            opacity: 0;
+            transform: translateX(100px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
-        .stack-cards__item h3 {
+        
+        .project-card.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            z-index: 10;
+        }
+        
+        .project-card h5 {
             font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 12px;
-            text-align: center;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+            line-height: 1.3;
         }
-
-        .stack-cards__item p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            opacity: 0.95;
+        
+        .project-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0 0 1.5rem 0;
+            font-size: 0.95rem;
             flex-grow: 1;
-            text-align: center;
         }
-
-        .stack-cards__item .counter {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            text-align: center;
-            margin-top: 12px;
-            padding: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
+        
+        /* Technology Tags */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
-
-        /* Mobile responsiveness for stack cards */
+        
+        .tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: var(--bg-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 1024px) {
-            .stack-cards-wrapper {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+            .project-panels-container {
+                grid-template-columns: 1fr;
+                max-width: 600px;
             }
         }
         
         @media (max-width: 768px) {
-            .stack-cards-wrapper {
-                grid-template-columns: 1fr;
-                gap: 15px;
+            .project-panel {
+                border-radius: 1.5rem;
+                min-height: 400px;
             }
             
-            .stack-cards-container {
-                height: 500px;
-                max-width: 100%;
-                padding: 12px;
+            .panel-header {
+                padding: 1.5rem 1.5rem 1rem 1.5rem;
             }
-
-            .stack-cards__item {
-                height: 250px;
-                padding: 15px;
-                margin-bottom: 30px;
+            
+            .panel-navigation {
+                padding: 0.8rem 1.5rem;
             }
-
-            .stack-cards__item h3 {
-                font-size: 1.2rem;
+            
+            .cards-container {
+                padding: 1.5rem;
+                height: 240px;
             }
-
-            .stack-cards__item p {
-                font-size: 0.85rem;
+            
+            .panel-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .panel-title {
+                font-size: 1.3rem;
+            }
+            
+            .nav-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
             }
         }
 
-        /* Survey Submit Button Styles */
-        .survey-submit-btn {
-            width: 150px;
-            height: 50px;
+        /* Fancy Animated Verify Buttons */
+        .fancy-verify-btn {
             background: none;
-            border: 4px solid var(--primary-color);
-            border-radius: 50px;
+            padding: 0;
+            border: none;
+            display: block;
+            backface-visibility: hidden;
+            width: 140px;
+            height: 40px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: transform 300ms, color 300ms;
             cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .fancy-verify-btn:hover,
+        .fancy-verify-btn:focus {
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .fancy-verify-btn:hover .fancy-btn-line,
+        .fancy-verify-btn:focus .fancy-btn-line {
+            animation-play-state: paused;
+        }
+        
+        .fancy-btn-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        @keyframes outer-dashoffset {
+            0% {
+                stroke-dashoffset: 0;
+                stroke-dasharray: 336px 336px;
+            }
+            50% {
+                stroke-dasharray: 224px 448px;
+            }
+            100% {
+                stroke-dashoffset: 672px;
+                stroke-dasharray: 336px 336px;
+            }
+        }
+        
+        .fancy-btn-line--outer {
+            stroke-dasharray: 336px 336px;
+            stroke-dashoffset: 0;
+            animation: outer-dashoffset infinite linear 6s;
+            stroke: var(--primary-color);
+        }
+        
+        @keyframes inner-dashoffset {
+            0% {
+                stroke-dashoffset: 0;
+                stroke-dasharray: 336px 336px;
+            }
+            50% {
+                stroke-dasharray: 224px 448px;
+            }
+            100% {
+                stroke-dashoffset: -672px;
+                stroke-dasharray: 336px 336px;
+            }
+        }
+        
+        .fancy-btn-line--inner {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 336px 336px;
+            animation: inner-dashoffset infinite 5s;
+            stroke: var(--primary-light);
+        }
+        
+        .fancy-btn-content {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 100ms;
-            position: relative;
+            line-height: 1;
+            gap: 0.4rem;
         }
-
-        .survey-submit-btn.disabled {
-            border-color: var(--border-color);
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .survey-submit-btn span,
-        .survey-submit-btn svg {
-            position: absolute;
-            color: var(--primary-color);
-            fill: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-        }
-
-        .survey-submit-btn.disabled span,
-        .survey-submit-btn.disabled svg {
-            color: var(--text-secondary);
-        }
-
-        .survey-submit-btn:not(.disabled):focus {
-            outline: none;
-            border: 2px solid var(--primary-dark);
-            width: 50px;
-            border-left: 4px solid var(--primary-dark);
-            border-bottom: 4px solid var(--primary-dark);
-            animation: spin 2s 500ms forwards;
-        }
-
-        .survey-submit-btn:not(.disabled):focus span {
-            color: transparent;
-        }
-
-        .survey-submit-btn:not(.disabled):focus svg {
-            animation: check 500ms 2300ms forwards;
-        }
-
-        @keyframes spin {
-            80% {
-                border: 4px solid transparent;
-                border-left: 4px solid var(--primary-color);
-            }
-            100% {
-                transform: rotate(1080deg);
-                border: 4px solid var(--primary-color);
-            }
-        }
-
-        @keyframes check {
-            to {
-                fill: #17b978;
-            }
-        }
-
-        /* Star Rating Styles */
-        .star-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .star-btn:hover {
-            transform: scale(1.2);
-        }
-
-        .star-btn.active {
-            color: #ffd700 !important;
-        }
-
-        .star-btn.hover {
-            color: #ffd700 !important;
-        }
-
-        /* Flip Button Styles */
-        .btn-flip {
-            opacity: 1;
-            outline: 0;
-            color: var(--bg-primary);
-            line-height: 40px;
-            position: relative;
+        
+        /* Future Certifications Styles - Cube Only */
+        .cube-showcase {
             text-align: center;
-            letter-spacing: 1px;
-            display: inline-block;
-            text-decoration: none;
-            font-family: 'Poppins', sans-serif;
-            text-transform: uppercase;
-            transition: 0.5s;
+            padding: 2rem 0;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-
-        .btn-flip:hover::after {
-            opacity: 1;
-            transform: translateY(0) rotateX(0);
+        
+        .cube-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 180px;
         }
-
-        .btn-flip:hover::before {
-            opacity: 0;
-            transform: translateY(50%) rotateX(90deg);
+        
+        .future-goals-label {
+            text-align: center;
+            margin-top: 1rem;
         }
-
-        .btn-flip::after {
-            top: 0;
-            left: 0;
-            opacity: 0;
-            width: 100%;
-            color: var(--bg-primary);
-            display: block;
-            transition: 0.5s;
-            position: absolute;
-            background: var(--primary-color);
-            content: attr(data-back);
-            transform: translateY(-50%) rotateX(90deg);
-            padding: 0 30px;
-            line-height: 40px;
-        }
-
-        .btn-flip::before {
-            top: 0;
-            left: 0;
-            opacity: 1;
+        
+        .cube-label {
             color: var(--primary-color);
-            display: block;
-            padding: 0 30px;
-            line-height: 40px;
-            transition: 0.5s;
-            position: relative;
-            background: var(--bg-secondary);
-            content: attr(data-front);
-            transform: translateY(0) rotateX(0);
-            border: 2px solid var(--primary-color);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
         }
-
+        
+        /* Responsive Design for Certifications */
+        @media (max-width: 1024px) {
+            .cert-main-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cert-section {
+                padding: 1rem;
+                max-height: none;
+            }
+            
+            .enhanced-cert-card {
+                padding: 0.8rem;
+            }
+            
+            .cert-header {
+                gap: 0.8rem;
+            }
+            
+            .verify-btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+            }
+        }
     </style>
     
     <script>
         // JavaScript fallback for certification card hover
         document.addEventListener('DOMContentLoaded', function() {
-            const certCards = document.querySelectorAll('.cert-card-3d');
-            
-            certCards.forEach((card, index) => {
-                // Mouse enter event
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'rotatex(0deg) translatey(0px) translatez(0px) scale(1.05)';
-                    this.style.transition = 'all 0.6s ease';
-                    this.style.boxShadow = '0px 30px 80px rgba(0, 0, 0, 0.4)';
-                    this.style.zIndex = '999';
-                });
-                
-                // Mouse leave event
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'rotatex(25deg) translatey(-30px) translatez(-30px)';
-                    this.style.transition = 'all 0.6s ease';
-                    this.style.boxShadow = '0px 20px 60px rgba(0,0,0, 0.5)';
-                    this.style.zIndex = '5';
-                });
-            });
+            // Old cert-card-3d hover JS removed for cleanup
 
             // Survey functionality
             const surveyToggle = document.getElementById('surveyToggle');
@@ -2336,7 +2499,7 @@
 
     <!-- Header & Navigation -->
     <header class="backdrop-blur-md shadow-xl sticky top-0 z-50 transition-all duration-300" style="background: rgba(0, 0, 0, 0.3);">
-        <div class="container mx-auto px-6 py-4 flex justify-center items-center">
+        <div class="container mx-auto px-6 py-0 flex justify-center items-center">
             <!-- Navigation Menu -->
             <nav class="hidden md:block">
                 <ul class="creative-nav">
@@ -2363,15 +2526,13 @@
         
     <div class="container mx-auto px-6 relative z-10 hero-entrance">
                 <!-- Centered hero content -->
-            <div class="max-w-3xl mx-auto mt-20 text-left lg:text-left" style="margin-left:2rem;">
-                <div class="shadow-dance-container mb-4 flex items-center space-x-6">
-                    <!-- Profile Picture -->
-                    <img src="me.jpg" alt="Messiah Heredia headshot" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
-                    <!-- Greeting Text -->
-                    <h1 class="shadow-dance-text">Hi! Welcome to my IT Portfolio!</h1>
+            <div class="max-w-3xl mx-auto mt-12 text-left lg:text-left" style="margin-left:2rem;">
+                <div class="shadow-dance-container mb-4 text-center">
+                    <!-- Professional Title with Aurora Effect -->
+                    <h1 class="aurora-title">Welcome to My IT Portfolio</h1>
                 </div>
-                <p class="text-xl mb-6 text-[#f3f4f6]/80 max-w-3xl leading-relaxed text-left" style="margin-left:1rem; max-width:56rem;">
-                    I'm Siah, a Systems Administrator and Infrastructure Engineer specializing in enterprise infrastructure management, network security, and virtualization platforms. I build and maintain scalable, secure IT environments that enable business growth. My software development skills complement my infrastructure expertise, allowing me to automate operations and create custom solutions when needed. I work extensively with System Admin tools like Azure AD, ITSM platforms, and enterprise management solutions to streamline operations. Outside of work I experiment with homelab automations and small open-source contributions to sharpen my tooling. I also enjoy collaborating on cross-functional projects that bridge networking and software teams. Continuously learning keeps my tooling modern — I regularly prototype small utilities and share notes to help others get productive faster.
+                <p class="text-xl mb-6 text-[#f3f4f6]/80 max-w-4xl leading-relaxed text-left" style="margin-left:1rem; max-width:64rem;">
+                    I'm Siah, a Systems & Network Administrator with expertise in enterprise infrastructure management, Active Directory, and virtualization platforms. Currently pursuing my Bachelor's in Information Systems at Purdue Fort Wayne, I specialize in hardware deployment, network troubleshooting, and secure data sanitization. My experience spans Windows/Linux server administration, VMware environments, and cloud platforms including Azure and AWS. I focus on DevOps practices, automation, and scripting to optimize IT operations while maintaining robust security protocols and disaster recovery solutions.
                 </p>
 
                 <!-- NEXT button for theme switching -->
@@ -2420,8 +2581,7 @@
                 <div class="box">
                     <span></span>
                     <div class="content">
-                        <h2>View my LinkedIn and Credly</h2>
-                        <p>Connect with me professionally and view my verified certifications.</p>
+                        <h2>LinkedIn and Credly!</h2>
                         <!-- Social Media Icons -->
                         <div class="social-media-icons">
                             <ul>
@@ -2449,201 +2609,276 @@
     <section id="certifications" class="py-20" style="background: rgba(0, 0, 0, 0.1);">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h3 class="shadow-dance-text" style="margin-bottom: 1.5rem;">Certifications</h3>
+                <h3 class="aurora-title" style="margin-bottom: 1.5rem;">Current Certifications</h3>
                 <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
-                    Current certifications and upcoming goals in cybersecurity and cloud computing
+                    Professional IT certifications with verification links and digital badges
                 </p>
             </div>
             
-            <!-- 3D Certification Cards -->
-            <div class="cert-section-3d">
-                <div class="cert-card-3d">
-                    <img src="linux.png" alt="Linux Certification">
-                    <h3>CompTIA Linux+</h3>
-                    <p>Linux systems administration and server management certification covering enterprise-level skills.</p>
-                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=G4MTLQ0T7R308TD2" target="_blank" class="cert-link">Verify</a>
-                </div>
+            <!-- Enhanced Certifications Grid -->
+            <div class="cert-main-grid">
+                <!-- Current Certifications -->
+                <div>
+                    <div class="cert-cards-container">
+                        <!-- CompTIA Linux+ -->
+                        <div class="enhanced-cert-card">
+                            <div class="cert-header">
+                                <div class="cert-details">
+                                    <h5 class="cert-title">CompTIA Linux+</h5>
+                                    <p class="cert-code">Validates skills in Linux system administration, security, and troubleshooting.</p>
+                                </div>
+                                <div class="cert-actions">
+                                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=G4MTLQ0T7R308TD2" target="_blank" rel="noopener noreferrer" class="fancy-verify-btn">
+                                        <svg class="fancy-btn-svg" width="200" height="50" viewBox="0 0 300 80">
+                                            <rect class="fancy-btn-line fancy-btn-line--outer" stroke-width="8" stroke="#EBC445" stroke-linecap="round" fill="none" x="4" y="4" width="292" height="72" rx="36" />
+                                            <rect class="fancy-btn-line fancy-btn-line--inner" stroke-width="4" stroke="#D9823B" stroke-linecap="round" fill="none" x="4" y="4" width="292" height="72" rx="36" />
+                                        </svg>
+                                        <div class="fancy-btn-content">
+                                            <i class="fas fa-certificate"></i>
+                                            <span>Verify</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="cert-card-3d">
-                    <img src="Ncert.png" alt="Network+ Certification">
-                    <h3>CompTIA Network+</h3>
-                    <p>Networking fundamentals, infrastructure, and security protocols for enterprise environments.</p>
-                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=Y96CPZ0RWVLLHF32" target="_blank" class="cert-link">Verify</a>
-                </div>
+                        <!-- CompTIA Network+ -->
+                        <div class="enhanced-cert-card">
+                            <div class="cert-header">
+                                <div class="cert-details">
+                                    <h5 class="cert-title">CompTIA Network+</h5>
+                                    <p class="cert-code">Demonstrates networking fundamentals, infrastructure, and security implementations.</p>
+                                </div>
+                                <div class="cert-actions">
+                                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=Y96CPZ0RWVLLHF32" target="_blank" rel="noopener noreferrer" class="fancy-verify-btn">
+                                        <svg class="fancy-btn-svg" width="200" height="50" viewBox="0 0 300 80">
+                                            <rect class="fancy-btn-line fancy-btn-line--outer" stroke-width="8" stroke="#EBC445" stroke-linecap="round" fill="none" x="4" y="4" width="292" height="72" rx="36" />
+                                            <rect class="fancy-btn-line fancy-btn-line--inner" stroke-width="4" stroke="#D9823B" stroke-linecap="round" fill="none" x="4" y="4" width="292" height="72" rx="36" />
+                                        </svg>
+                                        <div class="fancy-btn-content">
+                                            <i class="fas fa-certificate"></i>
+                                            <span>Verify</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="cert-card-3d">
-                    <img src="cloud.png" alt="Cloud+ Certification">
-                    <h3>CompTIA Cloud+</h3>
-                    <p>Cloud infrastructure and operations across multiple cloud environments and platforms.</p>
-                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=D7ES3EL67Q5LHECJ" target="_blank" class="cert-link">Verify</a>
+                        <!-- CompTIA Cloud+ -->
+                        <div class="enhanced-cert-card">
+                            <div class="cert-header">
+                                <div class="cert-details">
+                                    <h5 class="cert-title">CompTIA Cloud+</h5>
+                                    <p class="cert-code">Proves expertise in cloud architecture, deployment, and management practices.</p>
+                                </div>
+                                <div class="cert-actions">
+                                    <a href="https://www.certmetrics.com/comptia/public/verification.aspx?code=D7ES3EL67Q5LHECJ" target="_blank" rel="noopener noreferrer" class="fancy-verify-btn">
+                                        <svg class="fancy-btn-svg" width="200" height="50" viewBox="0 0 300 80">
+                                            <rect class="fancy-btn-line fancy-btn-line--outer" stroke-width="8" stroke="#EBC445" stroke-linecap="round" fill="none" x="4" y="4" width="292" height="72" rx="36" />
+                                            <rect class="fancy-btn-line fancy-btn-line--inner" stroke-width="4" stroke="#D9823B" stroke-linecap="round" fill="none" x="4" y="4" width="292" height="72" rx="36" />
+                                        </svg>
+                                        <div class="fancy-btn-content">
+                                            <i class="fas fa-certificate"></i>
+                                            <span>Verify</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Future Certifications -->
+                <div style="max-height: 300px; min-height: 300px;">
+                    <h4 class="cert-section-title">Currently Studying</h4>
+                    
+                    <!-- Compact 3D Cert Cube -->
+                    <div class="cube-showcase">
+                        <div class="cube-wrapper">
+                            <div class="box-card">
+                                <div class="face front"><img src="1c.jpg" alt="Future Cert 1"></div>
+                                <div class="face back"><img src="2c.jpg" alt="Future Cert 2"></div>
+                                <div class="face right"><img src="3c.jpg" alt="Future Cert 3"></div>
+                                <div class="face left"><img src="4c.jpg" alt="Future Cert 4"></div>
+                                <div class="face top"><img src="5c.jpg" alt="Future Cert 5"></div>
+                                <div class="face bottom"><img src="6c.jpg" alt="Future Cert 6"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Personal Projects Section -->
-    <section id="homelab" class="py-20" style="background: rgba(0, 0, 0, 0.05);">
+    <section id="homelab" class="py-20">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h3 class="shadow-dance-text" style="margin-bottom: 1.5rem;">My Personal Projects</h3>
+                <h3 class="aurora-title" style="margin-bottom: 1.5rem;">Personal Projects</h3>
                 <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
-                    A dedicated infrastructure environment for continuous learning, testing, and innovation
+                    Innovative solutions and technical implementations across cloud, development, and infrastructure
                 </p>
             </div>
             
-            <!-- Current Lab Setup -->
-            <div class="mb-16">
-                <!-- Stack Cards Panel: System Admin Tools -->
-                <div class="stack-cards-wrapper">
-                    <!-- First Stack: System Admin Tools -->
-                    <div>
-                        <h5 class="shadow-dance-text" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">Full Stack Portfolio Website</h5>
-                        <div class="stack-cards-container">
-                        <div class="stack-cards">
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Azure Cloud Services</h3>
-                                    <p>Cloud infrastructure deployment using Azure App Service, Azure Functions, and Azure Storage for scalable web applications.</p>
-                                    <div class="counter">Project 1 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Web Development Stack</h3>
-                                    <p>Full-stack development using HTML5, CSS3, JavaScript, Node.js, and modern frameworks for responsive web applications.</p>
-                                    <div class="counter">Project 2 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Database Integration</h3>
-                                    <p>Database design and integration using SQL Server, MongoDB, and cloud database services for data persistence.</p>
-                                    <div class="counter">Project 3 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>API Development</h3>
-                                    <p>RESTful API design and implementation for backend services, data exchange, and third-party integrations.</p>
-                                    <div class="counter">Project 4 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>DevOps & CI/CD</h3>
-                                    <p>Continuous integration and deployment pipelines using GitHub Actions, Azure DevOps, and automated testing workflows.</p>
-                                    <div class="counter">Project 5 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Security & Authentication</h3>
-                                    <p>Implementation of secure authentication, HTTPS, input validation, and security best practices for web applications.</p>
-                                    <div class="counter">Project 6 of 6</div>
-                                </div>
+            <!-- Three Project Panels -->
+            <div class="project-panels-container">
+                <!-- Cloud Infrastructure Panel -->
+                <div class="project-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h4 class="panel-title">Cloud Infrastructure</h4>
+                    </div>
+                    
+                    <!-- Navigation Controls -->
+                    <div class="panel-navigation">
+                        <button class="nav-btn prev-btn" data-panel="cloud">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="card-indicator">
+                            <span class="current-card" data-panel="cloud">1</span> / 3
+                        </div>
+                        <button class="nav-btn next-btn" data-panel="cloud">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Flippable Cards Container -->
+                    <div class="cards-container" data-panel="cloud">
+                        <div class="project-card active" data-index="0">
+                            <h5>Azure App Services</h5>
+                            <p>Scalable web application hosting with CI/CD integration, auto-scaling capabilities, and deployment slots for staging environments.</p>
+                            <div class="tech-tags">
+                                <span class="tag">Azure</span>
+                                <span class="tag">CI/CD</span>
+                                <span class="tag">Docker</span>
                             </div>
                         </div>
+                        <div class="project-card" data-index="1">
+                            <h5>Azure Functions</h5>
+                            <p>Serverless computing solutions for event-driven applications, API endpoints, and automated workflows with trigger-based execution.</p>
+                            <div class="tech-tags">
+                                <span class="tag">Serverless</span>
+                                <span class="tag">APIs</span>
+                                <span class="tag">Triggers</span>
+                            </div>
+                        </div>
+                        <div class="project-card" data-index="2">
+                            <h5>Cloud Storage Solutions</h5>
+                            <p>Blob storage implementation with CDN integration for optimal content delivery, backup solutions, and data archiving strategies.</p>
+                            <div class="tech-tags">
+                                <span class="tag">Storage</span>
+                                <span class="tag">CDN</span>
+                                <span class="tag">Backup</span>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Second Stack: Home Lab Infrastructure -->
-                    <div>
-                        <h5 class="shadow-dance-text" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">Home Lab Infrastructure</h5>
-                        <div class="stack-cards-container">
-                        <div class="stack-cards">
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Proxmox VE</h3>
-                                    <p>Open-source virtualization management solution combining KVM hypervisor and LXC containers with web-based management.</p>
-                                    <div class="counter">Infrastructure 1 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Docker & Kubernetes</h3>
-                                    <p>Containerization and orchestration platforms for modern application deployment and scaling in home lab environments.</p>
-                                    <div class="counter">Infrastructure 2 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Network Storage (NAS)</h3>
-                                    <p>Network-attached storage solutions using TrueNAS and FreeNAS for centralized data storage and backup.</p>
-                                    <div class="counter">Infrastructure 3 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Network Infrastructure</h3>
-                                    <p>VLAN configuration, managed switches, and network segmentation for secure home lab networking.</p>
-                                    <div class="counter">Infrastructure 4 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Monitoring & Alerting</h3>
-                                    <p>Infrastructure monitoring using Grafana, Prometheus, and Zabbix for performance tracking and alerting.</p>
-                                    <div class="counter">Infrastructure 5 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Backup & Recovery</h3>
-                                    <p>Automated backup solutions with Veeam, Restic, and cloud storage integration for data protection.</p>
-                                    <div class="counter">Infrastructure 6 of 6</div>
-                                </div>
+                <!-- Full Stack Development Panel -->
+                <div class="project-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4 class="panel-title">Full Stack Development</h4>
+                    </div>
+                    
+                    <!-- Navigation Controls -->
+                    <div class="panel-navigation">
+                        <button class="nav-btn prev-btn" data-panel="fullstack">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="card-indicator">
+                            <span class="current-card" data-panel="fullstack">1</span> / 3
+                        </div>
+                        <button class="nav-btn next-btn" data-panel="fullstack">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Flippable Cards Container -->
+                    <div class="cards-container" data-panel="fullstack">
+                        <div class="project-card active" data-index="0">
+                            <h5>React Web Applications</h5>
+                            <p>Modern single-page applications with responsive design, state management, component libraries, and optimized performance.</p>
+                            <div class="tech-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">Redux</span>
+                                <span class="tag">Responsive</span>
                             </div>
                         </div>
+                        <div class="project-card" data-index="1">
+                            <h5>Node.js APIs</h5>
+                            <p>RESTful backend services with authentication, input validation, rate limiting, and comprehensive database integration layers.</p>
+                            <div class="tech-tags">
+                                <span class="tag">Node.js</span>
+                                <span class="tag">REST API</span>
+                                <span class="tag">Auth</span>
+                            </div>
+                        </div>
+                        <div class="project-card" data-index="2">
+                            <h5>Database Design</h5>
+                            <p>SQL Server and MongoDB implementations with optimized queries, indexing strategies, and data modeling for performance.</p>
+                            <div class="tech-tags">
+                                <span class="tag">SQL Server</span>
+                                <span class="tag">MongoDB</span>
+                                <span class="tag">Optimization</span>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Third Stack: Security & Monitoring -->
-                    <div>
-                        <h5 class="shadow-dance-text" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">Linux/Windows Server and Distributions</h5>
-                        <div class="stack-cards-container">
-                        <div class="stack-cards">
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>VMware vSphere</h3>
-                                    <p>Enterprise virtualization platform for scalable infrastructure management and resource optimization across data centers.</p>
-                                    <div class="counter">Server 1 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Windows Server Administration</h3>
-                                    <p>Active Directory, DNS/DHCP, Group Policy, and Windows Server roles management for enterprise environments.</p>
-                                    <div class="counter">Server 2 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Linux Distributions</h3>
-                                    <p>Administration of Ubuntu Server, CentOS, RHEL, and Debian systems for various enterprise applications.</p>
-                                    <div class="counter">Server 3 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Wireshark Network Analysis</h3>
-                                    <p>Network protocol analysis and troubleshooting using Wireshark for traffic inspection and performance optimization.</p>
-                                    <div class="counter">Server 4 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>PowerShell & Bash Scripting</h3>
-                                    <p>Advanced scripting for automation, system administration, and infrastructure management tasks.</p>
-                                    <div class="counter">Server 5 of 6</div>
-                                </div>
-                            </div>
-                            <div class="stack-cards__item">
-                                <div class="inner">
-                                    <h3>Hyper-V & KVM</h3>
-                                    <p>Hypervisor technologies for virtualization on Windows and Linux platforms with performance optimization.</p>
-                                    <div class="counter">Server 6 of 6</div>
-                                </div>
+                <!-- Infrastructure & Security Panel -->
+                <div class="project-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="panel-title">Infrastructure & Security</h4>
+                    </div>
+                    
+                    <!-- Navigation Controls -->
+                    <div class="panel-navigation">
+                        <button class="nav-btn prev-btn" data-panel="infrastructure">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="card-indicator">
+                            <span class="current-card" data-panel="infrastructure">1</span> / 3
+                        </div>
+                        <button class="nav-btn next-btn" data-panel="infrastructure">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Flippable Cards Container -->
+                    <div class="cards-container" data-panel="infrastructure">
+                        <div class="project-card active" data-index="0">
+                            <h5>Network Security</h5>
+                            <p>Firewall configuration, VPN setup, intrusion detection systems, and comprehensive network monitoring implementations.</p>
+                            <div class="tech-tags">
+                                <span class="tag">Firewall</span>
+                                <span class="tag">VPN</span>
+                                <span class="tag">IDS</span>
                             </div>
                         </div>
+                        <div class="project-card" data-index="1">
+                            <h5>Server Administration</h5>
+                            <p>Windows Server management, Active Directory configuration, Group Policy implementation, and automated backup solutions.</p>
+                            <div class="tech-tags">
+                                <span class="tag">Windows Server</span>
+                                <span class="tag">Active Directory</span>
+                                <span class="tag">Automation</span>
+                            </div>
+                        </div>
+                        <div class="project-card" data-index="2">
+                            <h5>Monitoring Systems</h5>
+                            <p>Infrastructure monitoring with Grafana, Prometheus, custom alerting workflows, and performance optimization dashboards.</p>
+                            <div class="tech-tags">
+                                <span class="tag">Grafana</span>
+                                <span class="tag">Prometheus</span>
+                                <span class="tag">Alerting</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2655,7 +2890,7 @@
     <section id="about" class="py-20" style="background: rgba(0, 0, 0, 0.1);">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h3 class="shadow-dance-text" style="margin-bottom: 1.5rem;">About Me</h3>
+                <h3 class="aurora-title" style="margin-bottom: 1.5rem;">About Me</h3>
                 <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
                     Meet the person behind the passion for technology
                 </p>
@@ -2708,7 +2943,7 @@
     <section id="technical-skills" class="py-20" style="background: rgba(0, 0, 0, 0.05);">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h3 class="shadow-dance-text" style="margin-bottom: 1.5rem;">Technical Skills</h3>
+                <h3 class="aurora-title" style="margin-bottom: 1.5rem;">Technical Skills</h3>
                 <p class="text-xl text-[#f3f4f6]/70 max-w-2xl mx-auto">
                     Comprehensive expertise across enterprise technologies and infrastructure
                 </p>
@@ -2925,149 +3160,29 @@
             }
         };
 
-        // Draw.io Integration Functions
-        let currentDiagram = null;
-        let drawioFrame = null;
-
-        // Sample diagram data (you can replace with actual diagram URLs or data)
-        const diagramData = {
-            network: {
-                title: "Diagram 1 - Network Architecture",
-                url: "https://app.diagrams.net/?embed=1&ui=kennedy&spin=1&modified=unsavedChanges&proto=json#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjgraph%2Fdrawio-diagrams%2Fdev%2Fexamples%2Fnetwork-diagram.drawio",
-                description: "Complete enterprise network topology with VLANs, routing, and security zones"
-            },
-            security: {
-                title: "Diagram 2 - Security Architecture",
-                url: "https://app.diagrams.net/?embed=1&ui=kennedy&spin=1&modified=unsavedChanges&proto=json#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjgraph%2Fdrawio-diagrams%2Fdev%2Fexamples%2Fsecurity-architecture.drawio",
-                description: "Multi-layered security implementation with DMZ, firewalls, and intrusion detection"
-            },
-            infrastructure: {
-                title: "Diagram 3 - Infrastructure Design",
-                url: "https://app.diagrams.net/?embed=1&ui=kennedy&spin=1&modified=unsavedChanges&proto=json#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjgraph%2Fdrawio-diagrams%2Fdev%2Fexamples%2Faws-architecture.drawio",
-                description: "Hybrid cloud infrastructure with on-premises and cloud components"
-            }
-        };
-
-        function openDiagramViewer(type) {
-            const modal = document.getElementById('diagramModal');
-            const container = document.getElementById('modalDiagramContainer');
-            const title = document.getElementById('modalDiagramTitle');
-            
-            if (diagramData[type]) {
-                currentDiagram = type;
-                title.textContent = diagramData[type].title;
-                
-                // Clear existing content
-                container.innerHTML = `
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="text-center">
-                            <i class="fas fa-spinner fa-spin text-pfw-gold text-3xl mb-4"></i>
-                            <p class="text-[#f3f4f6]/70">Loading ${diagramData[type].title}...</p>
-                        </div>
-                    </div>
-                `;
-                
-                // Show modal
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-                
-                // Load diagram in iframe
-                setTimeout(() => {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = diagramData[type].url;
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.border = 'none';
-                    iframe.frameborder = '0';
-                    
-                    container.innerHTML = '';
-                    container.appendChild(iframe);
-                    drawioFrame = iframe;
-                }, 1000);
-            }
-        }
-
-        function closeDiagramModal() {
-            const modal = document.getElementById('diagramModal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto'; // Restore scrolling
-            currentDiagram = null;
-            drawioFrame = null;
-        }
-
-        // Keep these for backward compatibility with existing buttons
-        function loadDiagram(type) {
-            openDiagramViewer(type);
-        }
-
-        function closeDiagramViewer() {
-            closeDiagramModal();
-        }
-
-        function openFullScreenDiagram() {
-            if (currentDiagram && diagramData[currentDiagram]) {
-                // Open in new window/tab for fullscreen experience
-                const newWindow = window.open(
-                    diagramData[currentDiagram].url,
-                    '_blank',
-                    'width=1200,height=800,menubar=no,toolbar=no,location=no,status=no'
-                );
-                if (newWindow) {
-                    newWindow.focus();
-                } else {
-                    // Fallback if popup blocked
-                    window.open(diagramData[currentDiagram].url, '_blank');
-                }
-            }
-        }
-
-        // Title character-by-character reveal
-        document.addEventListener('DOMContentLoaded', () => {
-            const title = document.querySelector('.hero-title');
-            if (title) {
-                const text = title.textContent.trim();
-                title.textContent = '';
-                const frag = document.createDocumentFragment();
-                [...text].forEach((ch, i) => {
-                    const span = document.createElement('span');
-                    span.className = 'char';
-                    span.textContent = ch;
-                    // staggered animation
-                    span.style.animation = `charIn 420ms cubic-bezier(.2,.9,.25,1) ${i * 35}ms both`;
-                    frag.appendChild(span);
+        // Cool title animations
+        function initTitleAnimations() {
+            // Intersection Observer for title animations
+            const titleObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        titleObserver.unobserve(entry.target);
+                    }
                 });
-                title.appendChild(frag);
-            }
-        });
+            }, {
+                threshold: 0.3,
+                rootMargin: '0px 0px -50px 0px'
+            });
 
-        function openDiagramEditor() {
-            // Open draw.io editor with empty diagram
-            const editorUrl = 'https://app.diagrams.net/?embed=1&ui=kennedy&spin=1&proto=json';
-            const newWindow = window.open(
-                editorUrl,
-                '_blank',
-                'width=1200,height=800,menubar=no,toolbar=no,location=no,status=no'
-            );
-            if (newWindow) {
-                newWindow.focus();
-            } else {
-                window.open(editorUrl, '_blank');
-            }
+            // Observe all section titles
+            document.querySelectorAll('h3, .panel-title, .cert-section-title').forEach(title => {
+                if (!title.classList.contains('shadow-dance-text')) {
+                    title.classList.add('title-animate');
+                    titleObserver.observe(title);
+                }
+            });
         }
-
-        function createNewDiagram() {
-            // Open draw.io with network template
-            const templateUrl = 'https://app.diagrams.net/?libs=network;aws4;azure;gcp2&template=network&ui=kennedy';
-            window.open(templateUrl, '_blank');
-        }
-
-        function openTemplateLibrary() {
-            // Open draw.io template gallery
-            const templatesUrl = 'https://app.diagrams.net/?splash=0&libs=1&ui=kennedy';
-            window.open(templatesUrl, '_blank');
-        }
-
-        // Preloader with improved performance
         window.addEventListener('load', function() {
             const preloader = document.getElementById('preloader');
             if (preloader) {
@@ -3549,16 +3664,163 @@
 
         // Note: Stack cards now use native scroll - no additional JavaScript needed
         
+        // Initialize project card flipping functionality
+        function initProjectCards() {
+            console.log('Initializing project cards...');
+            const panels = ['cloud', 'fullstack', 'infrastructure'];
+            
+            panels.forEach(panelType => {
+                console.log(`Setting up panel: ${panelType}`);
+                
+                const container = document.querySelector(`.cards-container[data-panel="${panelType}"]`);
+                const prevBtn = document.querySelector(`.prev-btn[data-panel="${panelType}"]`);
+                const nextBtn = document.querySelector(`.next-btn[data-panel="${panelType}"]`);
+                const currentCardSpan = document.querySelector(`.current-card[data-panel="${panelType}"]`);
+                
+                console.log(`Panel ${panelType} elements:`, {
+                    container: !!container,
+                    prevBtn: !!prevBtn,
+                    nextBtn: !!nextBtn,
+                    currentCardSpan: !!currentCardSpan
+                });
+                
+                if (!container || !prevBtn || !nextBtn || !currentCardSpan) {
+                    console.error(`Missing elements for panel: ${panelType}`);
+                    return;
+                }
+                
+                const cards = container.querySelectorAll('.project-card');
+                console.log(`Found ${cards.length} cards for panel: ${panelType}`);
+                let currentIndex = 0;
+                
+                function updateCards() {
+                    cards.forEach((card, index) => {
+                        card.classList.remove('active');
+                        if (index === currentIndex) {
+                            card.classList.add('active');
+                        }
+                    });
+                    
+                    currentCardSpan.textContent = currentIndex + 1;
+                    
+                    // Update button states
+                    prevBtn.disabled = currentIndex === 0;
+                    nextBtn.disabled = currentIndex === cards.length - 1;
+                    
+                    console.log(`Updated ${panelType} to card ${currentIndex + 1}`);
+                }
+                
+                prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log(`Prev button clicked for ${panelType}, current index: ${currentIndex}`);
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCards();
+                    }
+                });
+                
+                nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log(`Next button clicked for ${panelType}, current index: ${currentIndex}`);
+                    if (currentIndex < cards.length - 1) {
+                        currentIndex++;
+                        updateCards();
+                    }
+                });
+                
+                // Initialize
+                updateCards();
+                console.log(`Panel ${panelType} initialized successfully`);
+                
+                // Auto-advance every 8 seconds
+                setInterval(() => {
+                    if (currentIndex < cards.length - 1) {
+                        currentIndex++;
+                    } else {
+                        currentIndex = 0;
+                    }
+                    updateCards();
+                }, 8000);
+            });
+        }
+        
         // Initialize stack cards when DOM is loaded
         function initStackCards() {
-            // Cards now work with native scroll behavior
-            console.log('Stack cards initialized with scroll behavior');
+            const stackContainer = document.getElementById('projectStack');
+            const prevBtn = document.getElementById('stackPrevBtn');
+            const nextBtn = document.getElementById('stackNextBtn');
+            const currentProjectSpan = document.getElementById('currentProject');
+            const totalProjectsSpan = document.getElementById('totalProjects');
+            
+            if (!stackContainer || !prevBtn || !nextBtn) return;
+            
+            const cards = stackContainer.querySelectorAll('.stacked-project-card');
+            let currentIndex = 0;
+            
+            // Set total projects
+            totalProjectsSpan.textContent = cards.length;
+            
+            function updateStack() {
+                cards.forEach((card, index) => {
+                    card.classList.remove('active', 'prev', 'next');
+                    
+                    if (index === currentIndex) {
+                        card.classList.add('active');
+                    } else if (index === currentIndex - 1) {
+                        card.classList.add('prev');
+                    } else if (index === currentIndex + 1) {
+                        card.classList.add('next');
+                    }
+                });
+                
+                // Update indicator
+                currentProjectSpan.textContent = currentIndex + 1;
+                
+                // Update button states
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === cards.length - 1;
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateStack();
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < cards.length - 1) {
+                    currentIndex++;
+                    updateStack();
+                }
+            });
+            
+            // Initialize
+            updateStack();
+            
+            // Auto-advance every 10 seconds
+            setInterval(() => {
+                if (currentIndex < cards.length - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                updateStack();
+            }, 10000);
         }
         
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initStackCards);
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('DOM fully loaded, initializing...');
+                initTitleAnimations();
+                initStackCards();
+                initProjectCards();
+            });
         } else {
+            console.log('DOM already loaded, initializing...');
+            initTitleAnimations();
             initStackCards();
+            initProjectCards();
         }
     </script>
 </body>
